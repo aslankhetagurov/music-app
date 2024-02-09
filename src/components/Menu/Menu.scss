@@ -1,6 +1,24 @@
 .menu {
+    flex-basis: 160px;
+    background-color: rgb(194 192 192 / 25%);
+    height: calc(100vh - 40px);
+    padding: 20px;
+
     &__list {
         display: flex;
         flex-direction: column;
+        gap: 20px;
+    }
+    &__link {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-radius: 10px;
+    }
+    &__link:hover {
+        background-color: rgba(226, 225, 225, 0.15);
+    }
+    &__link-active {
+        background-color: rgba(226, 225, 225, 0.35);
     }
 }

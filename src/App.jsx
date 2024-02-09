@@ -1,7 +1,29 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import './App.scss';
+import MainLayout from './layouts/MainLayout';
+import HomePage from './pages/HomePage/HomePage';
+import SongsPage from './pages/SongsPage/SongsPage';
+import ArtistsPage from './pages/ArtistsPage/ArtistsPage';
+import AlbumsPage from './pages/AlbumsPage/AlbumsPage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 function App() {
-    return <div className="app"></div>;
+    return (
+        <BrowserRouter>
+            <div className="app">
+                <Routes>
+                    <Route path="/" element={<MainLayout />}>
+                        <Route index={true} element={<HomePage />} />
+                        <Route path="songs" element={<SongsPage />} />
+                        <Route path="artists" element={<ArtistsPage />} />
+                        <Route path="albums" element={<AlbumsPage />} />
+                        <Route path="*" element={<NotFoundPage />} />
+                    </Route>
+                </Routes>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;
