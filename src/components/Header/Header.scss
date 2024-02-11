@@ -1,0 +1,42 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    &__search {
+        position: relative;
+        display: flex;
+        width: 40%;
+        margin: 0 15px;
+        &-img {
+            position: absolute;
+            left: 12px;
+            top: 11px;
+        }
+        &-input {
+            padding: 11px 11px 11px 32px;
+            border: 1px solid rgba(226, 225, 225, 0.35);
+            border-radius: 15px;
+            background-color: transparent;
+            color: #fff;
+            width: 100%;
+        }
+        &-input::placeholder {
+            color: #fff;
+            opacity: 0.8;
+            border: none;
+        }
+    }
+    &__logo-img {
+        width: 150px;
+    }
+    &__user {
+        display: flex;
+        align-items: center;
+        column-gap: 20px;
+    }
+    &__avatar-img {
+        width: 40px;
+        border-radius: 50%;
+    }
+}
