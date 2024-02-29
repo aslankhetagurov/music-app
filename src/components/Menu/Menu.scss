@@ -1,7 +1,8 @@
 .menu {
-    flex-basis: 160px;
+    min-width: 160px;
+    flex-basis: auto;
     background-color: rgb(194 192 192 / 25%);
-    height: calc(100vh - 40px);
+    min-height: 100vh;
     padding: 20px;
 
     &__list {
