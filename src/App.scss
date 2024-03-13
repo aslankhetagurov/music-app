@@ -4,3 +4,20 @@
     margin: 0 auto;
     min-height: 100vh;
 }
+
+.spinner {
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin: 0 auto;
+    animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
