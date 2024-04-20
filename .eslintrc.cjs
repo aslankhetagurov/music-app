@@ -17,7 +17,13 @@ module.exports = {
             { allowConstantExport: true },
         ],
         'no-unused-vars': ['warn'],
-        indent: ['warn', 4],
+        indent: [
+            'warn',
+            4,
+            {
+                ignoredNodes: ['ConditionalExpression'],
+            },
+        ],
         'linebreak-style': 0,
         quotes: ['error', 'single'],
         semi: ['error', 'always'],
