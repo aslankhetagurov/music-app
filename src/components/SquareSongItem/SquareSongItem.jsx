@@ -1,47 +1,53 @@
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FaPlay, FaPause } from 'react-icons/fa6';
+
+import {
+    setAddCurrentSong,
+    setTogglePlaying,
+    selectCurrentSong,
+    selectPlaying,
+} from '../../store/slices/generalStateSlice';
+
 import './SquareSongItem.scss';
-import { useEffect, useMemo, useState } from 'react';
 
 const SquareSongItem = ({ songData }) => {
-    const [playing, setPlaying] = useState(false);
+    const currentSongData = useSelector(selectCurrentSong);
+    const playing = useSelector(selectPlaying);
+    const dispatch = useDispatch();
 
-    const song = useMemo(() => {
-        return new Audio(songData.link);
-    }, []);
-
-    useEffect(() => {
-        song.addEventListener('ended', () => {
-            setPlaying(!playing);
-        });
-
-        return () => {
-            song.removeEventListener('ended', () => {
-                setPlaying(!playing);
-            });
-        };
-    }, [playing]);
+    const { song_id, image, artist, title } = songData;
 
     const handleAudio = () => {
-        playing ? song.pause() : song.play();
-        setPlaying(!playing);
+        if (currentSongData?.song_id !== song_id) {
+            dispatch(setAddCurrentSong(songData));
+        }
+        if (currentSongData?.song_id === song_id) {
+            dispatch(setTogglePlaying());
+        }
     };
 
-    const renderItem = ({ image, artist, title }) => {
+    const renderItem = () => {
         return (
-            <div tabIndex={0} className="song-item">
+            <div className="song-item">
                 <div className="song-item__wrapper">
                     <div className="song-item__top">
                         <img className="song-item__img" src={image} alt="img" />
                         <button
-                            tabIndex={0}
                             onClick={handleAudio}
                             className={`song-item__btn ${
-                                playing ? 'song-item__btn_active' : ''
+                                playing && currentSongData.song_id === song_id
+                                    ? 'song-item__btn_active'
+                                    : ''
                             }`}
                         >
                             <span className="song-item__btn-circle">
-                                {playing ? <FaPause /> : <FaPlay />}
+                                {playing &&
+                                currentSongData.song_id === song_id ? (
+                                    <FaPause />
+                                ) : (
+                                    <FaPlay />
+                                )}
                             </span>
                         </button>
                     </div>
@@ -54,9 +60,7 @@ const SquareSongItem = ({ songData }) => {
         );
     };
 
-    const item = renderItem(songData);
-
-    return item;
+    return renderItem();
 };
 
 export default SquareSongItem;

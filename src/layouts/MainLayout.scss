@@ -1,7 +1,11 @@
 .main {
-    display: flex;
+    position: relative;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    grid-template-rows: 1fr 72px;
     &__content {
         width: 100%;
         padding: 20px;
+        grid-column: 2 / 3;
     }
 }

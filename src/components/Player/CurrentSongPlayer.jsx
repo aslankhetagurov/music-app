@@ -1,0 +1,124 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { FaRepeat } from 'react-icons/fa6';
+import {
+    FaRandom,
+    FaPlay,
+    FaStepForward,
+    FaStepBackward,
+    FaPause,
+} from 'react-icons/fa';
+
+import {
+    selectCurrentSong,
+    selectPlaying,
+    setTogglePlaying,
+} from '../../store/slices/generalStateSlice';
+
+import './CurrentSongPlayer.scss';
+
+const CurrentSongPlayer = () => {
+    const [song, setSong] = useState(null);
+
+    const dispatch = useDispatch();
+
+    const currentSongData = useSelector(selectCurrentSong);
+    const playing = useSelector(selectPlaying);
+
+    useEffect(() => {
+        //pause prev song
+        playing && dispatch(setTogglePlaying());
+
+        const newSong = new Audio(currentSongData?.link);
+        newSong &&
+            newSong.addEventListener('loadeddata', () => {
+                setSong(newSong);
+            }); // eslint-disable-next-line
+    }, [currentSongData]);
+
+    // play after audio creation
+    useEffect(() => {
+        if (song) {
+            dispatch(setTogglePlaying());
+        } // eslint-disable-next-line
+    }, [song]);
+
+    // play/pause audio controller
+    useEffect(() => {
+        if (song) {
+            playing ? song.play() : song.pause();
+        } // eslint-disable-next-line
+    }, [playing]);
+
+    const handleSongPlay = () => {
+        dispatch(setTogglePlaying());
+    };
+
+    useEffect(() => {
+        const toggleAfterEnd = () => {
+            dispatch(setTogglePlaying());
+        };
+
+        if (song) {
+            song.addEventListener('ended', toggleAfterEnd);
+            return () => {
+                song.removeEventListener('ended', toggleAfterEnd);
+            };
+        } // eslint-disable-next-line
+    }, [song]);
+
+    const renderCurrentPlayer = (data) => {
+        const { image, artist, title } = data;
+        return (
+            <div className="current-song ">
+                <div className="current-song__progress">
+                    <div className="current-song__timeline">
+                        <span className="current-song__timeline-start">
+                            00:00 /{' '}
+                        </span>
+                        <span className="current-song__timeline-end">
+                            00:00
+                        </span>
+                    </div>
+                </div>
+
+                <div className="current-song__main">
+                    <div className="current-song__left-side">
+                        <img className="current-song__img" src={image} />
+                        <div className="current-song__info">
+                            <div className="current-song__title">{title}</div>
+                            <div className="current-song__artist">{artist}</div>
+                        </div>
+                    </div>
+
+                    <div className="current-song__controls-center">
+                        <button className="current-song__controls-btn current-song__controls-prev">
+                            <FaStepBackward />
+                        </button>
+                        <button
+                            onClick={handleSongPlay}
+                            className="current-song__controls-btn current-song__controls-play"
+                        >
+                            {playing ? <FaPause /> : <FaPlay />}
+                        </button>
+                        <button className="current-song__controls-btn current-song__controls-next">
+                            <FaStepForward />
+                        </button>
+                    </div>
+                    <div className="current-song__controls-right">
+                        <button className="current-song__controls-btn current-song__controls-repeat">
+                            <FaRepeat />
+                        </button>
+                        <button className="current-song__controls-btn current-song__controls-random">
+                            <FaRandom />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    return currentSongData && renderCurrentPlayer(currentSongData);
+};
+
+export default CurrentSongPlayer;

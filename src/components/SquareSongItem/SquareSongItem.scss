@@ -1,17 +1,11 @@
 .song-item {
-    &:focus {
-        outline: #8870ff auto 1px;
-        border: transparent;
-        .song-item__btn {
-            opacity: 1;
-        }
-    }
+    position: relative;
+
     &:hover {
         .song-item__btn {
             opacity: 1;
         }
     }
-    cursor: pointer;
 
     &__wrapper {
         max-width: 145px;
@@ -64,7 +58,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            // color: aliceblue;
         }
     }
 
