@@ -52,8 +52,12 @@ const SquareSongItem = ({ songData }) => {
                         </button>
                     </div>
                     <div className="song-item__info">
-                        <div className="song-item__title">{title}</div>
-                        <Link className="song-item__artist">{artist}</Link>
+                        <div className="song-item__info-title song-item__info-text">
+                            {title}
+                        </div>
+                        <Link className="song-item__info-artist song-item__info-text">
+                            {artist}
+                        </Link>
                     </div>
                 </div>
             </div>

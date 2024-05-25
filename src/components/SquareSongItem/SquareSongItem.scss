@@ -62,24 +62,25 @@
     }
 
     &__info {
-        display: block;
-        top: 100px;
-    }
+        max-width: 115px;
+        &-text {
+            max-width: 100%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        &-title {
+            margin-bottom: 10px;
+        }
 
-    &__title {
-        margin-bottom: 10px;
-        -webkit-box-orient: vertical;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        overflow: hidden;
-    }
+        &-artist {
+            font-size: 14px;
+            opacity: 0.7;
+            display: inline-block;
 
-    &__artist {
-        font-size: 14px;
-        opacity: 0.7;
-        -webkit-box-orient: vertical;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        overflow: hidden;
+            &:hover {
+                color: #8870ff;
+            }
+        }
     }
 }

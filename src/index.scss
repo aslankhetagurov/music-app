@@ -8,6 +8,7 @@ html {
 *::after,
 *::before {
     box-sizing: inherit;
+    user-select: none;
 }
 
 ul,
