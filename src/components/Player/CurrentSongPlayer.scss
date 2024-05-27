@@ -85,6 +85,7 @@
         &-right {
             display: flex;
             justify-content: end;
+            align-items: center;
             column-gap: 15px;
         }
         &-btn {
@@ -97,5 +98,27 @@
                 cursor: pointer;
             }
         }
+        &-repeat {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        &-repeat::before {
+            content: "1";
+            position: absolute;
+            font-size: 11px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        &-random {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+    &__btn-active {
+        color: #8870ff;
     }
 }

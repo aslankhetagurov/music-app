@@ -13,6 +13,8 @@ import {
     selectCurrentSong,
     selectPlaying,
     setTogglePlaying,
+    setToggleRepeating,
+    selectRepeating,
 } from '../../store/slices/generalStateSlice';
 import durationFormat from '../../utils/durationFormat';
 
@@ -26,6 +28,7 @@ const CurrentSongPlayer = () => {
 
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
+    const repeating = useSelector(selectRepeating);
 
     const progressRef = useRef(null);
     const timelineRef = useRef(null);
@@ -91,9 +94,9 @@ const CurrentSongPlayer = () => {
 
     useEffect(() => {
         const toggleAfterEnd = () => {
-            dispatch(setTogglePlaying());
             timelineRef.current.innerHTML = '00:00 /';
             progressRef.current.style.width = '0%';
+            repeating ? song.play() : dispatch(setTogglePlaying());
         };
 
         if (song) {
@@ -103,7 +106,7 @@ const CurrentSongPlayer = () => {
             };
         }
         // eslint-disable-next-line
-    }, [song]);
+    }, [song, repeating]);
 
     const changeProgressByClick = (evt) => {
         const { clientX } = evt;
@@ -151,6 +154,10 @@ const CurrentSongPlayer = () => {
 
         document.addEventListener('mousemove', changeProgress);
         document.addEventListener('mouseup', offMouseUp);
+    };
+
+    const handleRepeating = () => {
+        dispatch(setToggleRepeating());
     };
 
     const renderCurrentPlayer = (data) => {
@@ -207,7 +214,12 @@ const CurrentSongPlayer = () => {
                         </button>
                     </div>
                     <div className="current-song__controls-right">
-                        <button className="current-song__controls-btn current-song__controls-repeat">
+                        <button
+                            onClick={handleRepeating}
+                            className={`current-song__controls-btn current-song__controls-repeat ${
+                                repeating ? 'current-song__btn-active' : ''
+                            }`}
+                        >
                             <FaRepeat />
                         </button>
                         <button className="current-song__controls-btn current-song__controls-random">
