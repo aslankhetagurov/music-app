@@ -10,11 +10,13 @@ import {
 } from 'react-icons/fa';
 
 import {
+    selectCurrentSongsList,
     selectCurrentSong,
     selectPlaying,
     setTogglePlaying,
     setToggleRepeating,
     selectRepeating,
+    setAddCurrentSong,
 } from '../../store/slices/generalStateSlice';
 import durationFormat from '../../utils/durationFormat';
 
@@ -26,6 +28,7 @@ const CurrentSongPlayer = () => {
 
     const dispatch = useDispatch();
 
+    const currentSongsList = useSelector(selectCurrentSongsList);
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
     const repeating = useSelector(selectRepeating);
@@ -36,12 +39,14 @@ const CurrentSongPlayer = () => {
 
     useEffect(() => {
         //pause prev song
-        playing && dispatch(setTogglePlaying());
+        song?.pause();
 
         const newSong = new Audio(currentSongData?.link);
         const addSongAndDuration = () => {
             setSong(newSong);
             setDuration(newSong.duration);
+
+            newSong.play();
         };
         newSong && newSong.addEventListener('loadeddata', addSongAndDuration);
 
@@ -53,7 +58,7 @@ const CurrentSongPlayer = () => {
 
     // play after audio creation
     useEffect(() => {
-        if (song) {
+        if (song && !playing) {
             dispatch(setTogglePlaying());
         }
         // eslint-disable-next-line
@@ -86,7 +91,7 @@ const CurrentSongPlayer = () => {
             };
         }
         // eslint-disable-next-line
-    }, [playing]);
+    }, [playing, song]);
 
     const handleSongPlay = () => {
         dispatch(setTogglePlaying());
@@ -96,7 +101,9 @@ const CurrentSongPlayer = () => {
         const toggleAfterEnd = () => {
             timelineRef.current.innerHTML = '00:00 /';
             progressRef.current.style.width = '0%';
-            repeating ? song.play() : dispatch(setTogglePlaying());
+            repeating
+                ? song.play()
+                : handlePrevOrNextSong(currentSongData, 'next');
         };
 
         if (song) {
@@ -160,6 +167,23 @@ const CurrentSongPlayer = () => {
         dispatch(setToggleRepeating());
     };
 
+    const handlePrevOrNextSong = ({ song_id }, prevOrNext) => {
+        const songsList = Object.values(currentSongsList).flat();
+
+        const index = songsList.findIndex((item) => item.song_id === song_id);
+
+        if (prevOrNext === 'prev') {
+            const prevSong =
+                songsList[index - 1] || songsList[songsList.length - 1];
+            if (!prevSong) return;
+            dispatch(setAddCurrentSong(prevSong));
+        } else if (prevOrNext === 'next') {
+            const nextSong = songsList[index + 1] || songsList[0];
+            if (!nextSong) return;
+            dispatch(setAddCurrentSong(nextSong));
+        }
+    };
+
     const renderCurrentPlayer = (data) => {
         const { image, artist, title } = data;
         return (
@@ -200,7 +224,12 @@ const CurrentSongPlayer = () => {
                     </div>
 
                     <div className="current-song__controls-center">
-                        <button className="current-song__controls-btn current-song__controls-prev">
+                        <button
+                            onClick={() =>
+                                handlePrevOrNextSong(currentSongData, 'prev')
+                            }
+                            className="current-song__controls-btn current-song__controls-prev"
+                        >
                             <FaStepBackward />
                         </button>
                         <button
@@ -209,7 +238,12 @@ const CurrentSongPlayer = () => {
                         >
                             {playing ? <FaPause /> : <FaPlay />}
                         </button>
-                        <button className="current-song__controls-btn current-song__controls-next">
+                        <button
+                            onClick={() =>
+                                handlePrevOrNextSong(currentSongData, 'next')
+                            }
+                            className="current-song__controls-btn current-song__controls-next"
+                        >
                             <FaStepForward />
                         </button>
                     </div>

@@ -11,14 +11,15 @@ import {
 
 import './SquareSongItem.scss';
 
-const SquareSongItem = ({ songData }) => {
+const SquareSongItem = ({ handleAddCurrentList, songData }) => {
+    const { song_id, image, artist, title } = songData;
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
     const dispatch = useDispatch();
 
-    const { song_id, image, artist, title } = songData;
-
     const handleAudio = () => {
+        handleAddCurrentList();
+
         if (currentSongData?.song_id !== song_id) {
             dispatch(setAddCurrentSong(songData));
         }
@@ -34,7 +35,7 @@ const SquareSongItem = ({ songData }) => {
                     <div className="song-item__top">
                         <img className="song-item__img" src={image} alt="img" />
                         <button
-                            onClick={handleAudio}
+                            onClick={() => handleAudio(songData)}
                             className={`song-item__btn ${
                                 playing && currentSongData.song_id === song_id
                                     ? 'song-item__btn_active'
