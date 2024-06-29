@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaRepeat } from 'react-icons/fa6';
 import {
@@ -17,6 +17,8 @@ import {
     setToggleRepeating,
     selectRepeating,
     setAddCurrentSong,
+    setToggleRandom,
+    selectRandom,
 } from '../../store/slices/generalStateSlice';
 import durationFormat from '../../utils/durationFormat';
 
@@ -32,6 +34,7 @@ const CurrentSongPlayer = () => {
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
     const repeating = useSelector(selectRepeating);
+    const random = useSelector(selectRandom);
 
     const progressRef = useRef(null);
     const timelineRef = useRef(null);
@@ -101,9 +104,7 @@ const CurrentSongPlayer = () => {
         const toggleAfterEnd = () => {
             timelineRef.current.innerHTML = '00:00 /';
             progressRef.current.style.width = '0%';
-            repeating
-                ? song.play()
-                : handlePrevOrNextSong(currentSongData, 'next');
+            repeating ? song.play() : handlePrevOrNextSong('next');
         };
 
         if (song) {
@@ -167,21 +168,49 @@ const CurrentSongPlayer = () => {
         dispatch(setToggleRepeating());
     };
 
-    const handlePrevOrNextSong = ({ song_id }, prevOrNext) => {
+    const randomSongsList = useMemo(() => {
+        if (currentSongsList && random) {
+            const songsList = Object.values(currentSongsList).flat();
+
+            return songsList.sort(
+                () =>
+                    Math.floor(Math.random() * 1000) -
+                    Math.floor(Math.random() * 1000)
+            );
+        }
+        // eslint-disable-next-line
+    }, [random]);
+
+    const handlePrevOrNextSong = (prevOrNext) => {
+        const { song_id } = currentSongData;
         const songsList = Object.values(currentSongsList).flat();
 
-        const index = songsList.findIndex((item) => item.song_id === song_id);
+        const currentIndex = songsList.findIndex(
+            (item) => item.song_id === song_id
+        );
+        const randomCurrentIndex = randomSongsList?.findIndex(
+            (item) => item.song_id === song_id
+        );
 
         if (prevOrNext === 'prev') {
-            const prevSong =
-                songsList[index - 1] || songsList[songsList.length - 1];
-            if (!prevSong) return;
-            dispatch(setAddCurrentSong(prevSong));
+            const prevSong = random
+                ? randomSongsList[randomCurrentIndex - 1] ||
+                  randomSongsList[randomSongsList.length - 1]
+                : songsList[currentIndex - 1] ||
+                  songsList[songsList.length - 1];
+
+            prevSong && dispatch(setAddCurrentSong(prevSong));
         } else if (prevOrNext === 'next') {
-            const nextSong = songsList[index + 1] || songsList[0];
-            if (!nextSong) return;
-            dispatch(setAddCurrentSong(nextSong));
+            const nextSong = random
+                ? randomSongsList[randomCurrentIndex + 1] || randomSongsList[0]
+                : songsList[currentIndex + 1] || songsList[0];
+
+            nextSong && dispatch(setAddCurrentSong(nextSong));
         }
+    };
+
+    const handleRandom = () => {
+        dispatch(setToggleRandom());
     };
 
     const renderCurrentPlayer = (data) => {
@@ -225,9 +254,7 @@ const CurrentSongPlayer = () => {
 
                     <div className="current-song__controls-center">
                         <button
-                            onClick={() =>
-                                handlePrevOrNextSong(currentSongData, 'prev')
-                            }
+                            onClick={() => handlePrevOrNextSong('prev')}
                             className="current-song__controls-btn current-song__controls-prev"
                         >
                             <FaStepBackward />
@@ -239,9 +266,7 @@ const CurrentSongPlayer = () => {
                             {playing ? <FaPause /> : <FaPlay />}
                         </button>
                         <button
-                            onClick={() =>
-                                handlePrevOrNextSong(currentSongData, 'next')
-                            }
+                            onClick={() => handlePrevOrNextSong('next')}
                             className="current-song__controls-btn current-song__controls-next"
                         >
                             <FaStepForward />
@@ -256,7 +281,12 @@ const CurrentSongPlayer = () => {
                         >
                             <FaRepeat />
                         </button>
-                        <button className="current-song__controls-btn current-song__controls-random">
+                        <button
+                            onClick={handleRandom}
+                            className={`current-song__controls-btn current-song__controls-random ${
+                                random ? 'current-song__btn-active' : ''
+                            }`}
+                        >
                             <FaRandom />
                         </button>
                     </div>

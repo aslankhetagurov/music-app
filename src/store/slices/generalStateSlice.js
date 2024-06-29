@@ -5,6 +5,7 @@ const initialState = {
     currentSong: null,
     playing: false,
     repeating: false,
+    random: false,
 };
 
 const generalStateSlice = createSlice({
@@ -23,6 +24,9 @@ const generalStateSlice = createSlice({
         setToggleRepeating: (state) => {
             state.repeating = !state.repeating;
         },
+        setToggleRandom: (state) => {
+            state.random = !state.random;
+        },
     },
 });
 
@@ -33,6 +37,7 @@ export const {
     setAddCurrentSong,
     setToggleRepeating,
     setAddCurrentSongsList,
+    setToggleRandom,
 } = actions;
 
 export const selectCurrentSongsList = (state) =>
@@ -40,5 +45,6 @@ export const selectCurrentSongsList = (state) =>
 export const selectCurrentSong = (state) => state.generalState.currentSong;
 export const selectPlaying = (state) => state.generalState.playing;
 export const selectRepeating = (state) => state.generalState.repeating;
+export const selectRandom = (state) => state.generalState.random;
 
 export default reducer;
