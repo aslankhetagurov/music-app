@@ -27,6 +27,7 @@ import './CurrentSongPlayer.scss';
 const CurrentSongPlayer = () => {
     const [song, setSong] = useState(null);
     const [duration, setDuration] = useState(null);
+    const [volume, setVolume] = useState(50);
 
     const dispatch = useDispatch();
 
@@ -36,9 +37,9 @@ const CurrentSongPlayer = () => {
     const repeating = useSelector(selectRepeating);
     const random = useSelector(selectRandom);
 
-    const progressRef = useRef(null);
+    const progressLineRef = useRef(null);
     const timelineRef = useRef(null);
-    let { current: temporaryProgressRef } = useRef(null);
+    let { current: temporaryProgressLineRef } = useRef(null);
 
     useEffect(() => {
         //pause prev song
@@ -49,6 +50,7 @@ const CurrentSongPlayer = () => {
             setSong(newSong);
             setDuration(newSong.duration);
 
+            newSong.volume = volume / 100;
             newSong.play();
         };
         newSong && newSong.addEventListener('loadeddata', addSongAndDuration);
@@ -76,11 +78,11 @@ const CurrentSongPlayer = () => {
                 const { currentTime } = target;
                 let width = (currentTime * 100) / duration;
 
-                if (!temporaryProgressRef) {
+                if (!temporaryProgressLineRef) {
                     timelineRef.current.innerHTML = `${durationFormat(
                         currentTime
                     )} /`;
-                    progressRef.current.style.width = `${width}%`;
+                    progressLineRef.current.style.width = `${width}%`;
                 }
             };
 
@@ -103,7 +105,7 @@ const CurrentSongPlayer = () => {
     useEffect(() => {
         const toggleAfterEnd = () => {
             timelineRef.current.innerHTML = '00:00 /';
-            progressRef.current.style.width = '0%';
+            progressLineRef.current.style.width = '0%';
             repeating ? song.play() : handlePrevOrNextSong('next');
         };
 
@@ -116,7 +118,7 @@ const CurrentSongPlayer = () => {
         // eslint-disable-next-line
     }, [song, repeating]);
 
-    const changeProgressByClick = (evt) => {
+    const changeSongProgressByClick = (evt) => {
         const { clientX } = evt;
         const { clientWidth } = document.documentElement;
 
@@ -130,7 +132,7 @@ const CurrentSongPlayer = () => {
         }
     };
 
-    const changeProgressByMove = () => {
+    const changeSongProgressByMove = () => {
         const changeProgress = (evt) => {
             const { clientX } = evt;
             const { clientWidth } = document.documentElement;
@@ -138,25 +140,25 @@ const CurrentSongPlayer = () => {
             if (clientWidth > 1280) {
                 const res = duration / 1280;
                 const extraWidth = (clientWidth - 1280) / 2;
-                temporaryProgressRef = (clientX - extraWidth) * res;
+                temporaryProgressLineRef = (clientX - extraWidth) * res;
             } else {
                 const res = duration / clientWidth;
-                temporaryProgressRef = clientX * res;
+                temporaryProgressLineRef = clientX * res;
             }
-            let width = (temporaryProgressRef * 100) / duration;
+            let width = (temporaryProgressLineRef * 100) / duration;
 
             timelineRef.current.innerHTML = `${durationFormat(
-                temporaryProgressRef
+                temporaryProgressLineRef
             )} /`;
-            progressRef.current.style.width = `${width}%`;
+            progressLineRef.current.style.width = `${width}%`;
         };
 
         const offMouseUp = () => {
             document.removeEventListener('mousemove', changeProgress);
-            if (temporaryProgressRef) {
-                song.currentTime = temporaryProgressRef;
+            if (temporaryProgressLineRef) {
+                song.currentTime = temporaryProgressLineRef;
             }
-            temporaryProgressRef = null;
+            temporaryProgressLineRef = null;
             document.removeEventListener('mouseup', offMouseUp);
         };
 
@@ -213,23 +215,30 @@ const CurrentSongPlayer = () => {
         dispatch(setToggleRandom());
     };
 
+    const handleChangeVolume = (evt) => {
+        const { value } = evt.target;
+        song.volume = value / 100;
+        setVolume(value);
+        evt.target.style.background = `linear-gradient(to right, rgba(136,112,255, 0.9) ${value}%, #e6e1e1  ${value}%)`;
+    };
+
     const renderCurrentPlayer = (data) => {
         const { image, artist, title } = data;
         return (
             <div className="current-song ">
                 <div
-                    onClick={changeProgressByClick}
-                    onMouseDown={changeProgressByMove}
                     className="current-song__progress"
+                    onClick={changeSongProgressByClick}
+                    onMouseDown={changeSongProgressByMove}
                 >
                     <div
-                        ref={progressRef}
                         className="current-song__progress-line"
+                        ref={progressLineRef}
                     ></div>
                     <div className="current-song__timeline">
                         <span
-                            ref={timelineRef}
                             className="current-song__timeline-start"
+                            ref={timelineRef}
                         >
                             00:00 /
                         </span>
@@ -254,38 +263,46 @@ const CurrentSongPlayer = () => {
 
                     <div className="current-song__controls-center">
                         <button
-                            onClick={() => handlePrevOrNextSong('prev')}
                             className="current-song__controls-btn current-song__controls-prev"
+                            onClick={() => handlePrevOrNextSong('prev')}
                         >
                             <FaStepBackward />
                         </button>
                         <button
-                            onClick={handleSongPlay}
                             className="current-song__controls-btn current-song__controls-play"
+                            onClick={handleSongPlay}
                         >
                             {playing ? <FaPause /> : <FaPlay />}
                         </button>
                         <button
-                            onClick={() => handlePrevOrNextSong('next')}
                             className="current-song__controls-btn current-song__controls-next"
+                            onClick={() => handlePrevOrNextSong('next')}
                         >
                             <FaStepForward />
                         </button>
                     </div>
                     <div className="current-song__controls-right">
+                        <input
+                            className="current-song__controls-volume"
+                            onChange={handleChangeVolume}
+                            value={volume}
+                            type="range"
+                            min="0"
+                            max="100"
+                        />
                         <button
-                            onClick={handleRepeating}
                             className={`current-song__controls-btn current-song__controls-repeat ${
                                 repeating ? 'current-song__btn-active' : ''
                             }`}
+                            onClick={handleRepeating}
                         >
                             <FaRepeat />
                         </button>
                         <button
-                            onClick={handleRandom}
                             className={`current-song__controls-btn current-song__controls-random ${
                                 random ? 'current-song__btn-active' : ''
                             }`}
+                            onClick={handleRandom}
                         >
                             <FaRandom />
                         </button>
