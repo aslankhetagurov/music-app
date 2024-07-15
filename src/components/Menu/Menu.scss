@@ -8,6 +8,10 @@
     width: 100%;
     border-right: 2px solid #ffffff3d;
 
+    &__item-icon {
+        margin-right: 20px;
+    }
+
     &__list {
         display: flex;
         flex-direction: column;
@@ -18,11 +22,11 @@
         align-items: center;
         padding: 8px;
         border-radius: 10px;
-    }
-    &__link:hover {
-        background-color: rgba(226, 225, 225, 0.15);
-    }
-    &__link-active {
-        background-color: rgba(226, 225, 225, 0.35);
+        &:hover {
+            background-color: rgba(226, 225, 225, 0.15);
+        }
+        &-active {
+            background-color: rgba(226, 225, 225, 0.35);
+        }
     }
 }

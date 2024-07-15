@@ -1,0 +1,27 @@
+.artist {
+    margin-bottom: 10px;
+    width: 145px;
+
+    &__img {
+        height: 145px;
+        width: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
+        padding: 10px;
+    }
+    &__name {
+        display: block;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        transition: all 0.5s;
+
+        &:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
+        }
+    }
+}

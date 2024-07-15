@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { IoHomeOutline } from 'react-icons/io5';
 import { TbMicrophone2 } from 'react-icons/tb';
-import { RiFolderMusicLine } from 'react-icons/ri';
 import { LuMusic } from 'react-icons/lu';
 import './Menu.scss';
 
@@ -18,7 +17,7 @@ const Menu = () => {
                                 : 'menu__link'
                         }
                     >
-                        <IoHomeOutline style={{ marginRight: '20px' }} />
+                        <IoHomeOutline className="menu__item-icon" />
                         Home
                     </NavLink>
                 </li>
@@ -31,7 +30,7 @@ const Menu = () => {
                                 : 'menu__link'
                         }
                     >
-                        <LuMusic style={{ marginRight: '20px' }} />
+                        <LuMusic className="menu__item-icon" />
                         Songs
                     </NavLink>
                 </li>
@@ -44,21 +43,8 @@ const Menu = () => {
                                 : 'menu__link'
                         }
                     >
-                        <TbMicrophone2 style={{ marginRight: '20px' }} />
+                        <TbMicrophone2 className="menu__item-icon" />
                         Artists
-                    </NavLink>
-                </li>
-                <li className="menu__item">
-                    <NavLink
-                        to="albums"
-                        className={({ isActive }) =>
-                            isActive
-                                ? 'menu__link menu__link-active'
-                                : 'menu__link'
-                        }
-                    >
-                        <RiFolderMusicLine style={{ marginRight: '20px' }} />
-                        Albums
                     </NavLink>
                 </li>
             </ul>

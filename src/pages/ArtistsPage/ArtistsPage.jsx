@@ -1,5 +1,7 @@
+import PopularArtistsList from '../../components/PopularArtistsList/PopularArtistsList';
+
 const ArtistsPage = () => {
-    return <h1>ArtistsPage</h1>;
+    return <PopularArtistsList />;
 };
 
 export default ArtistsPage;

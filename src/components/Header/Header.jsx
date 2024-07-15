@@ -31,9 +31,6 @@ const Header = () => {
                 />
             </div>
             <div className="header__user">
-                <div className="header__user-greetings">
-                    <p>Welcom back,Jack! </p>
-                </div>
                 <div className="header__user-avatar">
                     <img
                         className="header__avatar-img"

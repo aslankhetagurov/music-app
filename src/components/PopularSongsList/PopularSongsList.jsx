@@ -50,7 +50,7 @@ const PopularSongsList = () => {
     return (
         <div className="popular-songs">
             <div className="popular-songs__top">
-                <h3 className="popular-songs__title">Popular songs</h3>
+                <h2 className="popular-songs__title">Popular songs</h2>
                 <Link className="popular-songs__link-all">See all</Link>
             </div>
             {songsLoadingStatus === 'loading' ? (

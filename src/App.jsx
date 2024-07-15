@@ -7,6 +7,7 @@ import SongsPage from './pages/SongsPage/SongsPage';
 import ArtistsPage from './pages/ArtistsPage/ArtistsPage';
 import AlbumsPage from './pages/AlbumsPage/AlbumsPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import PopularArtistsPage from './pages/PopularArtistsPage/PopularArtistsPage';
 
 function App() {
     return (
@@ -14,9 +15,13 @@ function App() {
             <div className="app">
                 <Routes>
                     <Route path="/" element={<MainLayout />}>
-                        <Route index={true} element={<HomePage />} />
+                        <Route index element={<HomePage />} />
                         <Route path="songs" element={<SongsPage />} />
                         <Route path="artists" element={<ArtistsPage />} />
+                        <Route
+                            path="artists/popularArtists"
+                            element={<PopularArtistsPage />}
+                        />
                         <Route path="albums" element={<AlbumsPage />} />
                         <Route path="*" element={<NotFoundPage />} />
                     </Route>

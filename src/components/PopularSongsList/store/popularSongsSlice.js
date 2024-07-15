@@ -31,8 +31,12 @@ const popularSongsSlice = createSlice({
         });
 
         builder.addCase(fetchPopularSongs.fulfilled, (state, action) => {
-            state.popularSongsLoadingStatus = 'idle';
-            state.popularSongs = action.payload;
+            if (action.payload) {
+                state.popularSongsLoadingStatus = 'idle';
+                state.popularSongs = action.payload;
+            } else {
+                state.popularSongsLoadingStatus = 'error';
+            }
         });
 
         builder.addCase(fetchPopularSongs.rejected, (state) => {
