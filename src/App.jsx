@@ -8,6 +8,7 @@ import ArtistsPage from './pages/ArtistsPage/ArtistsPage';
 import AlbumsPage from './pages/AlbumsPage/AlbumsPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import PopularArtistsPage from './pages/PopularArtistsPage/PopularArtistsPage';
+import CurrentArtistPage from './pages/CurrentArtistPage/CurrentArtistPage';
 
 function App() {
     return (
@@ -21,6 +22,10 @@ function App() {
                         <Route
                             path="artists/popularArtists"
                             element={<PopularArtistsPage />}
+                        />
+                        <Route
+                            path="/artists/:artistName/"
+                            element={<CurrentArtistPage />}
                         />
                         <Route path="albums" element={<AlbumsPage />} />
                         <Route path="*" element={<NotFoundPage />} />
