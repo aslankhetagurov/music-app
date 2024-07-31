@@ -35,16 +35,16 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
                     <div className="song-item__top">
                         <img className="song-item__img" src={image} alt="img" />
                         <button
-                            onClick={() => handleAudio(songData)}
+                            onClick={() => handleAudio()}
                             className={`song-item__btn ${
-                                playing && currentSongData.song_id === song_id
+                                playing && currentSongData?.song_id === song_id
                                     ? 'song-item__btn_active'
                                     : ''
                             }`}
                         >
                             <span className="song-item__btn-circle">
                                 {playing &&
-                                currentSongData.song_id === song_id ? (
+                                currentSongData?.song_id === song_id ? (
                                     <FaPause />
                                 ) : (
                                     <FaPlay />
@@ -56,7 +56,10 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
                         <div className="song-item__info-title song-item__info-text">
                             {title}
                         </div>
-                        <Link className="song-item__info-artist song-item__info-text">
+                        <Link
+                            className="song-item__info-artist song-item__info-text"
+                            to={`/artists/${artist}/songs`}
+                        >
                             {artist}
                         </Link>
                     </div>
@@ -65,7 +68,7 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
         );
     };
 
-    return renderItem();
+    return songData && renderItem();
 };
 
 export default SquareSongItem;

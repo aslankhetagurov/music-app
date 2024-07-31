@@ -9,6 +9,7 @@ import AlbumsPage from './pages/AlbumsPage/AlbumsPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import PopularArtistsPage from './pages/PopularArtistsPage/PopularArtistsPage';
 import CurrentArtistPage from './pages/CurrentArtistPage/CurrentArtistPage';
+import CurrentArtistSongslist from './components/CurrentArtistSongsList/CurrentArtistSongsList';
 
 function App() {
     return (
@@ -26,7 +27,12 @@ function App() {
                         <Route
                             path="/artists/:artistName/"
                             element={<CurrentArtistPage />}
-                        />
+                        >
+                            <Route
+                                path="songs"
+                                element={<CurrentArtistSongslist />}
+                            ></Route>
+                        </Route>
                         <Route path="albums" element={<AlbumsPage />} />
                         <Route path="*" element={<NotFoundPage />} />
                     </Route>
