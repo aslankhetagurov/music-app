@@ -10,6 +10,8 @@ import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import PopularArtistsPage from './pages/PopularArtistsPage/PopularArtistsPage';
 import CurrentArtistPage from './pages/CurrentArtistPage/CurrentArtistPage';
 import CurrentArtistSongslist from './components/CurrentArtistSongsList/CurrentArtistSongsList';
+import CurrentArtistAbout from './components/CurrentArtistAbout/CurrentArtistAbout';
+import CurrentArtistAlbums from './components/CurrentArtistAlbums/CurrentArtistAlbums';
 
 function App() {
     return (
@@ -31,6 +33,14 @@ function App() {
                             <Route
                                 path="songs"
                                 element={<CurrentArtistSongslist />}
+                            ></Route>
+                            <Route
+                                path="albums"
+                                element={<CurrentArtistAlbums />}
+                            ></Route>
+                            <Route
+                                path="about"
+                                element={<CurrentArtistAbout />}
                             ></Route>
                         </Route>
                         <Route path="albums" element={<AlbumsPage />} />

@@ -9,11 +9,8 @@ import {
     selectPopularSongs,
     selectPopularSongsLoadingStatus,
 } from './store/popularSongsSlice';
-
-import {
-    setAddCurrentSongsList,
-    selectCurrentSongsList,
-} from '../../store/slices/generalStateSlice';
+import { selectCurrentSongsList } from '../../store/slices/generalStateSlice';
+import handleAddCurrentList from '../../utils/handleAddCurrentSongsList';
 
 import './PopularSongsList.scss';
 
@@ -30,20 +27,13 @@ const PopularSongsList = () => {
         []
     );
 
-    const handleAddCurrentList = () => {
-        if (currentSongslist) {
-            const res = Object.keys(currentSongslist).includes('popularSongs');
-            !res && dispatch(setAddCurrentSongsList({ popularSongs }));
-        } else {
-            dispatch(setAddCurrentSongsList({ popularSongs }));
-        }
-    };
-
     const renderItems = popularSongs.map(({ id, ...data }) => (
         <SquareSongItem
             key={id}
             songData={data}
-            handleAddCurrentList={handleAddCurrentList}
+            handleAddCurrentList={() =>
+                handleAddCurrentList(currentSongslist, popularSongs)
+            }
         />
     ));
 
