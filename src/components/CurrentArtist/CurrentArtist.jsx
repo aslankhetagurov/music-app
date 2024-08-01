@@ -22,7 +22,6 @@ import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
 import './CurrentArtist.scss';
 
 const CurrentArtist = () => {
-    useEffect(() => {});
     const { artistName } = useParams();
     const dispatch = useDispatch();
     const artistInfo = useSelector(selectCurrentArtistInfo);
