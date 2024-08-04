@@ -73,8 +73,54 @@
         margin-right: 10px;
     }
 
+    &__info {
+        &-title {
+            white-space: nowrap;
+        }
+
+        &-feat {
+            transition: all 0.5s;
+            color: #ffffffb3;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            display: block;
+            max-width: 600px;
+
+            &-wrapper {
+                display: flex;
+                align-items: center;
+            }
+
+            &-word {
+                color: #ffffffb3;
+                padding: 0 5px;
+            }
+            &-artist {
+                display: inline;
+
+                &::before {
+                    content: "&";
+                    color: #ffffffb3;
+                    padding: 0 5px;
+                }
+                &:first-child {
+                    &::before {
+                        content: "";
+                        padding: 0;
+                    }
+                }
+
+                &:hover {
+                    color: #8870ff;
+                }
+            }
+        }
+    }
+
     &__duration {
         margin-left: auto;
         padding: 0 15px;
+        min-width: 73px;
     }
 }

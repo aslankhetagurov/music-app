@@ -72,16 +72,31 @@
         &-title {
             margin-bottom: 10px;
         }
+        &-artist-wrapper {
+            display: block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
 
         &-artist {
             font-size: 14px;
             opacity: 0.7;
-            display: inline-block;
+            display: inline;
             transition: all 0.5s;
 
+            &::before {
+                content: ", ";
+                color: #fff;
+            }
+            &:first-child {
+                &::before {
+                    content: "";
+                }
+            }
+
             &:hover {
-                transform: scale(1.3) translateX(3px);
-                filter: drop-shadow(0 0 5px #fff);
+                color: #8870ff;
             }
         }
     }

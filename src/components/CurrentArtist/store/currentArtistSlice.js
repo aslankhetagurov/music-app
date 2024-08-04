@@ -19,8 +19,8 @@ export const fetchCurrentArtist = createAsyncThunk(
             const { data: currentArtistSongs } = await supabase
                 .from('music')
                 .select()
-                .eq('artist', artistName);
-
+                .contains('artist', [artistName]);
+            currentArtistInfo;
             return { currentArtistInfo, currentArtistSongs };
         } catch (err) {
             return thunkApi.rejectWithValue(err);

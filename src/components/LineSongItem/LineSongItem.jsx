@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { FaPlay, FaPause } from 'react-icons/fa6';
 import { HiSpeakerWave } from 'react-icons/hi2';
+import { Link, useParams } from 'react-router-dom';
 
 import {
     setAddCurrentSong,
@@ -12,10 +13,25 @@ import './LineSongItem.scss';
 import durationFormat from '../../utils/durationFormat';
 
 const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
-    const { song_id, image, title, duration } = songData;
+    const { song_id, image, title, duration, artist } = songData;
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
     const dispatch = useDispatch();
+    const { artistName } = useParams();
+
+    const renderFeaturingArtists = (artists) => {
+        return artists.map((artist, id) =>
+            artistName === artist ? null : (
+                <Link
+                    className="line-song-item__info-feat-artist"
+                    to={`/artists/${artist}/songs`}
+                    key={id}
+                >
+                    {artist}
+                </Link>
+            )
+        );
+    };
 
     const handleAudio = () => {
         handleAddCurrentList();
@@ -68,6 +84,16 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
                 <div className="line-song-item__info-title line-song-item__info-text">
                     {title}
                 </div>
+                {artist.length > 1 && (
+                    <div className="line-song-item__info-feat-wrapper">
+                        <span className="line-song-item__info-feat-word">
+                            feat.
+                        </span>
+                        <div className="line-song-item__info-feat">
+                            {renderFeaturingArtists(artist)}
+                        </div>
+                    </div>
+                )}
                 <div className="line-song-item__duration">
                     {durationFormat(duration)}
                 </div>

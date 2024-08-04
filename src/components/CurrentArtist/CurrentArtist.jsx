@@ -38,9 +38,11 @@ const CurrentArtist = () => {
     const handleShareArtistLink = async () => {
         try {
             copyTooltipRef.current.style.opacity = '1';
+            copyTooltipRef.current.style.visibility = 'visible';
             await navigator.clipboard.writeText(document.location.href);
             tooltipTimer = setTimeout(() => {
                 copyTooltipRef.current.style.opacity = '0';
+                copyTooltipRef.current.style.visibility = 'hidden';
                 clearTimeout(tooltipTimer);
             }, 1500);
         } catch (err) {
@@ -52,7 +54,7 @@ const CurrentArtist = () => {
         () => {
             artistName && dispatch(fetchCurrentArtist(artistName));
         }, // eslint-disable-next-line
-        []
+        [artistName]
     );
 
     const handleAudio = (firstSong) => {
@@ -96,14 +98,16 @@ const CurrentArtist = () => {
                                     )
                                 }
                             >
-                                <span className="current-artist__head-btn-icon">
+                                <div className="current-artist__head-btn-icon">
                                     {playing &&
-                                    currentSongData?.artist === artistName ? (
+                                    currentSongData?.artist.includes(
+                                        artistName
+                                    ) ? (
                                         <FaPause />
                                     ) : (
                                         <FaPlay className="play-svg" />
                                     )}
-                                </span>
+                                </div>
                             </button>
                             <button
                                 className="current-artist__head-btn current-artist__head-btn-share "

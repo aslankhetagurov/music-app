@@ -28,6 +28,18 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
         }
     };
 
+    const artistsNameParse = (names) => {
+        return names.map((artistName, id) => (
+            <Link
+                className="song-item__info-artist song-item__info-text"
+                to={`/artists/${artistName}/songs`}
+                key={id}
+            >
+                {artistName}
+            </Link>
+        ));
+    };
+
     const renderItem = () => {
         return (
             <div className="song-item">
@@ -56,12 +68,9 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
                         <div className="song-item__info-title song-item__info-text">
                             {title}
                         </div>
-                        <Link
-                            className="song-item__info-artist song-item__info-text"
-                            to={`/artists/${artist}/songs`}
-                        >
-                            {artist}
-                        </Link>
+                        <div className="song-item__info-artist-wrapper">
+                            {artist && song_id && artistsNameParse(artist)}
+                        </div>
                     </div>
                 </div>
             </div>
