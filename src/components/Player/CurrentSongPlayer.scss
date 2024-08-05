@@ -23,7 +23,7 @@
 
         &-line {
             height: 100%;
-            background-color: rgba(136, 112, 255, 0.9);
+            background-color: #8870ff;
             z-index: 10;
         }
     }
@@ -40,12 +40,12 @@
     &__main {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        background: -webkit-linear-gradient(90deg, #a6a6a6, #d1d0d2, #a6a6a6); /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(90deg, #787a75, #a5a4a1, #787a75); /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(
             90deg,
-            #a6a6a6,
-            #d1d0d2,
-            #a6a6a6
+            #787a75,
+            #a5a4a1,
+            #787a75
         ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         height: 100%;
         padding: 5px 10px;
@@ -58,18 +58,14 @@
         max-width: 50px;
     }
     &__info {
-        margin-left: 10px;
-        max-width: 200px;
-        &-text {
-            max-width: 100%;
+        margin: 0 15px;
+        max-width: 23vw;
+
+        &-title {
+            width: 100%;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
-        }
-        &-artist {
-            font-size: 14px;
-            opacity: 0.7;
-            display: inline-block;
         }
     }
     &__controls {
@@ -92,6 +88,10 @@
             &:hover {
                 color: #8870ff;
                 cursor: pointer;
+            }
+
+            &:active {
+                transform: scale(0.8);
             }
         }
         &-repeat {
@@ -122,7 +122,7 @@
             border-radius: 3px;
             outline: none;
             cursor: pointer;
-            background: linear-gradient(to right, rgba(136, 112, 255, 0.9) 50%, #e6e1e1 50%);
+            background: linear-gradient(to right, #8870ff 50%, #e6e1e1 50%);
         }
         &-volume::-webkit-slider-thumb {
             -webkit-appearance: none;

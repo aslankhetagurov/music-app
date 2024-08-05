@@ -54,6 +54,10 @@
             transform: scale(1.2);
         }
 
+        &:active {
+            transform: scale(0.9);
+        }
+
         &-circle {
             display: flex;
             align-items: center;
@@ -63,20 +67,16 @@
 
     &__info {
         max-width: 115px;
+
         &-text {
             max-width: 100%;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
         }
+
         &-title {
             margin-bottom: 10px;
-        }
-        &-artist-wrapper {
-            display: block;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
         }
 
         &-artist {
@@ -89,6 +89,7 @@
                 content: ", ";
                 color: #fff;
             }
+
             &:first-child {
                 &::before {
                     content: "";

@@ -1,5 +1,4 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { FaPlay, FaPause } from 'react-icons/fa6';
 
 import {
@@ -8,6 +7,7 @@ import {
     selectCurrentSong,
     selectPlaying,
 } from '../../store/slices/generalStateSlice';
+import RenderArtistNames from '../RenderArtistNames/RenderArtistNames';
 
 import './SquareSongItem.scss';
 
@@ -28,18 +28,6 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
         }
     };
 
-    const artistsNameParse = (names) => {
-        return names.map((artistName, id) => (
-            <Link
-                className="song-item__info-artist song-item__info-text"
-                to={`/artists/${artistName}/songs`}
-                key={id}
-            >
-                {artistName}
-            </Link>
-        ));
-    };
-
     const renderItem = () => {
         return (
             <div className="song-item">
@@ -49,7 +37,7 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
                         <button
                             onClick={() => handleAudio()}
                             className={`song-item__btn ${
-                                playing && currentSongData?.song_id === song_id
+                                currentSongData?.song_id === song_id
                                     ? 'song-item__btn_active'
                                     : ''
                             }`}
@@ -68,9 +56,7 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
                         <div className="song-item__info-title song-item__info-text">
                             {title}
                         </div>
-                        <div className="song-item__info-artist-wrapper">
-                            {artist && song_id && artistsNameParse(artist)}
-                        </div>
+                        {artist && <RenderArtistNames names={artist} />}
                     </div>
                 </div>
             </div>

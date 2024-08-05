@@ -21,6 +21,7 @@ import {
     selectRandom,
 } from '../../store/slices/generalStateSlice';
 import durationFormat from '../../utils/durationFormat';
+import RenderArtistNames from '../RenderArtistNames/RenderArtistNames';
 
 import './CurrentSongPlayer.scss';
 
@@ -252,11 +253,11 @@ const CurrentSongPlayer = () => {
                     <div className="current-song__left-side">
                         <img className="current-song__img" src={image} />
                         <div className="current-song__info">
-                            <div className="current-song__info-title current-song__info-text">
+                            <div className="current-song__info-title">
                                 {title}
                             </div>
-                            <div className="current-song__info-artist current-song__info-text">
-                                {artist}
+                            <div className="current-song__info-artist">
+                                {artist && <RenderArtistNames names={artist} />}
                             </div>
                         </div>
                     </div>
