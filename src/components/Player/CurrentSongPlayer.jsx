@@ -10,6 +10,13 @@ import {
 } from 'react-icons/fa';
 
 import {
+    RxSpeakerOff,
+    RxSpeakerQuiet,
+    RxSpeakerModerate,
+    RxSpeakerLoud,
+} from 'react-icons/rx';
+
+import {
     selectCurrentSongsList,
     selectCurrentSong,
     selectPlaying,
@@ -196,13 +203,17 @@ const CurrentSongPlayer = () => {
         );
 
         if (prevOrNext === 'prev') {
-            const prevSong = random
-                ? randomSongsList[randomCurrentIndex - 1] ||
-                  randomSongsList[randomSongsList.length - 1]
-                : songsList[currentIndex - 1] ||
-                  songsList[songsList.length - 1];
+            if (song.currentTime > 5) {
+                song.currentTime = 0;
+            } else {
+                const prevSong = random
+                    ? randomSongsList[randomCurrentIndex - 1] ||
+                      randomSongsList[randomSongsList.length - 1]
+                    : songsList[currentIndex - 1] ||
+                      songsList[songsList.length - 1];
 
-            prevSong && dispatch(setAddCurrentSong(prevSong));
+                prevSong && dispatch(setAddCurrentSong(prevSong));
+            }
         } else if (prevOrNext === 'next') {
             const nextSong = random
                 ? randomSongsList[randomCurrentIndex + 1] || randomSongsList[0]
@@ -220,7 +231,14 @@ const CurrentSongPlayer = () => {
         const { value } = evt.target;
         song.volume = value / 100;
         setVolume(value);
-        evt.target.style.background = `linear-gradient(to right, rgba(136,112,255, 0.9) ${value}%, #e6e1e1  ${value}%)`;
+        evt.target.style.background = `linear-gradient(to right, #8870ff ${value}%,#b8b8b8 ${value}%)`;
+    };
+
+    const renderVolumeIcon = () => {
+        if (volume == 0) return <RxSpeakerOff />;
+        if (volume <= 25) return <RxSpeakerQuiet />;
+        if (volume > 25 && volume <= 75) return <RxSpeakerModerate />;
+        if (volume > 75) return <RxSpeakerLoud />;
     };
 
     const renderCurrentPlayer = (data) => {
@@ -283,14 +301,19 @@ const CurrentSongPlayer = () => {
                         </button>
                     </div>
                     <div className="current-song__controls-right">
-                        <input
-                            className="current-song__controls-volume"
-                            onChange={handleChangeVolume}
-                            value={volume}
-                            type="range"
-                            min="0"
-                            max="100"
-                        />
+                        <div className="current-song__controls-volume-wrapper">
+                            <div className="current-song__controls-volume-icon">
+                                {renderVolumeIcon()}
+                            </div>
+                            <input
+                                className="current-song__controls-volume-line"
+                                onChange={handleChangeVolume}
+                                value={volume}
+                                type="range"
+                                min="0"
+                                max="100"
+                            />
+                        </div>
                         <button
                             className={`current-song__controls-btn current-song__controls-repeat ${
                                 repeating ? 'current-song__btn-active' : ''

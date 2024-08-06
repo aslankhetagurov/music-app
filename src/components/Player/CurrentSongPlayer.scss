@@ -27,6 +27,7 @@
             z-index: 10;
         }
     }
+
     &__timeline {
         position: absolute;
         z-index: 11;
@@ -50,13 +51,16 @@
         height: 100%;
         padding: 5px 10px;
     }
+
     &__left-side {
         display: flex;
         align-items: center;
     }
+
     &__img {
         max-width: 50px;
     }
+
     &__info {
         margin: 0 15px;
         max-width: 23vw;
@@ -74,12 +78,14 @@
             justify-content: center;
             column-gap: 15px;
         }
+
         &-right {
             display: flex;
             justify-content: end;
             align-items: center;
             column-gap: 15px;
         }
+
         &-btn {
             font-size: 21px;
             transition: all 0.3s;
@@ -94,12 +100,14 @@
                 transform: scale(0.8);
             }
         }
+
         &-repeat {
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
         }
+
         &-repeat::before {
             content: "1";
             position: absolute;
@@ -108,13 +116,29 @@
             justify-content: center;
             align-items: center;
         }
+
         &-random {
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        &-volume {
+        &-volume-wrapper {
+            display: flex;
+            align-items: center;
+            column-gap: 3px;
+
+            &:hover {
+                .current-song__controls-volume-line::-webkit-slider-thumb {
+                    opacity: 1;
+                }
+                .current-song__controls-volume-line::-moz-range-thumb {
+                    opacity: 1;
+                }
+            }
+        }
+
+        &-volume-line {
             -webkit-appearance: none;
             appearance: none;
             width: 200px;
@@ -122,23 +146,32 @@
             border-radius: 3px;
             outline: none;
             cursor: pointer;
-            background: linear-gradient(to right, #8870ff 50%, #e6e1e1 50%);
+            background: linear-gradient(to right, #8870ff 50%, #b8b8b8 50%);
         }
-        &-volume::-webkit-slider-thumb {
+
+        &-volume-icon {
+            font-size: 20px;
+            line-height: 0px;
+        }
+
+        &-volume-line::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             height: 15px;
             width: 15px;
-            background-color: rgb(136, 112, 255);
+            background-color: #8870ff;
             border-radius: 50%;
             border: none;
+            opacity: 0;
         }
-        &-volume::-moz-range-thumb {
+
+        &-volume-line::-moz-range-thumb {
             height: 15px;
             width: 15px;
-            background-color: rgb(136, 112, 255);
+            background-color: #8870ff;
             border-radius: 50%;
             border: none;
+            opacity: 0;
         }
     }
     &__btn-active {
