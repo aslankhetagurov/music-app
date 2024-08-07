@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ImSpinner2 } from 'react-icons/im';
 
@@ -19,6 +19,9 @@ const PopularSongsList = () => {
     const popularSongs = useSelector(selectPopularSongs);
     const songsLoadingStatus = useSelector(selectPopularSongsLoadingStatus);
     const dispatch = useDispatch();
+    const { pathname } = useLocation();
+
+    const showAllItems = pathname === '/songs/popularSongs';
 
     useEffect(
         () => {
@@ -39,16 +42,29 @@ const PopularSongsList = () => {
 
     return (
         <div className="popular-songs">
-            <div className="popular-songs__top">
-                <h2 className="popular-songs__title">Popular songs</h2>
-                <Link className="popular-songs__link-all">See all</Link>
-            </div>
+            {!showAllItems && (
+                <div className="popular-songs__top">
+                    <h1 className="popular-songs__title">Popular songs</h1>
+                    <Link
+                        to="songs/popularSongs"
+                        className="popular-songs__link-all"
+                    >
+                        See all
+                    </Link>
+                </div>
+            )}
             {songsLoadingStatus === 'loading' ? (
                 <ImSpinner2 className="spinner" />
             ) : songsLoadingStatus === 'error' ? (
                 'An error has occurred, reload the page...'
             ) : (
-                <div className="popular-songs__list">{renderItems}</div>
+                <div
+                    className={`popular-songs__list ${
+                        showAllItems ? 'show-all-songs' : ''
+                    }`}
+                >
+                    {renderItems}
+                </div>
             )}
         </div>
     );

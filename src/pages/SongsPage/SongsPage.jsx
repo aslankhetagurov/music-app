@@ -1,5 +1,7 @@
+import PopularSongsList from '../../components/PopularSongsList/PopularSongsList';
+
 const SongsPage = () => {
-    return <h1>SongsPage</h1>;
+    return <PopularSongsList />;
 };
 
 export default SongsPage;

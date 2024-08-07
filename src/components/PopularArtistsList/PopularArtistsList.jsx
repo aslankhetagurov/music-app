@@ -37,12 +37,10 @@ const PopularArtistsList = () => {
         <div className="popular-artists">
             {!loadAllItems && (
                 <div className="popular-artists__top">
-                    <h2 className="popular-artists__top-title">
-                        Popular Artists
-                    </h2>
+                    <h2 className="popular-artists__title">Popular Artists</h2>
                     <Link
                         to="/artists/popularArtists"
-                        className="popular-artists__top-link"
+                        className="popular-artists__link"
                     >
                         See all
                     </Link>
@@ -55,7 +53,7 @@ const PopularArtistsList = () => {
             ) : (
                 <div
                     className={`popular-artists__list ${
-                        loadAllItems ? 'show-all-items' : ''
+                        loadAllItems ? 'show-all-artists' : ''
                     }`}
                 >
                     {renderItems}

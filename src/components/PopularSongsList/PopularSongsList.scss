@@ -1,13 +1,18 @@
 .popular-songs {
-    margin-bottom: 40px;
-
     &__top {
         display: flex;
         justify-content: space-between;
         margin-bottom: 20px;
     }
+
+    &__title {
+        font-size: 22px;
+        line-height: 24px;
+    }
+
     &__link-all {
         transition: all 0.5s;
+
         &:hover {
             transform: scale(1.2);
             filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
@@ -20,5 +25,13 @@
         overflow: hidden;
         column-gap: 10px;
         max-height: 212px;
+        row-gap: 20px;
     }
+}
+
+.show-all-songs {
+    overflow: visible;
+    justify-content: flex-start;
+    max-height: 100%;
+    column-gap: 30px;
 }

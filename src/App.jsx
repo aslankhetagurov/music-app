@@ -12,6 +12,7 @@ import CurrentArtistPage from './pages/CurrentArtistPage/CurrentArtistPage';
 import CurrentArtistSongslist from './components/CurrentArtistSongsList/CurrentArtistSongsList';
 import CurrentArtistAbout from './components/CurrentArtistAbout/CurrentArtistAbout';
 import CurrentArtistAlbums from './components/CurrentArtistAlbums/CurrentArtistAlbums';
+import PopularSongsPage from './pages/PopularSongsPage/PopularSongsPage';
 
 function App() {
     return (
@@ -21,6 +22,10 @@ function App() {
                     <Route path="/" element={<MainLayout />}>
                         <Route index element={<HomePage />} />
                         <Route path="songs" element={<SongsPage />} />
+                        <Route
+                            path="songs/popularSongs"
+                            element={<PopularSongsPage />}
+                        />
                         <Route path="artists" element={<ArtistsPage />} />
                         <Route
                             path="artists/popularArtists"
