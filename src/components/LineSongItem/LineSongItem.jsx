@@ -11,6 +11,10 @@ import {
 } from '../../store/slices/generalStateSlice';
 import './LineSongItem.scss';
 import durationFormat from '../../utils/durationFormat';
+import {
+    setAddSidebarInfo,
+    setToggleShowSidebar,
+} from '../Sidebar/store/sidebarSlice';
 
 const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
     const { song_id, image, title, duration, artist } = songData;
@@ -44,6 +48,13 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
         }
     };
 
+    const handleAddSidebarInfo = (evt) => {
+        if (evt.target.className !== 'song-artist-name__item') {
+            dispatch(setAddSidebarInfo(songData));
+            dispatch(setToggleShowSidebar(true));
+        }
+    };
+
     const renderItem = () => {
         return (
             <div tabIndex={0} className="line-song-item">
@@ -64,7 +75,7 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
                         )}
                     </div>
                     <button
-                        onClick={() => handleAudio()}
+                        onClick={handleAudio}
                         className={`line-song-item__btn ${
                             playing && currentSongData?.song_id === song_id
                                 ? 'line-song-item__btn_active'
@@ -80,22 +91,31 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
                         </span>
                     </button>
                 </div>
-                <img className="line-song-item__img" src={image} alt="img" />
-                <div className="line-song-item__info-title line-song-item__info-text">
-                    {title}
-                </div>
-                {artist.length > 1 && (
-                    <div className="line-song-item__info-feat-wrapper">
-                        <span className="line-song-item__info-feat-word">
-                            feat.
-                        </span>
-                        <div className="line-song-item__info-feat">
-                            {renderFeaturingArtists(artist)}
-                        </div>
+                <div
+                    className="line-song-item__content-wrapper"
+                    onClick={handleAddSidebarInfo}
+                >
+                    <img
+                        className="line-song-item__img"
+                        src={image}
+                        alt="img"
+                    />
+                    <div className="line-song-item__info-title line-song-item__info-text">
+                        {title}
                     </div>
-                )}
-                <div className="line-song-item__duration">
-                    {durationFormat(duration)}
+                    {artist.length > 1 && (
+                        <div className="line-song-item__info-feat-wrapper">
+                            <span className="line-song-item__info-feat-word">
+                                feat.
+                            </span>
+                            <div className="line-song-item__info-feat">
+                                {renderFeaturingArtists(artist)}
+                            </div>
+                        </div>
+                    )}
+                    <div className="line-song-item__duration">
+                        {durationFormat(duration)}
+                    </div>
                 </div>
             </div>
         );

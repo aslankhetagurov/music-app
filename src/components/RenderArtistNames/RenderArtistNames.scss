@@ -8,10 +8,17 @@
         color: #d5d6d6;
     }
 
+    &__line-clamp {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        white-space: normal;
+    }
+
     &__item {
         font-size: 14px;
         display: inline;
-        transition: all 0.3s;
 
         &::before {
             content: ", ";

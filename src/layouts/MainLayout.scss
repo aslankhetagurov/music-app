@@ -2,10 +2,12 @@
     position: relative;
     display: grid;
     grid-template-columns: 140px 1fr;
-    grid-template-rows: 1fr 72px;
+    grid-template-rows: 70px 1fr 72px;
     &__content {
         width: 100%;
-        padding: 20px;
+        padding: 20px 10px 20px 20px;
         grid-column: 2 / 3;
+        display: flex;
+        column-gap: 25px;
     }
 }

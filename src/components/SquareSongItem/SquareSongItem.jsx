@@ -8,6 +8,10 @@ import {
     selectPlaying,
 } from '../../store/slices/generalStateSlice';
 import RenderArtistNames from '../RenderArtistNames/RenderArtistNames';
+import {
+    setAddSidebarInfo,
+    setToggleShowSidebar,
+} from '../Sidebar/store/sidebarSlice';
 
 import './SquareSongItem.scss';
 
@@ -28,30 +32,37 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
         }
     };
 
+    const handleAddSidebarInfo = (evt) => {
+        if (evt.target.className !== 'song-artist-name__item') {
+            dispatch(setAddSidebarInfo(songData));
+            dispatch(setToggleShowSidebar(true));
+        }
+    };
+
     const renderItem = () => {
         return (
             <div className="song-item">
-                <div className="song-item__wrapper">
-                    <div className="song-item__top">
-                        <img className="song-item__img" src={image} alt="img" />
-                        <button
-                            onClick={() => handleAudio()}
-                            className={`song-item__btn ${
-                                currentSongData?.song_id === song_id
-                                    ? 'song-item__btn_active'
-                                    : ''
-                            }`}
-                        >
-                            <span className="song-item__btn-circle">
-                                {playing &&
-                                currentSongData?.song_id === song_id ? (
-                                    <FaPause />
-                                ) : (
-                                    <FaPlay />
-                                )}
-                            </span>
-                        </button>
-                    </div>
+                <button
+                    onClick={() => handleAudio()}
+                    className={`song-item__btn ${
+                        currentSongData?.song_id === song_id
+                            ? 'song-item__btn_active'
+                            : ''
+                    }`}
+                >
+                    <span className="song-item__btn-circle">
+                        {playing && currentSongData?.song_id === song_id ? (
+                            <FaPause />
+                        ) : (
+                            <FaPlay />
+                        )}
+                    </span>
+                </button>
+                <div
+                    onClick={handleAddSidebarInfo}
+                    className="song-item__content-wrapper"
+                >
+                    <img className="song-item__img" src={image} alt="img" />
                     <div className="song-item__info">
                         <div className="song-item__info-title song-item__info-text">
                             {title}

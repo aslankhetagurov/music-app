@@ -44,9 +44,9 @@ const PopularSongsList = () => {
         <div className="popular-songs">
             {!showAllItems && (
                 <div className="popular-songs__top">
-                    <h1 className="popular-songs__title">Popular songs</h1>
+                    <h2 className="popular-songs__title">Popular songs</h2>
                     <Link
-                        to="songs/popularSongs"
+                        to="/songs/popularSongs"
                         className="popular-songs__link-all"
                     >
                         See all
