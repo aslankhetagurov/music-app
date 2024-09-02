@@ -17,16 +17,33 @@
         flex-direction: column;
         gap: 20px;
     }
+
     &__link {
         display: flex;
         align-items: center;
         padding: 8px;
         border-radius: 10px;
+        transition:
+            box-shadow 0.2s,
+            transform 0.3s;
+        box-shadow:
+            3px 3px 8px #414141,
+            -3px -3px 8px #d7d7d7;
+
         &:hover {
-            background-color: rgba(226, 225, 225, 0.15);
+            transform: translateX(8px);
         }
+
         &-active {
-            background-color: rgba(226, 225, 225, 0.35);
+            box-shadow:
+                3px 3px 8px #414141 inset,
+                -3px -3px 8px #d7d7d7 inset;
+        }
+
+        &:active {
+            box-shadow:
+                3px 3px 8px #414141 inset,
+                -3px -3px 8px #d7d7d7 inset;
         }
     }
 }
