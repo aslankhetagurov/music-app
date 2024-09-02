@@ -5,6 +5,7 @@ import generalState from './slices/generalStateSlice';
 import popularArtists from '../components/PopularArtistsList/store/popularArtistsSlice';
 import currentArtist from '../components/CurrentArtist/store/currentArtistSlice';
 import sidebar from '../components/Sidebar/store/sidebarSlice';
+import auth from './slices/authSlice';
 
 const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
         popularArtists,
         currentArtist,
         sidebar,
+        auth,
     },
 });
 

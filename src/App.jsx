@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-import './App.scss';
 import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage/HomePage';
 import SongsPage from './pages/SongsPage/SongsPage';
@@ -13,8 +14,25 @@ import CurrentArtistSongslist from './components/CurrentArtistSongsList/CurrentA
 import CurrentArtistAbout from './components/CurrentArtistAbout/CurrentArtistAbout';
 import CurrentArtistAlbums from './components/CurrentArtistAlbums/CurrentArtistAlbums';
 import PopularSongsPage from './pages/PopularSongsPage/PopularSongsPage';
+import SignUpPage from './pages/SignUpPage/SignUpPage';
+import LogInPage from './pages/LogInPage/LogInPage';
+import { setAddUserInfo } from './store/slices/authSlice';
+import supabase from '../supabaseClient';
+
+import './App.scss';
 
 function App() {
+    const dispath = useDispatch();
+
+    useEffect(
+        () => {
+            supabase.auth.onAuthStateChange((_, session) => {
+                dispath(setAddUserInfo(session ? session.user : null));
+            });
+        }, // eslint-disable-next-line
+        []
+    );
+
     return (
         <BrowserRouter>
             <div className="app">
@@ -51,6 +69,8 @@ function App() {
                         <Route path="albums" element={<AlbumsPage />} />
                         <Route path="*" element={<NotFoundPage />} />
                     </Route>
+                    <Route path="/signup" element={<SignUpPage />} />
+                    <Route path="/login" element={<LogInPage />} />
                 </Routes>
             </div>
         </BrowserRouter>
