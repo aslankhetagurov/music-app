@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ErrorMessage, Form, Formik, useField } from 'formik';
 import { ImSpinner2 } from 'react-icons/im';
 import * as Yup from 'yup';
@@ -19,22 +19,32 @@ const MyTextInput = ({ label, ...props }) => {
     );
 };
 
-const AuthForm = ({ textBtn, title }) => {
+const AuthForm = ({ textBtn, title, type }) => {
     const navigate = useNavigate();
-    const { pathname } = useLocation();
-    const isSignUpPage = pathname === '/signup';
 
     const handleSubmit = async ({ email, password }) => {
-        const action = isSignUpPage ? 'signUp' : 'signInWithPassword';
-        let { data, error } = await supabase.auth[action]({
-            email,
-            password,
-        });
+        const action =
+            type === 'signUp'
+                ? 'signUp'
+                : type === 'logIn'
+                ? 'signInWithPassword'
+                : 'updateUser';
 
-        const link = isSignUpPage ? '/login' : '/';
-        data.user && navigate(link);
+        try {
+            let { data, error } = await supabase.auth[action]({
+                email,
+                password,
+            });
 
-        error && console.log(error.message);
+            const link =
+                type === 'signUp' ? '/login' : type === 'logIn' ? '/' : '/';
+
+            data?.user && navigate(link);
+
+            error && console.log(error.message);
+        } catch (error) {
+            console.log(error.message);
+        }
     };
 
     return (
@@ -48,7 +58,7 @@ const AuthForm = ({ textBtn, title }) => {
                     }}
                     validationSchema={Yup.object({
                         email: Yup.string()
-                            .email('Wrong email address')
+                            .email('Invalid email address')
                             .required('Required field'),
                         password: Yup.string()
                             .min(6, 'Minimum 6 characters')
@@ -81,6 +91,18 @@ const AuthForm = ({ textBtn, title }) => {
                                     className="auth-form__error"
                                     name="password"
                                 />
+
+                                {type === 'logIn' && (
+                                    <div className="auth-form__recover-password">
+                                        <span>Forgot your password? </span>
+                                        <Link
+                                            className="auth-form__recover-link"
+                                            to="/recover"
+                                        >
+                                            Recover
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="auth-form__btn-wrapper">
@@ -100,24 +122,28 @@ const AuthForm = ({ textBtn, title }) => {
                         </Form>
                     )}
                 </Formik>
-                <div className="auth-form__bottom">
-                    <div className="auth-form__bottom-links">
-                        <div className="auth-form__bottom-link-wrapper">
-                            <span className="auth-form__bottom-link-text">
-                                {isSignUpPage
-                                    ? 'Are you already registered?'
-                                    : 'You are not registered yet?'}
-                            </span>
-                            <Link
-                                className="auth-form__bottom-link"
-                                to={isSignUpPage ? '/login' : '/signup'}
-                            >
-                                {isSignUpPage ? 'Log in' : 'Sign Up'}
-                            </Link>
+                {type !== 'update' && (
+                    <div className="auth-form__bottom">
+                        <div className="auth-form__bottom-links">
+                            <div className="auth-form__bottom-link-wrapper">
+                                <span className="auth-form__bottom-link-text">
+                                    {type === 'signUp'
+                                        ? 'Are you already registered?'
+                                        : 'You are not registered yet?'}
+                                </span>
+                                <Link
+                                    className="auth-form__bottom-link"
+                                    to={
+                                        type === 'signUp' ? '/login' : '/signup'
+                                    }
+                                >
+                                    {type === 'signUp' ? 'Log in' : 'Sign Up'}
+                                </Link>
+                            </div>
+                            <div className="auth-form__signup-link"></div>
                         </div>
-                        <div className="auth-form__signup-link"></div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );

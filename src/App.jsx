@@ -18,7 +18,8 @@ import SignUpPage from './pages/SignUpPage/SignUpPage';
 import LogInPage from './pages/LogInPage/LogInPage';
 import { setAddUserInfo } from './store/slices/authSlice';
 import supabase from '../supabaseClient';
-
+import LoginDataUpdatePage from './pages/LoginDataUpdatePage/LoginDataUpdatePage';
+import PasswordRecoveryPage from './pages/PasswordRecoveryPage/PasswordRecoveryPage';
 import './App.scss';
 
 function App() {
@@ -71,6 +72,11 @@ function App() {
                     </Route>
                     <Route path="/signup" element={<SignUpPage />} />
                     <Route path="/login" element={<LogInPage />} />
+                    <Route path="/recover" element={<PasswordRecoveryPage />} />
+                    <Route
+                        path="/profile/update"
+                        element={<LoginDataUpdatePage />}
+                    />
                 </Routes>
             </div>
         </BrowserRouter>
