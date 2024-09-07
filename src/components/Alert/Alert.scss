@@ -1,0 +1,67 @@
+.alert {
+    position: fixed;
+    z-index: 1000;
+    right: -350px;
+    top: 70px;
+    border-radius: 5px;
+    padding: 7px;
+    width: 220px;
+    height: 65px;
+    visibility: hidden;
+    opacity: 0;
+    transition:
+        visibility 0.3s,
+        opacity 0.3s,
+        transform 0.8s;
+    display: flex;
+    align-items: center;
+
+    &__show {
+        transform: translateX(-360px);
+        visibility: visible;
+        opacity: 0.9;
+        transition:
+            visibility 0.3s,
+            opacity 1s,
+            transform 0.3s;
+    }
+
+    &__type-info {
+        color: green;
+        background-color: rgb(149, 250, 174);
+        border: 1px solid green;
+    }
+
+    &__type-error {
+        color: rgb(251, 108, 108);
+        background-color: #ffe7e7;
+        border: 1px solid rgb(251, 108, 108);
+    }
+
+    &__close-btn {
+        font-size: 20px;
+        line-height: 0;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-left: auto;
+        align-self: flex-start;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+
+        &:active {
+            transform: scale(0.9);
+        }
+    }
+
+    &__text {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        white-space: normal;
+        overflow: hidden;
+    }
+}

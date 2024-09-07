@@ -1,9 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { ErrorMessage, Form, Formik, useField } from 'formik';
 import { ImSpinner2 } from 'react-icons/im';
 import * as Yup from 'yup';
 
 import supabase from '../../../supabaseClient';
+import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
 import './AuthForm.scss';
 
 const MyTextInput = ({ label, ...props }) => {
@@ -21,6 +23,7 @@ const MyTextInput = ({ label, ...props }) => {
 
 const AuthForm = ({ textBtn, title, type }) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSubmit = async ({ email, password }) => {
         const action =
@@ -41,9 +44,13 @@ const AuthForm = ({ textBtn, title, type }) => {
 
             data?.user && navigate(link);
 
-            error && console.log(error.message);
+            if (error) {
+                dispatch(setAddAlertText(error.message));
+                dispatch(setAddAlertType('error'));
+            }
         } catch (error) {
-            console.log(error.message);
+            dispatch(setAddAlertText(error.message));
+            dispatch(setAddAlertType('error'));
         }
     };
 

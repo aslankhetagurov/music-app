@@ -20,6 +20,7 @@ import { setAddUserInfo } from './store/slices/authSlice';
 import supabase from '../supabaseClient';
 import LoginDataUpdatePage from './pages/LoginDataUpdatePage/LoginDataUpdatePage';
 import PasswordRecoveryPage from './pages/PasswordRecoveryPage/PasswordRecoveryPage';
+import Alert from './components/Alert/Alert';
 import './App.scss';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
     return (
         <BrowserRouter>
             <div className="app">
+                <Alert />
                 <Routes>
                     <Route path="/" element={<MainLayout />}>
                         <Route index element={<HomePage />} />

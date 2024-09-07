@@ -1,14 +1,17 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { ImSpinner2 } from 'react-icons/im';
 
 import supabase from '../../../supabaseClient';
+import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
 import './PasswordRecovery.scss';
 
 const PasswordRecovery = () => {
     const [inputValue, setinputValue] = useState('');
-    const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const dispatch = useDispatch();
 
     const emailValidate = (email) => {
         if (!email) {
@@ -35,10 +38,18 @@ const PasswordRecovery = () => {
                 inputValue
             );
 
-            data && setSuccess('Successfully reset password');
-            error && setError(error.message);
+            if (data) {
+                dispatch(setAddAlertText('Successfully reset password'));
+                dispatch(setAddAlertType('info'));
+            }
+
+            if (error) {
+                dispatch(setAddAlertText(error.message));
+                dispatch(setAddAlertType('error'));
+            }
         } catch (error) {
-            console.log(error.message);
+            dispatch(setAddAlertText(error.message));
+            dispatch(setAddAlertType('error'));
         } finally {
             setLoading(false);
             setinputValue('');
@@ -46,7 +57,6 @@ const PasswordRecovery = () => {
     };
 
     const changeInputValue = (evt) => {
-        setSuccess('');
         emailValidate(evt.target.value);
         setinputValue(evt.target.value);
     };
@@ -75,12 +85,6 @@ const PasswordRecovery = () => {
                     {error && (
                         <p className="recovery__error-message recovery__message">
                             {error}
-                        </p>
-                    )}
-
-                    {success && (
-                        <p className="recovery__success-message recovery__message">
-                            {success}
                         </p>
                     )}
 
