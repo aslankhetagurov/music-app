@@ -21,6 +21,7 @@ import supabase from '../supabaseClient';
 import LoginDataUpdatePage from './pages/LoginDataUpdatePage/LoginDataUpdatePage';
 import PasswordRecoveryPage from './pages/PasswordRecoveryPage/PasswordRecoveryPage';
 import Alert from './components/Alert/Alert';
+import RecentlyPlayedPage from './pages/RecentlyPlayedPage/RecentlyPlayedPage';
 import './App.scss';
 
 function App() {
@@ -44,16 +45,20 @@ function App() {
                         <Route index element={<HomePage />} />
                         <Route path="songs" element={<SongsPage />} />
                         <Route
-                            path="songs/popularSongs"
+                            path="songs/popular-songs"
                             element={<PopularSongsPage />}
+                        />
+                        <Route
+                            path="songs/recently-played"
+                            element={<RecentlyPlayedPage />}
                         />
                         <Route path="artists" element={<ArtistsPage />} />
                         <Route
-                            path="artists/popularArtists"
+                            path="artists/popular-artists"
                             element={<PopularArtistsPage />}
                         />
                         <Route
-                            path="/artists/:artistName/"
+                            path="/artists/:artistName"
                             element={<CurrentArtistPage />}
                         >
                             <Route

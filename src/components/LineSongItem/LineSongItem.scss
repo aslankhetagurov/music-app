@@ -89,8 +89,16 @@
     }
 
     &__info {
+        display: grid;
+        grid-template-columns: 1fr;
+
         &-title {
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+            max-width: 200px;
+            min-width: auto;
         }
 
         &-feat {
@@ -102,15 +110,11 @@
             display: block;
             max-width: 600px;
 
-            &-wrapper {
-                display: grid;
-                grid-template-columns: 39px 1fr;
-            }
-
             &-word {
                 color: #ffffffb3;
                 padding: 0 5px;
             }
+
             &-artist {
                 display: inline;
 
@@ -119,16 +123,17 @@
                     color: #ffffffb3;
                     padding: 0 5px;
                 }
-                &:first-child {
+                &:first-child,
+                &:nth-child(2) {
                     &::before {
                         content: "";
                         padding: 0;
                     }
                 }
+            }
 
-                &:hover {
-                    color: #8870ff;
-                }
+            &-link:hover {
+                color: #8870ff;
             }
         }
     }

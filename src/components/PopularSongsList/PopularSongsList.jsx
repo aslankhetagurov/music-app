@@ -21,7 +21,7 @@ const PopularSongsList = () => {
     const dispatch = useDispatch();
     const { pathname } = useLocation();
 
-    const showAllItems = pathname === '/songs/popularSongs';
+    const showAllItems = pathname === '/songs/popular-songs';
 
     useEffect(
         () => {
@@ -46,7 +46,7 @@ const PopularSongsList = () => {
                 <div className="popular-songs__top">
                     <h2 className="popular-songs__title">Popular songs</h2>
                     <Link
-                        to="/songs/popularSongs"
+                        to="/songs/popular-songs"
                         className="popular-songs__link-all"
                     >
                         See all
@@ -60,7 +60,7 @@ const PopularSongsList = () => {
             ) : (
                 <div
                     className={`popular-songs__list ${
-                        showAllItems ? 'show-all-songs' : ''
+                        showAllItems ? 'show-all-items' : ''
                     }`}
                 >
                     {renderItems}

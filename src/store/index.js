@@ -7,6 +7,7 @@ import currentArtist from '../components/CurrentArtist/store/currentArtistSlice'
 import sidebar from '../components/Sidebar/store/sidebarSlice';
 import auth from './slices/authSlice';
 import alert from '../components/Alert/store/alertSlice';
+import recentlyPlayed from '../components/RecentlyPlayedList/store/recentlyPlayedSlice';
 
 const store = configureStore({
     reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
         sidebar,
         auth,
         alert,
+        recentlyPlayed,
     },
 });
 

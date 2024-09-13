@@ -13,10 +13,6 @@
     animation: spinner 1s linear infinite;
 }
 
-.play-svg {
-    padding-left: 2px;
-}
-
 @keyframes spinner {
     from {
         transform: rotate(0deg);
@@ -24,4 +20,14 @@
     to {
         transform: rotate(360deg);
     }
+}
+
+.play-svg {
+    padding-left: 2px;
+}
+
+.show-all-items {
+    overflow: visible;
+    justify-content: flex-start;
+    max-height: 100%;
 }

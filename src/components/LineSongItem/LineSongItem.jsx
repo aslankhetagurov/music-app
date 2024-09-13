@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { FaPlay, FaPause } from 'react-icons/fa6';
 import { HiSpeakerWave } from 'react-icons/hi2';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
     setAddCurrentSong,
@@ -9,36 +10,39 @@ import {
     selectCurrentSong,
     selectPlaying,
 } from '../../store/slices/generalStateSlice';
-import './LineSongItem.scss';
 import durationFormat from '../../utils/durationFormat';
 import {
     setAddSidebarInfo,
     setToggleShowSidebar,
 } from '../Sidebar/store/sidebarSlice';
+import './LineSongItem.scss';
 
 const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
     const { song_id, image, title, duration, artist } = songData;
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
     const dispatch = useDispatch();
-    const { artistName } = useParams();
 
     const renderFeaturingArtists = (artists) => {
-        return artists.map((artist, id) =>
-            artistName === artist ? null : (
+        return artists.map((artist, id, arr) => (
+            <span className="line-song-item__info-feat-artist" key={uuidv4()}>
                 <Link
-                    className="line-song-item__info-feat-artist"
+                    className="line-song-item__info-feat-link"
                     to={`/artists/${artist}/songs`}
-                    key={id}
                 >
                     {artist}
                 </Link>
-            )
-        );
+                {arr.length > 1 && !id ? (
+                    <span className="line-song-item__info-feat-word">
+                        feat.
+                    </span>
+                ) : null}
+            </span>
+        ));
     };
 
     const handleAudio = () => {
-        handleAddCurrentList();
+        !playing && handleAddCurrentList();
 
         if (currentSongData?.song_id !== song_id) {
             dispatch(setAddCurrentSong(songData));
@@ -49,7 +53,7 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
     };
 
     const handleAddSidebarInfo = (evt) => {
-        if (evt.target.className !== 'song-artist-name__item') {
+        if (evt.target.className !== 'line-song-item__info-feat-link') {
             dispatch(setAddSidebarInfo(songData));
             dispatch(setToggleShowSidebar(true));
         }
@@ -100,19 +104,14 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
                         src={image}
                         alt="img"
                     />
-                    <div className="line-song-item__info-title line-song-item__info-text">
-                        {title}
-                    </div>
-                    {artist.length > 1 && (
-                        <div className="line-song-item__info-feat-wrapper">
-                            <span className="line-song-item__info-feat-word">
-                                feat.
-                            </span>
-                            <div className="line-song-item__info-feat">
-                                {renderFeaturingArtists(artist)}
-                            </div>
+                    <div className="line-song-item__info">
+                        <div className="line-song-item__info-title line-song-item__info-text">
+                            {title}
                         </div>
-                    )}
+                        <div className="line-song-item__info-feat">
+                            {renderFeaturingArtists(artist)}
+                        </div>
+                    </div>
                     <div className="line-song-item__duration">
                         {durationFormat(duration)}
                     </div>

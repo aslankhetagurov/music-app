@@ -1,4 +1,4 @@
-.popular-songs {
+.recently-played {
     width: 100%;
 
     &__top {
@@ -20,13 +20,19 @@
             filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
         }
     }
+
     &__list {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         flex-wrap: wrap;
         overflow: hidden;
         column-gap: 9px;
         max-height: 212px;
         row-gap: 20px;
+    }
+    &__list-column {
+        flex-direction: column;
+        width: 100%;
+        row-gap: 10px;
     }
 }

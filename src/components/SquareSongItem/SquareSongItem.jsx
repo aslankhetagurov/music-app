@@ -22,7 +22,7 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
     const dispatch = useDispatch();
 
     const handleAudio = () => {
-        handleAddCurrentList();
+        !playing && handleAddCurrentList();
 
         if (currentSongData?.song_id !== song_id) {
             dispatch(setAddCurrentSong(songData));
@@ -54,7 +54,7 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
                         {playing && currentSongData?.song_id === song_id ? (
                             <FaPause />
                         ) : (
-                            <FaPlay />
+                            <FaPlay className="play-svg" />
                         )}
                     </span>
                 </button>

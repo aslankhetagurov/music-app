@@ -16,11 +16,6 @@ module.exports = {
             'warn',
             { allowConstantExport: true },
         ],
-        indent: [
-            'warn',
-            4,
-            { SwitchCase: 1, ignoredNodes: ['ConditionalExpression'] },
-        ],
         'no-unused-vars': ['warn'],
         'linebreak-style': 0,
         quotes: ['warn', 'single'],

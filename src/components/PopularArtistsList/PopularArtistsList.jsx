@@ -20,11 +20,11 @@ const PopularArtistsList = () => {
     );
 
     const { pathname } = useLocation();
-    const loadAllItems = pathname === '/artists/popularArtists';
+    const showAllItems = pathname === '/artists/popular-artists';
 
     useEffect(
         () => {
-            dispatch(fetchPopularArtists(loadAllItems));
+            dispatch(fetchPopularArtists(showAllItems));
         }, // eslint-disable-next-line
         []
     );
@@ -35,11 +35,11 @@ const PopularArtistsList = () => {
 
     return (
         <div className="popular-artists">
-            {!loadAllItems && (
+            {!showAllItems && (
                 <div className="popular-artists__top">
                     <h2 className="popular-artists__title">Popular Artists</h2>
                     <Link
-                        to="/artists/popularArtists"
+                        to="/artists/popular-artists"
                         className="popular-artists__link"
                     >
                         See all
@@ -53,7 +53,7 @@ const PopularArtistsList = () => {
             ) : (
                 <div
                     className={`popular-artists__list ${
-                        loadAllItems ? 'show-all-artists' : ''
+                        showAllItems ? 'show-all-items' : ''
                     }`}
                 >
                     {renderItems}
