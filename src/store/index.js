@@ -8,6 +8,7 @@ import sidebar from '../components/Sidebar/store/sidebarSlice';
 import auth from './slices/authSlice';
 import alert from '../components/Alert/store/alertSlice';
 import recentlyPlayed from '../components/RecentlyPlayedList/store/recentlyPlayedSlice';
+import searchInput from '../components/SearchInput/store/searchInputSlice';
 
 const store = configureStore({
     reducer: {
@@ -19,6 +20,7 @@ const store = configureStore({
         auth,
         alert,
         recentlyPlayed,
+        searchInput,
     },
 });
 

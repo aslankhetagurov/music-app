@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { IoMdClose, IoMdSearch } from 'react-icons/io';
+import { IoMdClose } from 'react-icons/io';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,12 +7,11 @@ import logo from '../../assets/logo.png';
 import avatar from '../../assets/avatar.png';
 import supabase from '../../../supabaseClient';
 import { selectUserInfo, setAddUserInfo } from '../../store/slices/authSlice';
+import SearchInput from '../SearchInput/SearchInput';
 import './Header.scss';
 
 const Header = () => {
-    const [inputValue, setInputValue] = useState('');
     const [userMenu, setUserMenu] = useState(false);
-
     const dispatch = useDispatch();
     const userInfo = useSelector(selectUserInfo);
 
@@ -30,10 +29,6 @@ const Header = () => {
         };
         // eslint-disable-next-line
     }, [userMenu]);
-
-    const handleInputValue = (e) => {
-        setInputValue(e.target.value);
-    };
 
     const handleLogOut = async () => {
         let { error } = await supabase.auth.signOut();
@@ -58,18 +53,8 @@ const Header = () => {
             <Link className="header__logo" to=".">
                 <img className="header__logo-img" src={logo} alt="logo" />
             </Link>
-            <div className="header__search">
-                <div className="header__search-img">
-                    <IoMdSearch />
-                </div>
-                <input
-                    className="header__search-input"
-                    placeholder="Search by title, artist, or album..."
-                    type="text"
-                    value={inputValue}
-                    onChange={handleInputValue}
-                />
-            </div>
+
+            <SearchInput />
             {userInfo ? (
                 <div
                     className="header__user"

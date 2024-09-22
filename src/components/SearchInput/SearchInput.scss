@@ -1,0 +1,119 @@
+.search {
+    position: relative;
+    display: flex;
+    width: 30%;
+    margin: 0 15px;
+
+    &__img {
+        position: absolute;
+        left: 12px;
+        top: 11px;
+    }
+
+    &__input-wrapper {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        z-index: 10;
+        background-color: #787a75;
+        border-radius: 10px;
+    }
+
+    &__input {
+        padding: 11px 11px 11px 32px;
+        border: 1px solid rgba(226, 225, 225, 0.35);
+        border-radius: 10px;
+        background-color: transparent;
+        color: #fff;
+        width: 100%;
+
+        &::placeholder {
+            color: #fff;
+            opacity: 0.8;
+            border: none;
+        }
+
+        &::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+        }
+    }
+
+    &__close-btn {
+        position: absolute;
+        right: 3px;
+        font-size: 18px;
+        line-height: 0;
+        color: #d1d1d1;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+
+        &:active {
+            transform: scale(0.9);
+        }
+    }
+
+    &__result {
+        position: absolute;
+        width: 100%;
+        max-height: 60vh;
+        top: 42px;
+        background-color: #787a75;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow:
+            5px 5px 20px #434343,
+            -5px 0 20px #989898;
+        overflow-y: auto;
+        scrollbar-gutter: auto;
+        overflow-x: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-40px);
+        transition:
+            opacity 300ms,
+            visibility 300ms,
+            transform 300ms;
+
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: #787a75;
+            border-radius: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #d7d7d7b0;
+            border-radius: 5px;
+        }
+    }
+
+    &__result-artists {
+        margin-bottom: 20px;
+    }
+
+    &__result-title {
+        display: inline-block;
+        font-size: 18px;
+        line-height: 20px;
+        margin-bottom: 10px;
+        padding-left: 5px;
+        border-radius: 5px;
+        color: #d5d6d6;
+    }
+
+    &__show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        transition:
+            opacity 300ms,
+            visibility 300ms,
+            transform 300ms;
+    }
+}

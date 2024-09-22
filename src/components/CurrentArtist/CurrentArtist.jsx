@@ -90,13 +90,7 @@ const CurrentArtist = () => {
                         <div className="current-artist__head-btns">
                             <button
                                 className="current-artist__head-btn"
-                                onClick={() =>
-                                    handleAudio(
-                                        artistSongs[0],
-                                        artistSongs,
-                                        currentSongData
-                                    )
-                                }
+                                onClick={() => handleAudio(artistSongs[0])}
                             >
                                 <div className="current-artist__head-btn-icon">
                                     {playing &&

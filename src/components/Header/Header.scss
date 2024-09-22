@@ -11,35 +11,7 @@
     background: -webkit-linear-gradient(90deg, #a5a4a1, #787a75, #787a75, #a3a3a3);
     background: linear-gradient(90deg, #a5a4a1, #787a75, #787a75, #a3a3a3);
     border-bottom: 2px solid rgba(255, 255, 255, 0.2392156863);
-    z-index: 10;
-
-    &__search {
-        position: relative;
-        display: flex;
-        width: 40%;
-        margin: 0 15px;
-
-        &-img {
-            position: absolute;
-            left: 12px;
-            top: 11px;
-        }
-
-        &-input {
-            padding: 11px 11px 11px 32px;
-            border: 1px solid rgba(226, 225, 225, 0.35);
-            border-radius: 15px;
-            background-color: transparent;
-            color: #fff;
-            width: 100%;
-
-            &::placeholder {
-                color: #fff;
-                opacity: 0.8;
-                border: none;
-            }
-        }
-    }
+    z-index: 100;
 
     &__logo-img {
         max-width: 150px;
