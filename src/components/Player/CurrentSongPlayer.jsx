@@ -31,23 +31,32 @@ import durationFormat from '../../utils/durationFormat';
 import RenderArtistNames from '../RenderArtistNames/RenderArtistNames';
 
 import './CurrentSongPlayer.scss';
+import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
+import supabase from '../../../supabaseClient';
+import {
+    selectRecentlyPlayed,
+    setAddRecentlyPlayed,
+} from '../RecentlyPlayedList/store/recentlyPlayedSlice';
+import { selectUserInfo } from '../../store/slices/authSlice';
+import { useLocation } from 'react-router-dom';
 
 const CurrentSongPlayer = () => {
     const [song, setSong] = useState(null);
     const [duration, setDuration] = useState(null);
     const [volume, setVolume] = useState(50);
-
     const dispatch = useDispatch();
-
     const currentSongsList = useSelector(selectCurrentSongsList);
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
     const repeating = useSelector(selectRepeating);
     const random = useSelector(selectRandom);
-
     const progressLineRef = useRef(null);
     const timelineRef = useRef(null);
     let { current: temporaryProgressLineRef } = useRef(null);
+    const userInfo = useSelector(selectUserInfo);
+    const recentlyPlayed = useSelector(selectRecentlyPlayed);
+    const { pathname } = useLocation();
+    const showAllItems = pathname === '/songs/recently-played';
 
     useEffect(() => {
         //pause prev song
@@ -106,10 +115,6 @@ const CurrentSongPlayer = () => {
         // eslint-disable-next-line
     }, [playing, song]);
 
-    const handleSongPlay = () => {
-        dispatch(setTogglePlaying());
-    };
-
     useEffect(() => {
         const toggleAfterEnd = () => {
             timelineRef.current.innerHTML = '00:00 /';
@@ -125,6 +130,15 @@ const CurrentSongPlayer = () => {
         }
         // eslint-disable-next-line
     }, [song, repeating]);
+
+    useEffect(() => {
+        currentSongData && sendRecentlyPlayedSong();
+        // eslint-disable-next-line
+    }, [currentSongData]);
+
+    const handleSongPlay = () => {
+        dispatch(setTogglePlaying());
+    };
 
     const changeSongProgressByClick = (evt) => {
         const { clientX } = evt;
@@ -239,6 +253,70 @@ const CurrentSongPlayer = () => {
         if (volume <= 25) return <RxSpeakerQuiet />;
         if (volume > 25 && volume <= 75) return <RxSpeakerModerate />;
         if (volume > 75) return <RxSpeakerLoud />;
+    };
+
+    const sendRecentlyPlayedSong = () => {
+        const findCopy = (element) =>
+            element.song_id === currentSongData?.song_id;
+        const isCopy = recentlyPlayed.some(findCopy);
+
+        const insertSong = async () => {
+            try {
+                const { error } = await supabase
+                    .from('recently_played')
+                    .insert([
+                        {
+                            song_id: currentSongData?.song_id,
+                            user_id: userInfo?.id,
+                        },
+                    ])
+                    .select();
+
+                if (error) {
+                    dispatch(setAddAlertText(error.message));
+                    dispatch(setAddAlertType('error'));
+                }
+            } catch (error) {
+                dispatch(setAddAlertText(error.message));
+                dispatch(setAddAlertType('error'));
+            }
+        };
+
+        const updateSong = async () => {
+            try {
+                const { error } = await supabase
+                    .from('recently_played')
+                    .update({ date: new Date().toISOString() })
+                    .eq('song_id', currentSongData.song_id)
+                    .eq('user_id', userInfo.id);
+
+                if (error) {
+                    dispatch(setAddAlertText(error.message));
+                    dispatch(setAddAlertType('error'));
+                }
+            } catch (error) {
+                dispatch(setAddAlertText(error.message));
+                dispatch(setAddAlertType('error'));
+            }
+        };
+
+        if (isCopy) {
+            updateSong();
+
+            if (!showAllItems) {
+                const findIndex = recentlyPlayed.findIndex(findCopy);
+                const recentlyPlayedCopy = recentlyPlayed.slice();
+                recentlyPlayedCopy.splice(findIndex, 1);
+                recentlyPlayedCopy.unshift(currentSongData);
+                dispatch(setAddRecentlyPlayed(recentlyPlayedCopy));
+            }
+        } else {
+            insertSong();
+
+            const recentlyPlayedCopy = recentlyPlayed.slice();
+            recentlyPlayedCopy.unshift(currentSongData);
+            dispatch(setAddRecentlyPlayed(recentlyPlayedCopy));
+        }
     };
 
     const renderCurrentPlayer = (data) => {

@@ -7,26 +7,19 @@ import {
     fetchRecentlyPlayed,
     selectRecentlyPlayed,
     selectRecentlyPlayedLoadingStatus,
-    setAddRecentlyPlayed,
 } from './store/recentlyPlayedSlice';
 import { selectUserInfo } from '../../store/slices/authSlice';
 import SquareSongItem from '../SquareSongItem/SquareSongItem';
 import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
-import {
-    selectCurrentSong,
-    selectCurrentSongsList,
-} from '../../store/slices/generalStateSlice';
-import supabase from '../../../supabaseClient';
-import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
-import './RecentlyPlayedList.scss';
+import { selectCurrentSongsList } from '../../store/slices/generalStateSlice';
 import LineSongItem from '../LineSongItem/LineSongItem';
+import './RecentlyPlayedList.scss';
 
 const RecentlyPlayedList = () => {
     const dispatch = useDispatch();
     const { pathname } = useLocation();
 
     const currentSongslist = useSelector(selectCurrentSongsList);
-    const currentSong = useSelector(selectCurrentSong);
     const userInfo = useSelector(selectUserInfo);
     const recentlyPlayed = useSelector(selectRecentlyPlayed);
     const recentlyPlayedLoadingStatus = useSelector(
@@ -36,74 +29,9 @@ const RecentlyPlayedList = () => {
     const showAllItems = pathname === '/songs/recently-played';
 
     useEffect(() => {
-        currentSong && sendRecentlyPlayedSong();
-        // eslint-disable-next-line
-    }, [currentSong]);
-
-    useEffect(() => {
         userInfo && dispatch(fetchRecentlyPlayed(userInfo.id));
         // eslint-disable-next-line
     }, [userInfo]);
-
-    const insertSong = async () => {
-        try {
-            const { error } = await supabase
-                .from('recently_played')
-                .insert([
-                    { song_id: currentSong?.song_id, user_id: userInfo?.id },
-                ])
-                .select();
-
-            if (error) {
-                dispatch(setAddAlertText(error.message));
-                dispatch(setAddAlertType('error'));
-            }
-        } catch (error) {
-            dispatch(setAddAlertText(error.message));
-            dispatch(setAddAlertType('error'));
-        }
-    };
-
-    const updateSong = async () => {
-        try {
-            const { error } = await supabase
-                .from('recently_played')
-                .update({ date: new Date().toISOString() })
-                .eq('song_id', currentSong.song_id)
-                .eq('user_id', userInfo.id);
-
-            if (error) {
-                dispatch(setAddAlertText(error.message));
-                dispatch(setAddAlertType('error'));
-            }
-        } catch (error) {
-            dispatch(setAddAlertText(error.message));
-            dispatch(setAddAlertType('error'));
-        }
-    };
-
-    const sendRecentlyPlayedSong = () => {
-        const findCopy = (element) => element.song_id === currentSong?.song_id;
-        const isCopy = recentlyPlayed.some(findCopy);
-
-        if (isCopy) {
-            updateSong();
-
-            if (!showAllItems) {
-                const findIndex = recentlyPlayed.findIndex(findCopy);
-                const recentlyPlayedCopy = recentlyPlayed.slice();
-                recentlyPlayedCopy.splice(findIndex, 1);
-                recentlyPlayedCopy.unshift(currentSong);
-                dispatch(setAddRecentlyPlayed(recentlyPlayedCopy));
-            }
-        } else {
-            insertSong();
-
-            const recentlyPlayedCopy = recentlyPlayed.slice();
-            recentlyPlayedCopy.unshift(currentSong);
-            dispatch(setAddRecentlyPlayed(recentlyPlayedCopy));
-        }
-    };
 
     const renderItems = showAllItems
         ? recentlyPlayed.map((data, i) => (
