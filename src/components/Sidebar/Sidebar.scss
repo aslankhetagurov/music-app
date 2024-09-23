@@ -140,7 +140,7 @@
     }
 
     &__item-img {
-        width: 40px;
+        min-width: 40px;
         height: 40px;
         border-radius: 7px;
         object-fit: cover;

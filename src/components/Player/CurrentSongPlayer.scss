@@ -132,6 +132,7 @@
             display: flex;
             align-items: center;
             column-gap: 3px;
+            width: 100%;
 
             &:hover {
                 .current-song__controls-volume-line::-webkit-slider-thumb {
@@ -146,7 +147,7 @@
         &-volume-line {
             -webkit-appearance: none;
             appearance: none;
-            width: 200px;
+            width: 100%;
             height: 6px;
             border-radius: 3px;
             outline: none;
