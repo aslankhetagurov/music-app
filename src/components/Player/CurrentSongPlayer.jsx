@@ -57,6 +57,7 @@ const CurrentSongPlayer = () => {
     const recentlyPlayed = useSelector(selectRecentlyPlayed);
     const { pathname } = useLocation();
     const showAllItems = pathname === '/songs/recently-played';
+    let volumeInputRef = useRef(null);
 
     useEffect(() => {
         //pause prev song
@@ -255,6 +256,20 @@ const CurrentSongPlayer = () => {
         if (volume > 75) return <RxSpeakerLoud />;
     };
 
+    const handleVolumeOffToggle = () => {
+        if (song.muted) {
+            song.muted = false;
+            const volume = song.volume * 100;
+            setVolume(volume);
+            volumeInputRef.current.style.background = `linear-gradient(to right, #8870ff ${volume}%,#b8b8b8 ${volume}%)`;
+        } else {
+            song.muted = true;
+            setVolume(0);
+            volumeInputRef.current.style.background =
+                'linear-gradient(to right, #8870ff 0%,#b8b8b8 0%)';
+        }
+    };
+
     const sendRecentlyPlayedSong = () => {
         const findCopy = (element) =>
             element.song_id === currentSongData?.song_id;
@@ -380,13 +395,17 @@ const CurrentSongPlayer = () => {
                     </div>
                     <div className="current-song__controls-right">
                         <div className="current-song__controls-volume-wrapper">
-                            <div className="current-song__controls-volume-icon">
+                            <div
+                                className="current-song__controls-volume-icon"
+                                onClick={handleVolumeOffToggle}
+                            >
                                 {renderVolumeIcon()}
                             </div>
                             <input
                                 className="current-song__controls-volume-line"
                                 onChange={handleChangeVolume}
                                 value={volume}
+                                ref={volumeInputRef}
                                 type="range"
                                 min="0"
                                 max="100"

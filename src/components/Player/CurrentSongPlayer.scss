@@ -76,6 +76,7 @@
             max-width: 340px;
         }
     }
+
     &__controls {
         &-center {
             display: flex;
@@ -133,15 +134,12 @@
             align-items: center;
             column-gap: 3px;
             width: 100%;
+        }
 
-            &:hover {
-                .current-song__controls-volume-line::-webkit-slider-thumb {
-                    opacity: 1;
-                }
-                .current-song__controls-volume-line::-moz-range-thumb {
-                    opacity: 1;
-                }
-            }
+        &-volume-icon {
+            font-size: 20px;
+            line-height: 0px;
+            cursor: pointer;
         }
 
         &-volume-line {
@@ -153,33 +151,38 @@
             outline: none;
             cursor: pointer;
             background: linear-gradient(to right, #8870ff 50%, #b8b8b8 50%);
-        }
 
-        &-volume-icon {
-            font-size: 20px;
-            line-height: 0px;
-        }
+            &:hover {
+                &::-webkit-slider-thumb {
+                    opacity: 1;
+                }
+                &::-moz-range-thumb {
+                    opacity: 1;
+                }
+            }
 
-        &-volume-line::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            height: 15px;
-            width: 15px;
-            background-color: #8870ff;
-            border-radius: 50%;
-            border: none;
-            opacity: 0;
-        }
+            &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                height: 15px;
+                width: 15px;
+                background-color: #8870ff;
+                border-radius: 50%;
+                border: none;
+                opacity: 0;
+            }
 
-        &-volume-line::-moz-range-thumb {
-            height: 15px;
-            width: 15px;
-            background-color: #8870ff;
-            border-radius: 50%;
-            border: none;
-            opacity: 0;
+            &::-moz-range-thumb {
+                height: 15px;
+                width: 15px;
+                background-color: #8870ff;
+                border-radius: 50%;
+                border: none;
+                opacity: 0;
+            }
         }
     }
+
     &__btn-active {
         color: #8870ff;
     }
