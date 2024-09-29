@@ -1,0 +1,78 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { setAddAlertText, setAddAlertType } from '../../Alert/store/alertSlice';
+import supabase from '../../../../supabaseClient';
+
+const initialState = {
+    favoriteSongs: [],
+    userCollectionLoadingStatus: 'idle',
+};
+
+export const fetchUserCollection = createAsyncThunk(
+    'userCollection/fetchUserCollection',
+    async (userEmail, thunkAPI) => {
+        try {
+            const { data: favoriteSongs, error } = await supabase
+                .from('favorite_songs')
+                .select('music(*)')
+                .eq('user_email', userEmail);
+
+            if (error) {
+                thunkAPI.dispatch(setAddAlertText(error.message));
+                thunkAPI.dispatch(setAddAlertType('error'));
+            }
+
+            return favoriteSongs;
+        } catch (error) {
+            thunkAPI.dispatch(setAddAlertText(error.message));
+            thunkAPI.dispatch(setAddAlertType('error'));
+
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
+const userCollectionSlice = createSlice({
+    name: 'userCollection',
+    initialState,
+    reducers: {
+        setAddFavoriteSongs: (state, action) => {
+            state.favoriteSongs.unshift(action.payload);
+        },
+        setDeleteFavoriteSong: (state, action) => {
+            state.favoriteSongs = state.favoriteSongs.filter(
+                (song) => song.song_id !== action.payload
+            );
+        },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchUserCollection.pending, (state) => {
+            state.userCollectionLoadingStatus = 'loading';
+        });
+        builder.addCase(fetchUserCollection.fulfilled, (state, action) => {
+            if (action.payload) {
+                state.favoriteSongs = action.payload
+                    .map((obj) => ({
+                        ...obj.music,
+                    }))
+                    .reverse();
+                state.userCollectionLoadingStatus = 'idle';
+            } else {
+                state.userCollectionLoadingStatus = 'error';
+            }
+        });
+        builder.addCase(fetchUserCollection.rejected, (state) => {
+            state.userCollectionLoadingStatus = 'error';
+        });
+    },
+});
+
+const { reducer, actions } = userCollectionSlice;
+
+export const { setAddFavoriteSongs, setDeleteFavoriteSong } = actions;
+
+export const selectFavoriteSongs = (state) =>
+    state.userCollection.favoriteSongs;
+export const selectUserCollectionLoadingStatus = (state) =>
+    state.userCollection.userCollectionLoadingStatus;
+
+export default reducer;

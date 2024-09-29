@@ -22,15 +22,21 @@ import LoginDataUpdatePage from './pages/LoginDataUpdatePage/LoginDataUpdatePage
 import PasswordRecoveryPage from './pages/PasswordRecoveryPage/PasswordRecoveryPage';
 import Alert from './components/Alert/Alert';
 import RecentlyPlayedPage from './pages/RecentlyPlayedPage/RecentlyPlayedPage';
+import UserCollectionPage from './pages/UserCollectionPage/UserCollectionPage';
+import { fetchUserCollection } from './components/UserCollection/store/userCollectionSlice';
+import UserCollectionFavoriteSongs from './components/UserCollection/UserCollectionFavoriteSongs/UserCollectionFavoriteSongs';
 import './App.scss';
 
 function App() {
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
 
     useEffect(
         () => {
             supabase.auth.onAuthStateChange((_, session) => {
-                dispath(setAddUserInfo(session ? session.user : null));
+                if (session) {
+                    dispatch(setAddUserInfo(session.user));
+                    dispatch(fetchUserCollection(session.user.email));
+                }
             });
         }, // eslint-disable-next-line
         []
@@ -72,6 +78,15 @@ function App() {
                             <Route
                                 path="about"
                                 element={<CurrentArtistAbout />}
+                            ></Route>
+                        </Route>
+                        <Route
+                            path="/users/:userId"
+                            element={<UserCollectionPage />}
+                        >
+                            <Route
+                                path="favorite-songs"
+                                element={<UserCollectionFavoriteSongs />}
                             ></Route>
                         </Route>
                         <Route path="albums" element={<AlbumsPage />} />

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { FaRepeat } from 'react-icons/fa6';
 import {
     FaRandom,
@@ -29,8 +30,6 @@ import {
 } from '../../store/slices/generalStateSlice';
 import durationFormat from '../../utils/durationFormat';
 import RenderArtistNames from '../RenderArtistNames/RenderArtistNames';
-
-import './CurrentSongPlayer.scss';
 import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
 import supabase from '../../../supabaseClient';
 import {
@@ -38,7 +37,8 @@ import {
     setAddRecentlyPlayed,
 } from '../RecentlyPlayedList/store/recentlyPlayedSlice';
 import { selectUserInfo } from '../../store/slices/authSlice';
-import { useLocation } from 'react-router-dom';
+import LikeBtn from '../LikeBtn/LikeBtn';
+import './CurrentSongPlayer.scss';
 
 const CurrentSongPlayer = () => {
     const [song, setSong] = useState(null);
@@ -371,6 +371,7 @@ const CurrentSongPlayer = () => {
                                 {artist && <RenderArtistNames names={artist} />}
                             </div>
                         </div>
+                        <LikeBtn songData={currentSongData} />
                     </div>
 
                     <div className="current-song__controls-center">

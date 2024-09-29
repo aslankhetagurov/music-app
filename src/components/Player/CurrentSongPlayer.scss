@@ -55,6 +55,13 @@
     &__left-side {
         display: flex;
         align-items: center;
+
+        .like-btn {
+            display: flex;
+            align-items: center;
+            opacity: 1;
+            position: inherit;
+        }
     }
 
     &__img {
@@ -74,6 +81,7 @@
 
         &-artist {
             max-width: 340px;
+            display: grid;
         }
     }
 

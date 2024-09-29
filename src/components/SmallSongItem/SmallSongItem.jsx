@@ -8,6 +8,7 @@ import {
     setTogglePlaying,
 } from '../../store/slices/generalStateSlice';
 import RenderArtistNames from '../RenderArtistNames/RenderArtistNames';
+import LikeBtn from '../LikeBtn/LikeBtn';
 import './SmallSongItem.scss';
 
 const SmallSongItem = ({ songData }) => {
@@ -58,6 +59,7 @@ const SmallSongItem = ({ songData }) => {
                         {artist && <RenderArtistNames names={artist} />}
                     </div>
                 </div>
+                <LikeBtn songData={songData} />
             </div>
         );
     };

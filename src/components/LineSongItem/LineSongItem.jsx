@@ -15,6 +15,7 @@ import {
     setAddSidebarInfo,
     setToggleShowSidebar,
 } from '../Sidebar/store/sidebarSlice';
+import LikeBtn from '../LikeBtn/LikeBtn';
 import './LineSongItem.scss';
 
 const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
@@ -42,7 +43,7 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
     };
 
     const handleAudio = () => {
-        !playing && handleAddCurrentList();
+        handleAddCurrentList();
 
         if (currentSongData?.song_id !== song_id) {
             dispatch(setAddCurrentSong(songData));
@@ -116,6 +117,7 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
                         {durationFormat(duration)}
                     </div>
                 </div>
+                <LikeBtn songData={songData} />
             </div>
         );
     };

@@ -6,6 +6,13 @@
     transition: all 0.3s;
     cursor: pointer;
     transition: background-color 0.3s;
+    position: relative;
+
+    .like-btn {
+        opacity: 1;
+        right: 60px;
+        position: absolute;
+    }
 
     &:hover {
         background-color: rgba(255, 255, 255, 0.2);
@@ -140,7 +147,7 @@
 
     &__duration {
         margin-left: auto;
-        padding: 0 15px;
-        min-width: 73px;
+        padding: 0 15px 0 50px;
+        min-width: 108px;
     }
 }

@@ -14,6 +14,7 @@ import {
 } from '../Sidebar/store/sidebarSlice';
 
 import './SquareSongItem.scss';
+import LikeBtn from '../LikeBtn/LikeBtn';
 
 const SquareSongItem = ({ handleAddCurrentList, songData }) => {
     const { song_id, image, artist, title } = songData;
@@ -22,7 +23,7 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
     const dispatch = useDispatch();
 
     const handleAudio = () => {
-        !playing && handleAddCurrentList();
+        handleAddCurrentList();
 
         if (currentSongData?.song_id !== song_id) {
             dispatch(setAddCurrentSong(songData));
@@ -42,8 +43,9 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
     const renderItem = () => {
         return (
             <div className="song-item">
+                <LikeBtn songData={songData} />
                 <button
-                    onClick={() => handleAudio()}
+                    onClick={handleAudio}
                     className={`song-item__btn ${
                         currentSongData?.song_id === song_id
                             ? 'song-item__btn_active'

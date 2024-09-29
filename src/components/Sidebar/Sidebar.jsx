@@ -17,7 +17,7 @@ import {
     setAddCurrentSong,
     setTogglePlaying,
 } from '../../store/slices/generalStateSlice';
-
+import LikeBtn from '../LikeBtn/LikeBtn';
 import './Sidebar.scss';
 
 const Sidebar = () => {
@@ -51,6 +51,7 @@ const Sidebar = () => {
     const renderQueue = () => {
         return currentSongsList.map((songData) => {
             const { song_id, image, title, artist } = songData;
+
             return (
                 <div key={songData.song_id} className="sidebar__queue-item">
                     <div className="sidebar__item-left">
@@ -83,6 +84,7 @@ const Sidebar = () => {
                             {artist && <RenderArtistNames names={artist} />}
                         </div>
                     </div>
+                    <LikeBtn songData={songData} />
                 </div>
             );
         });
@@ -103,6 +105,7 @@ const Sidebar = () => {
                             <IoMdClose />
                         </button>
                     </div>
+                    <LikeBtn songData={sidebarInfo} />
                     <img src={image} className="sidebar__img"></img>
                     <span className="sidebar__song-title">{title}</span>
                     <div className="sidebar__artist">

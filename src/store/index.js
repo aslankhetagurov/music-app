@@ -9,6 +9,7 @@ import auth from './slices/authSlice';
 import alert from '../components/Alert/store/alertSlice';
 import recentlyPlayed from '../components/RecentlyPlayedList/store/recentlyPlayedSlice';
 import searchInput from '../components/SearchInput/store/searchInputSlice';
+import userCollection from '../components/UserCollection/store/userCollectionSlice';
 
 const store = configureStore({
     reducer: {
@@ -21,6 +22,7 @@ const store = configureStore({
         alert,
         recentlyPlayed,
         searchInput,
+        userCollection,
     },
 });
 
