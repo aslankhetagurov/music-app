@@ -57,11 +57,12 @@ const CurrentArtist = () => {
         [artistName]
     );
 
-    const handleAudio = (firstSong) => {
+    const handleAudio = (firstSong, name) => {
         if (
             artistSongs.some(
                 (songObj) => currentSongData?.song_id === songObj.song_id
-            )
+            ) &&
+            currentSongsList.every((song) => song.artist.includes(name))
         ) {
             dispatch(setTogglePlaying());
         } else {
@@ -90,12 +91,17 @@ const CurrentArtist = () => {
                         <div className="current-artist__head-btns">
                             <button
                                 className="current-artist__head-btn"
-                                onClick={() => handleAudio(artistSongs[0])}
+                                onClick={() =>
+                                    handleAudio(artistSongs[0], name)
+                                }
                             >
                                 <div className="current-artist__head-btn-icon">
                                     {playing &&
                                     currentSongData?.artist.includes(
                                         artistName
+                                    ) &&
+                                    currentSongsList.every((song) =>
+                                        song.artist.includes(name)
                                     ) ? (
                                         <FaPause />
                                     ) : (
