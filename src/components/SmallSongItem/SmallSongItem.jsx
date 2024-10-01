@@ -59,7 +59,7 @@ const SmallSongItem = ({ songData }) => {
                         {artist && <RenderArtistNames names={artist} />}
                     </div>
                 </div>
-                <LikeBtn songData={songData} />
+                <LikeBtn data={songData} itemType="song" />
             </div>
         );
     };

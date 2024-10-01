@@ -23,7 +23,7 @@ const UserCollectionFavoriteSongs = () => {
         }
         return (
             <div className="favorite-songs">
-                <h1 className="favorite-songs__title">Songs</h1>
+                <h1 className="favorite-songs__title">Favorite Songs</h1>
                 <div className="favorite-songs__list">
                     {favoriteSongs.map((data, i) => {
                         return (

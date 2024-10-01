@@ -25,6 +25,7 @@ import RecentlyPlayedPage from './pages/RecentlyPlayedPage/RecentlyPlayedPage';
 import UserCollectionPage from './pages/UserCollectionPage/UserCollectionPage';
 import { fetchUserCollection } from './components/UserCollection/store/userCollectionSlice';
 import UserCollectionFavoriteSongs from './components/UserCollection/UserCollectionFavoriteSongs/UserCollectionFavoriteSongs';
+import UserCollectionFavoriteArtists from './components/UserCollection/UserCollectionFavoriteArtists/UserCollectionFavoriteArtists';
 import './App.scss';
 
 function App() {
@@ -87,6 +88,10 @@ function App() {
                             <Route
                                 path="favorite-songs"
                                 element={<UserCollectionFavoriteSongs />}
+                            ></Route>
+                            <Route
+                                path="favorite-artists"
+                                element={<UserCollectionFavoriteArtists />}
                             ></Route>
                         </Route>
                         <Route path="albums" element={<AlbumsPage />} />

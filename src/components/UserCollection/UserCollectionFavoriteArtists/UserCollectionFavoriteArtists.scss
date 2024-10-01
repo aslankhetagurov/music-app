@@ -1,0 +1,14 @@
+.favorite-artists {
+    &__title {
+        font-size: 22px;
+        line-height: 24px;
+        margin: 0 0 20px 20px;
+    }
+
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 9px;
+        justify-content: flex-start;
+    }
+}

@@ -1,26 +1,37 @@
 import { FaRegHeart, FaHeart } from 'react-icons/fa6';
 import { useSelector } from 'react-redux';
 
-import addOrDeleteFavoriteSong from '../../utils/addOrDeleteFavoriteSong';
+import addOrDeleteFavoriteItem from '../../utils/addOrDeleteFavoriteItem';
 import { selectUserInfo } from '../../store/slices/authSlice';
-import { selectFavoriteSongs } from '../UserCollection/store/userCollectionSlice';
+import {
+    selectFavoriteArtists,
+    selectFavoriteSongs,
+} from '../UserCollection/store/userCollectionSlice';
 import './LikeBtn.scss';
 
-const LikeBtn = ({ songData }) => {
+const LikeBtn = ({ data, itemType }) => {
     const userInfo = useSelector(selectUserInfo);
     const favoriteSongs = useSelector(selectFavoriteSongs);
-    const isFavoriteSong = favoriteSongs?.some(
-        (song) => song.song_id === songData.song_id
-    );
+    const favoriteArtists = useSelector(selectFavoriteArtists);
+    const isFavorite =
+        itemType === 'song'
+            ? favoriteSongs?.some((song) => song.song_id === data.song_id)
+            : favoriteArtists?.some(
+                  (artist) => artist.artist_id === data?.artist_id
+              );
 
     return (
         <button
             className="like-btn"
             onClick={() =>
-                addOrDeleteFavoriteSong(isFavoriteSong, songData, userInfo)
+                addOrDeleteFavoriteItem(isFavorite, data, userInfo, itemType)
             }
         >
-            {isFavoriteSong ? <FaHeart /> : <FaRegHeart />}
+            {isFavorite ? (
+                <FaHeart style={{ color: 'rgb(255 99 99)' }} />
+            ) : (
+                <FaRegHeart />
+            )}
         </button>
     );
 };

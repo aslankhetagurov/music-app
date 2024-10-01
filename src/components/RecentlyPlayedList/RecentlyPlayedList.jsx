@@ -18,7 +18,6 @@ import './RecentlyPlayedList.scss';
 const RecentlyPlayedList = () => {
     const dispatch = useDispatch();
     const { pathname } = useLocation();
-
     const currentSongslist = useSelector(selectCurrentSongsList);
     const userInfo = useSelector(selectUserInfo);
     const recentlyPlayed = useSelector(selectRecentlyPlayed);
@@ -29,7 +28,8 @@ const RecentlyPlayedList = () => {
     const showAllItems = pathname === '/songs/recently-played';
 
     useEffect(() => {
-        userInfo && dispatch(fetchRecentlyPlayed(userInfo.id));
+        userInfo &&
+            dispatch(fetchRecentlyPlayed({ userId: userInfo.id, limit: 19 }));
         // eslint-disable-next-line
     }, [userInfo]);
 

@@ -4,6 +4,7 @@ import supabase from '../../../../supabaseClient';
 
 const initialState = {
     favoriteSongs: [],
+    favoriteArtists: [],
     userCollectionLoadingStatus: 'idle',
 };
 
@@ -11,17 +12,29 @@ export const fetchUserCollection = createAsyncThunk(
     'userCollection/fetchUserCollection',
     async (userEmail, thunkAPI) => {
         try {
-            const { data: favoriteSongs, error } = await supabase
-                .from('favorite_songs')
-                .select('music(*)')
-                .eq('user_email', userEmail);
+            const { data: favoriteSongs, error: favoriteSongsError } =
+                await supabase
+                    .from('favorite_songs')
+                    .select('music(*)')
+                    .eq('user_email', userEmail);
 
-            if (error) {
-                thunkAPI.dispatch(setAddAlertText(error.message));
+            const { data: favoriteArtists, error: favoriteArtistsError } =
+                await supabase
+                    .from('favorite_artists')
+                    .select('artists(*)')
+                    .eq('user_email', userEmail);
+
+            if (favoriteSongsError || favoriteArtistsError) {
+                thunkAPI.dispatch(
+                    setAddAlertText(
+                        `${favoriteSongsError?.message || ''}; 
+                            ${favoriteArtistsError?.message || ''}`
+                    )
+                );
                 thunkAPI.dispatch(setAddAlertType('error'));
             }
 
-            return favoriteSongs;
+            return { favoriteSongs, favoriteArtists };
         } catch (error) {
             thunkAPI.dispatch(setAddAlertText(error.message));
             thunkAPI.dispatch(setAddAlertType('error'));
@@ -38,9 +51,17 @@ const userCollectionSlice = createSlice({
         setAddFavoriteSongs: (state, action) => {
             state.favoriteSongs.unshift(action.payload);
         },
+        setAddFavoriteArtist: (state, action) => {
+            state.favoriteArtists.unshift(action.payload);
+        },
         setDeleteFavoriteSong: (state, action) => {
             state.favoriteSongs = state.favoriteSongs.filter(
                 (song) => song.song_id !== action.payload
+            );
+        },
+        setDeleteFavoriteArtist: (state, action) => {
+            state.favoriteArtists = state.favoriteArtists.filter(
+                (artist) => artist.artist_id !== action.payload
             );
         },
     },
@@ -50,12 +71,19 @@ const userCollectionSlice = createSlice({
         });
         builder.addCase(fetchUserCollection.fulfilled, (state, action) => {
             if (action.payload) {
-                state.favoriteSongs = action.payload
+                state.userCollectionLoadingStatus = 'idle';
+
+                state.favoriteSongs = action.payload.favoriteSongs
                     .map((obj) => ({
                         ...obj.music,
                     }))
                     .reverse();
-                state.userCollectionLoadingStatus = 'idle';
+
+                state.favoriteArtists = action.payload.favoriteArtists
+                    .map((obj) => ({
+                        ...obj.artists,
+                    }))
+                    .reverse();
             } else {
                 state.userCollectionLoadingStatus = 'error';
             }
@@ -68,10 +96,17 @@ const userCollectionSlice = createSlice({
 
 const { reducer, actions } = userCollectionSlice;
 
-export const { setAddFavoriteSongs, setDeleteFavoriteSong } = actions;
+export const {
+    setAddFavoriteSongs,
+    setDeleteFavoriteSong,
+    setAddFavoriteArtist,
+    setDeleteFavoriteArtist,
+} = actions;
 
 export const selectFavoriteSongs = (state) =>
     state.userCollection.favoriteSongs;
+export const selectFavoriteArtists = (state) =>
+    state.userCollection.favoriteArtists;
 export const selectUserCollectionLoadingStatus = (state) =>
     state.userCollection.userCollectionLoadingStatus;
 

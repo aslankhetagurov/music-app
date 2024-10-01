@@ -2,6 +2,24 @@
     margin-bottom: 10px;
     width: 145px;
 
+    &__img-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        &:hover {
+            .artist__img {
+                filter: brightness(50%);
+            }
+
+            .like-btn {
+                opacity: 1;
+                z-index: 10;
+            }
+        }
+    }
+
     &__img {
         height: 145px;
         width: 100%;
@@ -9,6 +27,8 @@
         object-fit: cover;
         filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
         padding: 10px;
+        transition: filter 0.3s;
+        filter: brightness(100%);
     }
     &__name {
         display: block;

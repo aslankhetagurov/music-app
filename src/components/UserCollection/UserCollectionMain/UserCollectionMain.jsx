@@ -79,7 +79,7 @@ const UserCollectionMain = () => {
                                 }
                                 to="favorite-songs"
                             >
-                                Favorite Songs
+                                Songs
                             </NavLink>
                         </li>
                         <li className="user-colletion__tab">
@@ -89,7 +89,7 @@ const UserCollectionMain = () => {
                                         ? 'user-colletion__tab-link user-colletion__tab-link-active'
                                         : 'user-colletion__tab-link'
                                 }
-                                to="artists"
+                                to="favorite-artists"
                             >
                                 Artists
                             </NavLink>
@@ -101,7 +101,7 @@ const UserCollectionMain = () => {
                                         ? 'user-colletion__tab-link user-colletion__tab-link-about user-colletion__tab-link-active'
                                         : 'user-colletion__tab-link user-colletion__tab-link-about'
                                 }
-                                to="history"
+                                to="listening-history"
                             >
                                 History
                             </NavLink>

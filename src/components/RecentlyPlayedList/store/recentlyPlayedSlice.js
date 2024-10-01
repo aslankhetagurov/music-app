@@ -9,13 +9,13 @@ const initialState = {
 
 export const fetchRecentlyPlayed = createAsyncThunk(
     'recentlyPlayed/fetchRecentlyPlayed',
-    async (userId, thunkAPI) => {
+    async (data, thunkAPI) => {
         try {
             const { data: recentlyPlayed, error } = await supabase
                 .from('recently_played')
                 .select('music(*)')
-                .eq('user_id', userId)
-                .range(0, 100);
+                .eq('user_id', data.userId)
+                .range(0, data.limit);
 
             if (error) {
                 thunkAPI.dispatch(setAddAlertText(error.message));

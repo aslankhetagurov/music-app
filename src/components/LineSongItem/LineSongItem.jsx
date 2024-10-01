@@ -117,7 +117,7 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
                         {durationFormat(duration)}
                     </div>
                 </div>
-                <LikeBtn songData={songData} />
+                <LikeBtn data={songData} itemType="song" />
             </div>
         );
     };

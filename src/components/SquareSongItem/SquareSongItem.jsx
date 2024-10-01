@@ -43,7 +43,7 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
     const renderItem = () => {
         return (
             <div className="song-item">
-                <LikeBtn songData={songData} />
+                <LikeBtn data={songData} itemType="song" />
                 <button
                     onClick={handleAudio}
                     className={`song-item__btn ${

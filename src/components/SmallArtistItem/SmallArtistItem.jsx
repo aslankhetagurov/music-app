@@ -13,6 +13,7 @@ import {
 import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
 import supabase from '../../../supabaseClient';
 import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
+import LikeBtn from '../LikeBtn/LikeBtn';
 import './SmallArtistItem.scss';
 
 const SmallArtistItem = ({ artistInfo }) => {
@@ -99,6 +100,7 @@ const SmallArtistItem = ({ artistInfo }) => {
                         {name}
                     </Link>
                 </div>
+                <LikeBtn data={artistInfo} />
             </div>
         );
     };
