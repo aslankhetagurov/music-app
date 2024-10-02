@@ -15,7 +15,7 @@ export const fetchRecentlyPlayed = createAsyncThunk(
                 .from('recently_played')
                 .select('music(*)')
                 .eq('user_id', data.userId)
-                .range(0, data.limit);
+                .limit(data.limit);
 
             if (error) {
                 thunkAPI.dispatch(setAddAlertText(error.message));
