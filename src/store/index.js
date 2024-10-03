@@ -10,6 +10,7 @@ import alert from '../components/Alert/store/alertSlice';
 import recentlyPlayed from '../components/RecentlyPlayedList/store/recentlyPlayedSlice';
 import searchInput from '../components/SearchInput/store/searchInputSlice';
 import userCollection from '../components/UserCollection/store/userCollectionSlice';
+import popularAlbums from '../components/PopularAlbumsList/store/popularAlbumsListSlice';
 
 const store = configureStore({
     reducer: {
@@ -23,6 +24,7 @@ const store = configureStore({
         recentlyPlayed,
         searchInput,
         userCollection,
+        popularAlbums,
     },
 });
 

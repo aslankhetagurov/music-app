@@ -1,0 +1,94 @@
+.album-item {
+    position: relative;
+    border-radius: 10px;
+    max-width: 145px;
+    background-color: rgb(226 225 225 / 6%);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s;
+    cursor: pointer;
+
+    .like-btn {
+        top: 20px;
+        left: 5px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: none;
+        background-color: rgba(78, 75, 75, 0.13);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &:hover {
+        background-color: rgb(226 225 225 / 25%);
+
+        .album-item__btn {
+            opacity: 1;
+        }
+
+        .like-btn {
+            opacity: 1;
+        }
+    }
+
+    &__img {
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    &__btn {
+        position: absolute;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: none;
+        background-color: #8870ff;
+        transition: all 0.3s;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 10;
+        margin: 0 auto;
+        top: 56px;
+        right: 0;
+        bottom: 0px;
+        left: 0;
+
+        &_active {
+            opacity: 1;
+        }
+
+        &:hover {
+            transform: scale(1.2);
+        }
+
+        &:active {
+            transform: scale(0.9);
+        }
+
+        &-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+    }
+
+    &__info {
+        max-width: 115px;
+
+        &-text {
+            max-width: 100%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        &-title {
+            margin-bottom: 10px;
+        }
+    }
+}

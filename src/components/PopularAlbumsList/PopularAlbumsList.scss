@@ -1,0 +1,32 @@
+.popular-albums {
+    width: 100%;
+
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    &__title {
+        font-size: 22px;
+        line-height: 24px;
+    }
+
+    &__link-all {
+        transition: all 0.5s;
+
+        &:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
+        }
+    }
+    &__list {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        overflow: hidden;
+        column-gap: 9px;
+        max-height: 215px;
+        row-gap: 20px;
+    }
+}
