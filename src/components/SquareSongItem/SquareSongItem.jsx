@@ -2,50 +2,35 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FaPlay, FaPause } from 'react-icons/fa6';
 
 import {
-    setAddCurrentSong,
-    setTogglePlaying,
     selectCurrentSong,
     selectPlaying,
 } from '../../store/slices/generalStateSlice';
 import RenderArtistNames from '../RenderArtistNames/RenderArtistNames';
-import {
-    setAddSidebarInfo,
-    setToggleShowSidebar,
-} from '../Sidebar/store/sidebarSlice';
-
-import './SquareSongItem.scss';
 import LikeBtn from '../LikeBtn/LikeBtn';
+import handleSongPlay from '../../utils/handleSongPlay';
+import handleAddSidebarInfo from '../Sidebar/utils/handleAddSidebarInfo';
+import './SquareSongItem.scss';
 
 const SquareSongItem = ({ handleAddCurrentList, songData }) => {
-    const { song_id, image, artist, title } = songData;
+    const { song_id, image, artist, name } = songData;
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
     const dispatch = useDispatch();
-
-    const handleAudio = () => {
-        handleAddCurrentList();
-
-        if (currentSongData?.song_id !== song_id) {
-            dispatch(setAddCurrentSong(songData));
-        }
-        if (currentSongData?.song_id === song_id) {
-            dispatch(setTogglePlaying());
-        }
-    };
-
-    const handleAddSidebarInfo = (evt) => {
-        if (evt.target.className !== 'song-artist-name__item') {
-            dispatch(setAddSidebarInfo(songData));
-            dispatch(setToggleShowSidebar(true));
-        }
-    };
 
     const renderItem = () => {
         return (
             <div className="song-item">
                 <LikeBtn data={songData} itemType="song" />
                 <button
-                    onClick={handleAudio}
+                    onClick={() =>
+                        handleSongPlay(
+                            dispatch,
+                            songData,
+                            currentSongData,
+                            song_id,
+                            handleAddCurrentList
+                        )
+                    }
                     className={`song-item__btn ${
                         currentSongData?.song_id === song_id
                             ? 'song-item__btn_active'
@@ -61,13 +46,21 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
                     </span>
                 </button>
                 <div
-                    onClick={handleAddSidebarInfo}
+                    onClick={(e) =>
+                        handleAddSidebarInfo(
+                            e,
+                            dispatch,
+                            'song-artist-name__item',
+                            songData,
+                            'Song'
+                        )
+                    }
                     className="song-item__content-wrapper"
                 >
                     <img className="song-item__img" src={image} alt="img" />
                     <div className="song-item__info">
                         <div className="song-item__info-title song-item__info-text">
-                            {title}
+                            {name}
                         </div>
                         {artist && <RenderArtistNames names={artist} />}
                     </div>

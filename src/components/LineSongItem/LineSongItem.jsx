@@ -5,21 +5,17 @@ import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
-    setAddCurrentSong,
-    setTogglePlaying,
     selectCurrentSong,
     selectPlaying,
 } from '../../store/slices/generalStateSlice';
 import durationFormat from '../../utils/durationFormat';
-import {
-    setAddSidebarInfo,
-    setToggleShowSidebar,
-} from '../Sidebar/store/sidebarSlice';
 import LikeBtn from '../LikeBtn/LikeBtn';
+import handleSongPlay from '../../utils/handleSongPlay';
+import handleAddSidebarInfo from '../Sidebar/utils/handleAddSidebarInfo';
 import './LineSongItem.scss';
 
 const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
-    const { song_id, image, title, duration, artist } = songData;
+    const { song_id, image, name, duration, artist } = songData;
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
     const dispatch = useDispatch();
@@ -42,24 +38,6 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
         ));
     };
 
-    const handleAudio = () => {
-        handleAddCurrentList();
-
-        if (currentSongData?.song_id !== song_id) {
-            dispatch(setAddCurrentSong(songData));
-        }
-        if (currentSongData?.song_id === song_id) {
-            dispatch(setTogglePlaying());
-        }
-    };
-
-    const handleAddSidebarInfo = (evt) => {
-        if (evt.target.className !== 'line-song-item__info-feat-link') {
-            dispatch(setAddSidebarInfo(songData));
-            dispatch(setToggleShowSidebar(true));
-        }
-    };
-
     const renderItem = () => {
         return (
             <div tabIndex={0} className="line-song-item">
@@ -80,7 +58,15 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
                         )}
                     </div>
                     <button
-                        onClick={handleAudio}
+                        onClick={() =>
+                            handleSongPlay(
+                                dispatch,
+                                songData,
+                                currentSongData,
+                                song_id,
+                                handleAddCurrentList
+                            )
+                        }
                         className={`line-song-item__btn ${
                             playing && currentSongData?.song_id === song_id
                                 ? 'line-song-item__btn_active'
@@ -98,7 +84,15 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
                 </div>
                 <div
                     className="line-song-item__content-wrapper"
-                    onClick={handleAddSidebarInfo}
+                    onClick={(e) =>
+                        handleAddSidebarInfo(
+                            e,
+                            dispatch,
+                            'line-song-item__info-feat-link',
+                            songData,
+                            'Song'
+                        )
+                    }
                 >
                     <img
                         className="line-song-item__img"
@@ -107,10 +101,10 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
                     />
                     <div className="line-song-item__info">
                         <div className="line-song-item__info-title line-song-item__info-text">
-                            {title}
+                            {name}
                         </div>
                         <div className="line-song-item__info-feat">
-                            {renderFeaturingArtists(artist)}
+                            {artist && renderFeaturingArtists(artist)}
                         </div>
                     </div>
                     <div className="line-song-item__duration">

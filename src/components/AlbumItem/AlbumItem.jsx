@@ -12,7 +12,7 @@ import {
 import {
     setAddSidebarInfo,
     setAddSidebarInfoType,
-    setToggleShowSidebar,
+    setAddSidebarList,
 } from '../Sidebar/store/sidebarSlice';
 import RenderArtistNames from '../RenderArtistNames/RenderArtistNames';
 import defaultImg from '../../assets/default-img.webp';
@@ -20,6 +20,7 @@ import LikeBtn from '../LikeBtn/LikeBtn';
 import supabase from '../../../supabaseClient';
 import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
 import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
+import handleAddSidebarInfo from '../Sidebar/utils/handleAddSidebarInfo';
 import './AlbumItem.scss';
 
 const AlbumItem = ({ albumData }) => {
@@ -55,25 +56,16 @@ const AlbumItem = ({ albumData }) => {
         if (
             albumSongs.some(
                 (songObj) => currentSongData?.song_id === songObj.song_id
-            )
+            ) &&
+            albumSongs === currentSongsList
         ) {
             dispatch(setTogglePlaying());
         } else {
             dispatch(setAddCurrentSong(albumSongs[0]));
-        }
-
-        dispatch(setAddSidebarInfo(albumData));
-        dispatch(setAddSidebarInfoType('Album'));
-
-        handleAddCurrentSongsList(currentSongsList, albumSongs);
-    };
-
-    const handleAddSidebarInfo = (evt) => {
-        if (evt.target.className !== 'song-artist-name__item') {
-            dispatch(setAddSidebarInfoType('Album'));
-            dispatch(setAddSidebarInfo(albumData));
-            dispatch(setToggleShowSidebar(true));
             handleAddCurrentSongsList(currentSongsList, albumSongs);
+            dispatch(setAddSidebarList(albumSongs));
+            dispatch(setAddSidebarInfo(albumData));
+            dispatch(setAddSidebarInfoType('Album'));
         }
     };
 
@@ -86,7 +78,7 @@ const AlbumItem = ({ albumData }) => {
                     className={`album-item__btn ${
                         albumSongs?.some(
                             (song) => currentSongData?.song_id === song.song_id
-                        )
+                        ) && albumSongs === currentSongsList
                             ? 'album-item__btn_active'
                             : ''
                     }`}
@@ -95,7 +87,8 @@ const AlbumItem = ({ albumData }) => {
                         {playing &&
                         albumSongs?.some(
                             (song) => currentSongData?.song_id === song.song_id
-                        ) ? (
+                        ) &&
+                        albumSongs === currentSongsList ? (
                             <FaPause />
                         ) : (
                             <FaPlay className="play-svg" />
@@ -103,7 +96,16 @@ const AlbumItem = ({ albumData }) => {
                     </span>
                 </button>
                 <div
-                    onClick={handleAddSidebarInfo}
+                    onClick={(e) =>
+                        handleAddSidebarInfo(
+                            e,
+                            dispatch,
+                            'song-artist-name__item',
+                            albumData,
+                            'Song',
+                            albumSongs
+                        )
+                    }
                     className="album-item__content-wrapper"
                 >
                     <img

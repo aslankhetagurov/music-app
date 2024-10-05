@@ -6,6 +6,8 @@ import { IoMdClose } from 'react-icons/io';
 import {
     selectShowSidebar,
     selectSidebarInfo,
+    selectSidebarInfoType,
+    selectSidebarList,
     setAddSidebarInfo,
     setToggleShowSidebar,
 } from './store/sidebarSlice';
@@ -18,6 +20,8 @@ import {
     setTogglePlaying,
 } from '../../store/slices/generalStateSlice';
 import LikeBtn from '../LikeBtn/LikeBtn';
+import defaultImg from '../../assets/default-img.webp';
+import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
 import './Sidebar.scss';
 
 const Sidebar = () => {
@@ -27,6 +31,8 @@ const Sidebar = () => {
     const currentSongsList = useSelector(selectCurrentSongsList);
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
+    const sidebarInfoType = useSelector(selectSidebarInfoType);
+    const sidebarList = useSelector(selectSidebarList);
 
     const handleCloseSidebar = () => {
         dispatch(setToggleShowSidebar(false));
@@ -34,12 +40,14 @@ const Sidebar = () => {
 
     useEffect(
         () => {
-            currentSongData && dispatch(setAddSidebarInfo(currentSongData));
+            if (currentSongData && showSidebar && sidebarInfoType === 'Song') {
+                currentSongData && dispatch(setAddSidebarInfo(currentSongData));
+            }
         }, // eslint-disable-next-line
         [currentSongData]
     );
 
-    const handleAudio = (songData) => {
+    const handlePlaySong = (songData) => {
         if (currentSongData?.song_id !== songData.song_id) {
             dispatch(setAddCurrentSong(songData));
         }
@@ -48,24 +56,50 @@ const Sidebar = () => {
         }
     };
 
-    const renderQueue = () => {
-        return currentSongsList.map((songData) => {
-            const { song_id, image, title, artist } = songData;
+    const handlePlayMain = () => {
+        if (
+            sidebarInfoType === 'Album' &&
+            sidebarList.some(
+                (song) => song.song_id === currentSongData?.song_id
+            ) &&
+            currentSongsList === sidebarList
+        ) {
+            dispatch(setTogglePlaying());
+        } else if (sidebarInfoType === 'Album') {
+            dispatch(setAddCurrentSong(sidebarList[0]));
+            handleAddCurrentSongsList(currentSongsList, sidebarList);
+        }
+
+        if (
+            sidebarInfoType === 'Song' &&
+            currentSongData?.song_id === sidebarInfo.song_id
+        ) {
+            dispatch(setTogglePlaying());
+        } else if (sidebarInfoType === 'Song') {
+            dispatch(setAddCurrentSong(sidebarInfo));
+        }
+    };
+
+    const renderSidebarList = () => {
+        return sidebarList?.map((songData) => {
+            const { song_id, image, name, artist } = songData;
 
             return (
-                <div key={songData.song_id} className="sidebar__queue-item">
+                <div key={songData.song_id} className="sidebar__list-item">
                     <div className="sidebar__item-left">
                         <button
-                            onClick={() => handleAudio(songData)}
+                            onClick={() => handlePlaySong(songData)}
                             className={`sidebar__item-btn ${
-                                currentSongData?.song_id === song_id
+                                currentSongData?.song_id === song_id &&
+                                currentSongsList === sidebarList
                                     ? 'sidebar__item-btn-active'
                                     : ''
                             }`}
                         >
                             <div className="sidebar__btn-icon">
                                 {playing &&
-                                currentSongData?.song_id === song_id ? (
+                                currentSongData?.song_id === song_id &&
+                                currentSongsList === sidebarList ? (
                                     <FaPause />
                                 ) : (
                                     <FaPlay className="play-svg" />
@@ -79,8 +113,8 @@ const Sidebar = () => {
                         />
                     </div>
                     <div className="sidebar__item-main">
-                        <div className="sidebar__queue-item-title">{title}</div>
-                        <div className="sidebar__queue-item-artist">
+                        <div className="sidebar__list-item-name">{name}</div>
+                        <div className="sidebar__list-item-artist">
                             {artist && <RenderArtistNames names={artist} />}
                         </div>
                     </div>
@@ -91,13 +125,13 @@ const Sidebar = () => {
     };
 
     const renderContent = () => {
-        const { title, artist, image, genre, date } = sidebarInfo;
+        const { name, artist, image, genre, date, song_id } = sidebarInfo;
 
         return (
             <aside className="sidebar">
                 <div className="sidebar__info">
                     <div className="sidebar__header">
-                        <span className="sidebar__title">Playing song</span>
+                        <h3 className="sidebar__title">{sidebarInfoType}</h3>
                         <button
                             onClick={handleCloseSidebar}
                             className="sidebar__close-btn"
@@ -105,9 +139,40 @@ const Sidebar = () => {
                             <IoMdClose />
                         </button>
                     </div>
-                    <LikeBtn songData={sidebarInfo} />
-                    <img src={image} className="sidebar__img"></img>
-                    <span className="sidebar__song-title">{title}</span>
+                    <div className="sidebar__top">
+                        <div className="sidebar__btns">
+                            <button
+                                onClick={handlePlayMain}
+                                className="sidebar__main-btn"
+                            >
+                                <span className="sidebar__main-btn-circle">
+                                    {(playing &&
+                                        currentSongsList?.some(
+                                            (song) =>
+                                                song.song_id ===
+                                                currentSongData.song_id
+                                        ) &&
+                                        currentSongsList === sidebarList) ||
+                                    (playing &&
+                                        currentSongData?.song_id ===
+                                            song_id) ? (
+                                        <FaPause />
+                                    ) : (
+                                        <FaPlay className="play-svg" />
+                                    )}
+                                </span>
+                            </button>
+                            <LikeBtn
+                                data={sidebarInfo}
+                                itemType={sidebarInfoType.toLowerCase()}
+                            />
+                        </div>
+                        <img
+                            src={image || defaultImg}
+                            className="sidebar__img"
+                        ></img>
+                    </div>
+                    <span className="sidebar__song-name">{name}</span>
                     <div className="sidebar__artist">
                         {artist && (
                             <RenderArtistNames names={artist} lineClamp />
@@ -121,13 +186,10 @@ const Sidebar = () => {
                         <span className="sidebar__genre">{genre}</span>
                     </div>
                 </div>
-                {currentSongsList && (
-                    <div className="sidebar__queue">
-                        <span className="sidebar__queue-title">
-                            Next in queue
-                        </span>
-                        <div className="sidebar__queue-items">
-                            {currentSongsList && renderQueue()}
+                {sidebarList && (
+                    <div className="sidebar__list">
+                        <div className="sidebar__list-items">
+                            {renderSidebarList()}
                         </div>
                     </div>
                 )}
