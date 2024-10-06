@@ -27,6 +27,7 @@ import { fetchUserCollection } from './components/UserCollection/store/userColle
 import UserCollectionFavoriteSongs from './components/UserCollection/UserCollectionFavoriteSongs/UserCollectionFavoriteSongs';
 import UserCollectionFavoriteArtists from './components/UserCollection/UserCollectionFavoriteArtists/UserCollectionFavoriteArtists';
 import ListeningHistory from './components/UserCollection/ListeningHistory/ListeningHistory';
+import PopularAlbumsPage from './pages/PopularAlbumsPage/PopularAlbumsPage';
 import './App.scss';
 
 function App() {
@@ -100,6 +101,10 @@ function App() {
                             ></Route>
                         </Route>
                         <Route path="albums" element={<AlbumsPage />} />
+                        <Route
+                            path="albums/popular-albums"
+                            element={<PopularAlbumsPage />}
+                        />
                         <Route path="*" element={<NotFoundPage />} />
                     </Route>
                     <Route path="/signup" element={<SignUpPage />} />
