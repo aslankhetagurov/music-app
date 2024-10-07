@@ -8,6 +8,10 @@
     border-right: 2px solid #ffffff3d;
     top: 70px;
 
+    &__item {
+        cursor: pointer;
+    }
+
     &__item-icon {
         margin-right: 7px;
     }

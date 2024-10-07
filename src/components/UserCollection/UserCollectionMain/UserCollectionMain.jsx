@@ -27,14 +27,14 @@ const UserCollectionMain = () => {
         if (
             favoriteSongs.some(
                 (songObj) => currentSongData?.song_id === songObj.song_id
-            )
+            ) &&
+            currentSongsList === favoriteSongs
         ) {
             dispatch(setTogglePlaying());
         } else {
             dispatch(setAddCurrentSong(firstSong));
+            handleAddCurrentSongsList(currentSongsList, favoriteSongs);
         }
-
-        handleAddCurrentSongsList(currentSongsList, favoriteSongs);
     };
 
     const renderContent = () => {

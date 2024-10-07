@@ -95,7 +95,7 @@ const SmallArtistItem = ({ artistInfo }) => {
                 <div className="small-artist-item__artist">
                     <Link
                         className="small-artist-item__artist-name"
-                        to={`/artists/${name}/artistSongs`}
+                        to={`/artists/${name}/songs`}
                     >
                         {name}
                     </Link>

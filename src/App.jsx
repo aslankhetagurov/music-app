@@ -35,8 +35,8 @@ function App() {
 
     useEffect(
         () => {
-            supabase.auth.onAuthStateChange((_, session) => {
-                if (session) {
+            supabase.auth.onAuthStateChange((event, session) => {
+                if (session && event === 'INITIAL_SESSION') {
                     dispatch(setAddUserInfo(session.user));
                     dispatch(fetchUserCollection(session.user.email));
                 }

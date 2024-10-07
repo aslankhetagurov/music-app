@@ -31,7 +31,7 @@ const SearchInput = () => {
                 searchValue &&
                 setTimeout(() => dispatch(fetchSearchLists(searchValue)), 300);
 
-            if (!searchValue) {
+            if (!searchValue && (searchArtistsList || searchSongsList)) {
                 dispatch(setAddSearchArtistsList(null));
                 dispatch(setAddSearchSongsList(null));
             }

@@ -26,7 +26,7 @@ const SmallSongItem = ({ songData }) => {
     };
 
     const renderContent = () => {
-        const { song_id, image, title, artist } = songData;
+        const { song_id, image, name, artist } = songData;
 
         return (
             <div className="small-song-item">
@@ -54,7 +54,7 @@ const SmallSongItem = ({ songData }) => {
                     />
                 </div>
                 <div className="small-song-item__main">
-                    <div className="small-song-item__title">{title}</div>
+                    <div className="small-song-item__title">{name}</div>
                     <div className="small-song-item__artist">
                         {artist && <RenderArtistNames names={artist} />}
                     </div>

@@ -120,7 +120,11 @@ const CurrentSongPlayer = () => {
         const toggleAfterEnd = () => {
             timelineRef.current.innerHTML = '00:00 /';
             progressLineRef.current.style.width = '0%';
-            repeating ? song.play() : handlePrevOrNextSong('next');
+            repeating
+                ? song.play()
+                : currentSongsList
+                ? handlePrevOrNextSong('next')
+                : dispatch(setTogglePlaying());
         };
 
         if (song) {
@@ -195,9 +199,7 @@ const CurrentSongPlayer = () => {
 
     const randomSongsList = useMemo(() => {
         if (currentSongsList && random) {
-            const songsList = Object.values(currentSongsList).flat();
-
-            return songsList.sort(
+            return currentSongsList.sort(
                 () =>
                     Math.floor(Math.random() * 1000) -
                     Math.floor(Math.random() * 1000)
@@ -208,9 +210,8 @@ const CurrentSongPlayer = () => {
 
     const handlePrevOrNextSong = (prevOrNext) => {
         const { song_id } = currentSongData;
-        const songsList = Object.values(currentSongsList).flat();
 
-        const currentIndex = songsList.findIndex(
+        const currentIndex = currentSongsList.findIndex(
             (item) => item.song_id === song_id
         );
         const randomCurrentIndex = randomSongsList?.findIndex(
@@ -224,15 +225,15 @@ const CurrentSongPlayer = () => {
                 const prevSong = random
                     ? randomSongsList[randomCurrentIndex - 1] ||
                       randomSongsList[randomSongsList.length - 1]
-                    : songsList[currentIndex - 1] ||
-                      songsList[songsList.length - 1];
+                    : currentSongsList[currentIndex - 1] ||
+                      currentSongsList[currentSongsList.length - 1];
 
                 prevSong && dispatch(setAddCurrentSong(prevSong));
             }
         } else if (prevOrNext === 'next') {
             const nextSong = random
                 ? randomSongsList[randomCurrentIndex + 1] || randomSongsList[0]
-                : songsList[currentIndex + 1] || songsList[0];
+                : currentSongsList[currentIndex + 1] || currentSongsList[0];
 
             nextSong && dispatch(setAddCurrentSong(nextSong));
         }
@@ -335,7 +336,8 @@ const CurrentSongPlayer = () => {
     };
 
     const renderCurrentPlayer = (data) => {
-        const { image, artist, title } = data;
+        const { image, artist, name } = data;
+
         return (
             <div className="current-song ">
                 <div
@@ -365,19 +367,20 @@ const CurrentSongPlayer = () => {
                         <img className="current-song__img" src={image} />
                         <div className="current-song__info">
                             <div className="current-song__info-title">
-                                {title}
+                                {name}
                             </div>
                             <div className="current-song__info-artist">
                                 {artist && <RenderArtistNames names={artist} />}
                             </div>
                         </div>
-                        <LikeBtn songData={currentSongData} />
+                        <LikeBtn data={currentSongData} itemType="song" />
                     </div>
 
                     <div className="current-song__controls-center">
                         <button
                             className="current-song__controls-btn current-song__controls-prev"
                             onClick={() => handlePrevOrNextSong('prev')}
+                            disabled={!currentSongsList}
                         >
                             <FaStepBackward />
                         </button>
@@ -390,6 +393,7 @@ const CurrentSongPlayer = () => {
                         <button
                             className="current-song__controls-btn current-song__controls-next"
                             onClick={() => handlePrevOrNextSong('next')}
+                            disabled={!currentSongsList}
                         >
                             <FaStepForward />
                         </button>

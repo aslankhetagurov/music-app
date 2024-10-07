@@ -15,7 +15,8 @@ export const fetchPopularAlbums = createAsyncThunk(
             let { data: popularAlbums, error } = await supabase
                 .from('albums')
                 .select('*')
-                .order('rating', { ascending: false });
+                .order('rating', { ascending: false })
+                .limit(20);
 
             if (error) {
                 thunkAPI.dispatch(setAddAlertText(error.message));

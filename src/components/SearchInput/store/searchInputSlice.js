@@ -26,7 +26,7 @@ export const fetchSearchLists = createAsyncThunk(
                     await supabase
                         .from('music')
                         .select()
-                        .ilike('title', `%${searchValue}%`)
+                        .ilike('name', `%${searchValue}%`)
                         .range(0, 9);
 
                 if (artistsError || musicError) {
