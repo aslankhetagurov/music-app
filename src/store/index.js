@@ -11,6 +11,7 @@ import recentlyPlayed from '../components/RecentlyPlayedList/store/recentlyPlaye
 import searchInput from '../components/SearchInput/store/searchInputSlice';
 import userCollection from '../components/UserCollection/store/userCollectionSlice';
 import popularAlbums from '../components/PopularAlbumsList/store/popularAlbumsListSlice';
+import singleAlbum from '../pages/SingleAlbumPage/store/singleAlbumSlice';
 
 const store = configureStore({
     reducer: {
@@ -25,6 +26,7 @@ const store = configureStore({
         searchInput,
         userCollection,
         popularAlbums,
+        singleAlbum,
     },
 });
 

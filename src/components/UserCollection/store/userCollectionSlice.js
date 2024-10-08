@@ -15,7 +15,7 @@ export const fetchUserCollection = createAsyncThunk(
             const { data: favoriteSongs, error: favoriteSongsError } =
                 await supabase
                     .from('favorite_songs')
-                    .select('music(*)')
+                    .select('music(*, albums(*))')
                     .eq('user_email', userEmail);
 
             const { data: favoriteArtists, error: favoriteArtistsError } =

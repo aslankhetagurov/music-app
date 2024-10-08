@@ -1,0 +1,77 @@
+.single-album {
+    display: flex;
+    flex-wrap: wrap;
+
+    &__img {
+        width: 200px;
+        height: 200px;
+        border-radius: 10px;
+        object-fit: cover;
+        background-color: #fff;
+    }
+
+    &__main {
+        margin-left: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &__label {
+        font-size: 30px;
+        line-height: 34px;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    &__title {
+        font-size: 52px;
+        line-height: 54px;
+        font-weight: 700;
+        margin: 20px 0 10px;
+    }
+
+    &__more-info {
+        display: flex;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 18px;
+        line-height: 20px;
+    }
+
+    &__artist {
+        &:hover {
+            color: #fff;
+        }
+    }
+
+    &__sep {
+        margin: 0 10px;
+    }
+
+    &__play-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 10px;
+        padding: 10px;
+        width: 100px;
+        height: 35px;
+        font-size: 20px;
+        border-radius: 20px;
+        border: none;
+        background-color: #8870ff;
+        color: rgba(255, 255, 255, 0.7);
+        transition: all 0.3s;
+        cursor: pointer;
+        font-family: "Roboto Condensed", sans-serif;
+
+        &:hover {
+            color: #8870ff;
+            background-color: #fff;
+        }
+
+        &:active {
+            transform: scale(0.9);
+        }
+    }
+}

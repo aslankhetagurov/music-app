@@ -13,7 +13,6 @@
 
     &__info {
         border-bottom: 2px solid rgba(255, 255, 255, 0.2392156863);
-        margin-bottom: 15px;
         position: relative;
 
         .like-btn {
@@ -124,7 +123,17 @@
     &__other-info {
         color: #d5d6d6;
         font-size: 14px;
-        margin-bottom: 15px;
+        margin-bottom: 5px;
+    }
+
+    &__album {
+        font-size: 14px;
+        margin-bottom: 5px;
+        color: #d5d6d6;
+    }
+
+    &__album-title:hover {
+        color: #8870ff;
     }
 
     &__list-items {
@@ -132,8 +141,8 @@
         scrollbar-gutter: auto;
         overflow-x: hidden;
         height: 100%;
-        height: calc(100vh - 531px);
-        margin-top: 10px;
+        height: calc(100vh - 524px);
+        margin-top: 15px;
         background-color: rgba(78, 75, 75, 0.13);
         border-radius: 7px;
 

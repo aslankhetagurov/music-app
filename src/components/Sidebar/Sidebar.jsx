@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { FaPause, FaPlay } from 'react-icons/fa6';
 import { IoMdClose } from 'react-icons/io';
 
@@ -125,7 +126,8 @@ const Sidebar = () => {
     };
 
     const renderContent = () => {
-        const { name, artist, image, genre, date, song_id } = sidebarInfo;
+        const { name, artist, image, genre, date, song_id, albums } =
+            sidebarInfo;
 
         return (
             <aside className="sidebar">
@@ -185,6 +187,19 @@ const Sidebar = () => {
                         <span style={{ margin: '0 10px' }}>*</span>
                         <span className="sidebar__genre">{genre}</span>
                     </div>
+                    {sidebarInfoType === 'Song' && (
+                        <div className="sidebar__album">
+                            <span className="sidebar__album-label">
+                                Album:{' '}
+                            </span>
+                            <Link
+                                className="sidebar__album-title"
+                                to={`/albums/${albums.id}`}
+                            >
+                                {albums.name}
+                            </Link>
+                        </div>
+                    )}
                 </div>
                 {sidebarList && (
                     <div className="sidebar__list">

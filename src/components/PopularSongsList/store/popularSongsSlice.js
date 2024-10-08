@@ -13,7 +13,7 @@ export const fetchPopularSongs = createAsyncThunk(
         try {
             const { data } = await supabase
                 .from('music')
-                .select()
+                .select('*, albums(*)')
                 .order('rating', { ascending: false });
             return data;
         } catch (error) {

@@ -79,16 +79,18 @@
 
     &__info {
         max-width: 115px;
-
-        &-text {
-            max-width: 100%;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-        }
+        display: grid;
 
         &-title {
             margin-bottom: 10px;
+            width: 100%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+
+            &:hover {
+                color: #8870ff;
+            }
         }
     }
 }

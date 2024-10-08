@@ -13,7 +13,7 @@ export const fetchRecentlyPlayed = createAsyncThunk(
         try {
             const { data: recentlyPlayed, error } = await supabase
                 .from('recently_played')
-                .select('music(*)')
+                .select('music(*,albums(*))')
                 .eq('user_id', data.userId)
                 .limit(data.limit);
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { FaPause, FaPlay } from 'react-icons/fa6';
 
 import {
@@ -24,7 +25,7 @@ import handleAddSidebarInfo from '../Sidebar/utils/handleAddSidebarInfo';
 import './AlbumItem.scss';
 
 const AlbumItem = ({ albumData }) => {
-    const { image, artist, name } = albumData;
+    const { image, artist, name, id } = albumData;
     const [albumSongs, setAlbumSongs] = useState(null);
     const currentSongData = useSelector(selectCurrentSong);
     const currentSongsList = useSelector(selectCurrentSongsList);
@@ -36,7 +37,7 @@ const AlbumItem = ({ albumData }) => {
             try {
                 let { data: albumSongs, error } = await supabase
                     .from('music')
-                    .select('*')
+                    .select('*, albums(*)')
                     .eq('album', name);
 
                 if (error) {
@@ -57,7 +58,9 @@ const AlbumItem = ({ albumData }) => {
             albumSongs.some(
                 (songObj) => currentSongData?.song_id === songObj.song_id
             ) &&
-            albumSongs === currentSongsList
+            currentSongsList?.every(
+                (song, i) => song.song_id === albumSongs[i].song_id
+            )
         ) {
             dispatch(setTogglePlaying());
         } else {
@@ -78,7 +81,10 @@ const AlbumItem = ({ albumData }) => {
                     className={`album-item__btn ${
                         albumSongs?.some(
                             (song) => currentSongData?.song_id === song.song_id
-                        ) && albumSongs === currentSongsList
+                        ) &&
+                        currentSongsList?.every(
+                            (song, i) => song.song_id === albumSongs[i].song_id
+                        )
                             ? 'album-item__btn_active'
                             : ''
                     }`}
@@ -88,7 +94,9 @@ const AlbumItem = ({ albumData }) => {
                         albumSongs?.some(
                             (song) => currentSongData?.song_id === song.song_id
                         ) &&
-                        albumSongs === currentSongsList ? (
+                        currentSongsList?.every(
+                            (song, i) => song.song_id === albumSongs[i].song_id
+                        ) ? (
                             <FaPause />
                         ) : (
                             <FaPlay className="play-svg" />
@@ -100,9 +108,9 @@ const AlbumItem = ({ albumData }) => {
                         handleAddSidebarInfo(
                             e,
                             dispatch,
-                            'song-artist-name__item',
+                            ['artist-name__item', 'album-item__info-title'],
                             albumData,
-                            'Song',
+                            'Album',
                             albumSongs
                         )
                     }
@@ -114,10 +122,13 @@ const AlbumItem = ({ albumData }) => {
                         alt="img"
                     />
                     <div className="album-item__info">
-                        <div className="album-item__info-title album-item__info-text">
+                        <Link
+                            className="album-item__info-title"
+                            to={`albums/${id}`}
+                        >
                             {name}
-                        </div>
-                        {artist && <RenderArtistNames names={artist} />}
+                        </Link>
+                        {<RenderArtistNames names={artist} />}
                     </div>
                 </div>
             </div>

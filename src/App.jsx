@@ -28,6 +28,7 @@ import UserCollectionFavoriteSongs from './components/UserCollection/UserCollect
 import UserCollectionFavoriteArtists from './components/UserCollection/UserCollectionFavoriteArtists/UserCollectionFavoriteArtists';
 import ListeningHistory from './components/UserCollection/ListeningHistory/ListeningHistory';
 import PopularAlbumsPage from './pages/PopularAlbumsPage/PopularAlbumsPage';
+import SingleAlbumPage from './pages/SingleAlbumPage/SingleAlbumPage';
 import './App.scss';
 
 function App() {
@@ -104,6 +105,10 @@ function App() {
                         <Route
                             path="albums/popular-albums"
                             element={<PopularAlbumsPage />}
+                        />
+                        <Route
+                            path="albums/:albumId"
+                            element={<SingleAlbumPage />}
                         />
                         <Route path="*" element={<NotFoundPage />} />
                     </Route>
