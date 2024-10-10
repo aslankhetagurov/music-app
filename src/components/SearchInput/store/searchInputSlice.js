@@ -7,6 +7,7 @@ const initialState = {
     searchValue: '',
     searchArtistsList: null,
     searchSongsList: null,
+    searchAlbumsList: null,
     searchDataLoadingStatus: null,
 };
 
@@ -29,17 +30,25 @@ export const fetchSearchLists = createAsyncThunk(
                         .ilike('name', `%${searchValue}%`)
                         .range(0, 9);
 
-                if (artistsError || musicError) {
+                const { data: searchAlbumsList, error: albumsError } =
+                    await supabase
+                        .from('albums')
+                        .select('*, music(*)')
+                        .ilike('name', `%${searchValue}%`)
+                        .range(0, 9);
+
+                if (artistsError || musicError || albumsError) {
                     thunkApi.dispatch(
                         setAddAlertText(
                             `${artistsError?.message || ''}; 
-                            ${musicError?.message || ''}`
+                            ${musicError?.message || ''}
+                            ${albumsError?.message || ''}`
                         )
                     );
                     thunkApi.dispatch(setAddAlertType('error'));
                 }
 
-                return { searchArtistsList, searchSongsList };
+                return { searchArtistsList, searchSongsList, searchAlbumsList };
             }
         } catch (error) {
             thunkApi.dispatch(setAddAlertText(error.message));
@@ -74,6 +83,7 @@ const searchInputSlice = createSlice({
                 state.searchDataLoadingStatus = 'idle';
                 state.searchArtistsList = action.payload.searchArtistsList;
                 state.searchSongsList = action.payload.searchSongsList;
+                state.searchAlbumsList = action.payload.searchAlbumsList;
             } else {
                 state.searchDataLoadingStatus = 'error';
             }
@@ -98,6 +108,8 @@ export const selectSearchArtistsList = (state) =>
     state.searchInput.searchArtistsList;
 export const selectSearchSongsList = (state) =>
     state.searchInput.searchSongsList;
+export const selectSearchAlbumsList = (state) =>
+    state.searchInput.searchAlbumsList;
 export const selectDataLoadingStatus = (state) =>
     state.searchInput.searchDataLoadingStatus;
 

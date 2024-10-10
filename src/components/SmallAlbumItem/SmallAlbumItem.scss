@@ -1,0 +1,116 @@
+.small-album-item {
+    max-height: 50px;
+    max-width: 350px;
+    padding: 10px 5px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    border-radius: 7px;
+    position: relative;
+
+    .like-btn {
+        opacity: 1;
+        position: inherit;
+        margin-left: auto;
+
+        &::after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+        }
+    }
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+
+        .small-album-item__btn {
+            opacity: 1;
+        }
+    }
+
+    &:focus-visible {
+        background-color: rgba(255, 255, 255, 0.2);
+        outline: 2px solid #fff;
+        .small-album-item__btn {
+            opacity: 1;
+        }
+    }
+
+    &__left {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    &__btn {
+        position: absolute;
+        color: rgba(255, 255, 255, 0.7);
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        font-size: 11px;
+        background-color: #8870ff;
+        cursor: pointer;
+        opacity: 0;
+        transition: transform 0.3s;
+
+        &::after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+        }
+
+        &:active {
+            transform: scale(0.9);
+        }
+
+        &:focus-visible {
+            opacity: 1;
+        }
+    }
+
+    &__btn-active {
+        opacity: 1;
+    }
+
+    &__btn-icon {
+        line-height: 0;
+    }
+
+    &__img {
+        min-width: 40px;
+        height: 40px;
+        border-radius: 7px;
+        object-fit: cover;
+    }
+
+    &__info {
+        display: grid;
+    }
+
+    &__title {
+        font-size: 14px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+
+        &:hover {
+            color: #8870ff;
+        }
+
+        &:focus-visible {
+            outline: 2px solid #fff;
+        }
+    }
+
+    &__artist {
+        display: grid;
+    }
+}

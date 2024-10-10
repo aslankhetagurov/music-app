@@ -20,7 +20,7 @@ const SingleAlbumPage = () => {
         () => {
             dispatch(fetchSingleAlbum(albumId));
         }, //eslint-disable-next-line
-        []
+        [albumId]
     );
 
     return singlAlbumLoadingStatus === 'loading' ? (

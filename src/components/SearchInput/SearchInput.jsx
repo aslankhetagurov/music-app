@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     fetchSearchLists,
     selectDataLoadingStatus,
+    selectSearchAlbumsList,
     selectSearchArtistsList,
     selectSearchSongsList,
     selectSearchValue,
@@ -14,6 +15,7 @@ import {
 } from './store/searchInputSlice';
 import SmallSongItem from '../SmallSongItem/SmallSongItem';
 import SmallArtistItem from '../SmallArtistItem/SmallArtistItem';
+import SmallAlbumItem from '../SmallAlbumItem/SmallAlbumItem';
 import './SearchInput.scss';
 
 const SearchInput = () => {
@@ -22,6 +24,7 @@ const SearchInput = () => {
     const searchDataLoadingStatus = useSelector(selectDataLoadingStatus);
     const searchArtistsList = useSelector(selectSearchArtistsList);
     const searchSongsList = useSelector(selectSearchSongsList);
+    const searchAlbumsList = useSelector(selectSearchAlbumsList);
     const [searchResultToggle, setSearchResultToggle] = useState(false);
     const searchResultRef = useRef(null);
 
@@ -81,6 +84,13 @@ const SearchInput = () => {
             </li>
         ));
 
+    const renderSearchAlbumsList = () =>
+        searchAlbumsList?.map((albumData) => (
+            <li key={albumData.album_id}>
+                <SmallAlbumItem albumData={albumData} />
+            </li>
+        ));
+
     const handleInputValueClear = () => {
         dispatch(setAddSearchValue(''));
     };
@@ -124,15 +134,21 @@ const SearchInput = () => {
                 }`}
             >
                 {!!searchArtistsList?.length && (
-                    <ul className="search__result-artists">
+                    <ul className="search__result-items">
                         <span className="search__result-title">Artists</span>
                         {renderSearchArtistList()}
                     </ul>
                 )}
                 {!!searchSongsList?.length && (
-                    <ul className="search__result-songs">
+                    <ul className="search__result-items">
                         <span className="search__result-title">Songs</span>
                         {renderSearchSongsList()}
+                    </ul>
+                )}
+                {!!searchAlbumsList?.length && (
+                    <ul className="search__result-items">
+                        <span className="search__result-title">Albums</span>
+                        {renderSearchAlbumsList()}
                     </ul>
                 )}
                 {searchDataLoadingStatus === 'error' &&
