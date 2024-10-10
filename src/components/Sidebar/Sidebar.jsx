@@ -126,7 +126,7 @@ const Sidebar = () => {
     };
 
     const renderContent = () => {
-        const { name, artist, image, genre, date, song_id, albums } =
+        const { name, artist, image, genre, date, song_id, albums, id } =
             sidebarInfo;
 
         return (
@@ -174,7 +174,16 @@ const Sidebar = () => {
                             className="sidebar__img"
                         ></img>
                     </div>
-                    <span className="sidebar__song-name">{name}</span>
+                    {sidebarInfoType === 'Album' ? (
+                        <Link
+                            to={`/albums/${id}`}
+                            className="sidebar__item-name sidebar__item-name-album"
+                        >
+                            {name}
+                        </Link>
+                    ) : (
+                        <span className="sidebar__item-name">{name}</span>
+                    )}
                     <div className="sidebar__artist">
                         {artist && (
                             <RenderArtistNames names={artist} lineClamp />
