@@ -4,6 +4,7 @@ import supabase from '../../../../supabaseClient';
 const initialState = {
     currentArtistInfo: null,
     currentArtistSongs: null,
+    currentArtistAlbums: null,
     currentArtistLoadingStatus: 'idle',
 };
 
@@ -13,15 +14,10 @@ export const fetchCurrentArtist = createAsyncThunk(
         try {
             const { data: currentArtistInfo } = await supabase
                 .from('artists')
-                .select()
+                .select('*, music(*), albums(*, music(*))')
                 .eq('name', artistName);
 
-            const { data: currentArtistSongs } = await supabase
-                .from('music')
-                .select()
-                .contains('artist', [artistName]);
-            currentArtistInfo;
-            return { currentArtistInfo, currentArtistSongs };
+            return currentArtistInfo;
         } catch (err) {
             return thunkApi.rejectWithValue(err);
         }
@@ -40,8 +36,9 @@ const currentArtistSlice = createSlice({
         builder.addCase(fetchCurrentArtist.fulfilled, (state, action) => {
             if (action.payload) {
                 state.currentArtistLoadingStatus = 'idle';
-                state.currentArtistInfo = action.payload.currentArtistInfo;
-                state.currentArtistSongs = action.payload.currentArtistSongs;
+                state.currentArtistInfo = action.payload;
+                state.currentArtistSongs = action.payload[0].music;
+                state.currentArtistAlbums = action.payload[0].albums;
             } else {
                 state.currentArtistLoadingStatus = 'error';
             }
@@ -56,6 +53,8 @@ export const selectCurrentArtistInfo = (state) =>
     state.currentArtist.currentArtistInfo;
 export const selectCurrentArtistSongs = (state) =>
     state.currentArtist.currentArtistSongs;
+export const selectCurrentArtistAlbums = (state) =>
+    state.currentArtist.currentArtistAlbums;
 export const selectCurrentArtistLoadingStatus = (state) =>
     state.currentArtist.currentArtistLoadingStatus;
 
