@@ -1,4 +1,4 @@
-.song-artist-name {
+.artist-name {
     &__items {
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -6,7 +6,6 @@
         display: inline-block;
         width: 100%;
         color: #d5d6d6;
-        padding: 3px;
     }
 
     &__line-clamp {

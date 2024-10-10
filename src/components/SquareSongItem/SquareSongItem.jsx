@@ -50,7 +50,7 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
                         handleAddSidebarInfo(
                             e,
                             dispatch,
-                            'song-artist-name__item',
+                            ['artist-name__item'],
                             songData,
                             'Song'
                         )

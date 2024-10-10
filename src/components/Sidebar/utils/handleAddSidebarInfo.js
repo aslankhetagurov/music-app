@@ -8,12 +8,12 @@ import {
 const handleAddSidebarInfo = (
     e,
     dispatch,
-    className,
+    classNames,
     data,
     sidebarType,
     sidebarList = null
 ) => {
-    if (e.target.className !== className) {
+    if (classNames.every((className) => e.target.className !== className)) {
         dispatch(setAddSidebarInfo(data));
         dispatch(setAddSidebarInfoType(sidebarType));
         dispatch(setToggleShowSidebar(true));

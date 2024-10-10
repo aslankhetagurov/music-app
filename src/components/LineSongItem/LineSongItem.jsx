@@ -88,7 +88,7 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
                         handleAddSidebarInfo(
                             e,
                             dispatch,
-                            'line-song-item__info-feat-link',
+                            ['line-song-item__info-feat-link'],
                             songData,
                             'Song'
                         )

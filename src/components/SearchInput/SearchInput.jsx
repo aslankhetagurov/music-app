@@ -48,7 +48,7 @@ const SearchInput = () => {
             if (
                 !searchResultRef.current?.contains(e.target) ||
                 e.target.className === 'small-artist-item__artist-name' ||
-                e.target.className === 'song-artist-name__item'
+                e.target.className === 'artist-name__item'
             ) {
                 setSearchResultToggle(!searchResultToggle);
             }
