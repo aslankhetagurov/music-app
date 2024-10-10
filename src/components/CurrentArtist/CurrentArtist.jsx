@@ -67,9 +67,8 @@ const CurrentArtist = () => {
             dispatch(setTogglePlaying());
         } else {
             dispatch(setAddCurrentSong(firstSong));
+            handleAddCurrentSongsList(currentSongsList, artistSongs);
         }
-
-        handleAddCurrentSongsList(currentSongsList, artistSongs);
     };
 
     const renderContent = () => {
@@ -179,7 +178,7 @@ const CurrentArtist = () => {
     ) : currentArtistLoadingStatus === 'error' ? (
         <h1>An has occurred, reload the page...</h1>
     ) : (
-        artistInfo && artistSongs && renderContent()
+        artistInfo && renderContent()
     );
 };
 

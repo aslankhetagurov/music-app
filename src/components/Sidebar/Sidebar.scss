@@ -110,9 +110,13 @@
         object-fit: cover;
     }
 
-    &__song-name {
+    &__item-name {
         display: inline-block;
         margin-bottom: 5px;
+
+        &-album:hover {
+            color: #8870ff;
+        }
     }
 
     &__artist {
