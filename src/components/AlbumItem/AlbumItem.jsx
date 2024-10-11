@@ -51,7 +51,7 @@ const AlbumItem = ({ albumData }) => {
     const renderItem = () => {
         return (
             <div className="album-item">
-                <LikeBtn data={albumData} itemType="song" />
+                <LikeBtn data={albumData} itemType="album" />
                 <button
                     onClick={handleAudio}
                     className={`album-item__btn ${

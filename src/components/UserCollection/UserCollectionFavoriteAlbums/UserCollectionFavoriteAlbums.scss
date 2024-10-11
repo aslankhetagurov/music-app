@@ -1,0 +1,18 @@
+.favorite-albums {
+    &__title {
+        font-size: 22px;
+        line-height: 24px;
+        margin-bottom: 20px;
+    }
+
+    &__items {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 20px 9px;
+    }
+
+    &__message {
+        text-align: center;
+    }
+}

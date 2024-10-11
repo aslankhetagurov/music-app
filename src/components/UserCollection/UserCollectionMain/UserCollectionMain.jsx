@@ -98,6 +98,18 @@ const UserCollectionMain = () => {
                             <NavLink
                                 className={({ isActive }) =>
                                     isActive
+                                        ? 'user-colletion__tab-link user-colletion__tab-link-active'
+                                        : 'user-colletion__tab-link'
+                                }
+                                to="favorite-albums"
+                            >
+                                Albums
+                            </NavLink>
+                        </li>
+                        <li className="user-colletion__tab">
+                            <NavLink
+                                className={({ isActive }) =>
+                                    isActive
                                         ? 'user-colletion__tab-link user-colletion__tab-link-about user-colletion__tab-link-active'
                                         : 'user-colletion__tab-link user-colletion__tab-link-about'
                                 }

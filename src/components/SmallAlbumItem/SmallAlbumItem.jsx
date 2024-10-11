@@ -90,7 +90,7 @@ const SmallAlbumItem = ({ albumData }) => {
                         {artist && <RenderArtistNames names={artist} />}
                     </div>
                 </div>
-                <LikeBtn data={albumData} />
+                <LikeBtn data={albumData} itemType="album" />
             </div>
         );
     };

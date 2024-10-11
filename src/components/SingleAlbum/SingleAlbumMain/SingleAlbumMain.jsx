@@ -15,6 +15,7 @@ import {
     setTogglePlaying,
 } from '../../../store/slices/generalStateSlice';
 import handleAddCurrentSongsList from '../../../utils/handleAddCurrentSongsList';
+import LikeBtn from '../../LikeBtn/LikeBtn';
 import './SingleAlbumMain.scss';
 
 const SingleAlbumMain = () => {
@@ -83,6 +84,8 @@ const SingleAlbumMain = () => {
                                 <FaPlay className="play-svg" />
                             )}
                         </button>
+
+                        <LikeBtn data={singleAlbumInfo} itemType="album" />
                     </div>
                 </div>
             </div>

@@ -40,6 +40,8 @@
     }
 
     &__artist {
+        transition: color 0.3s;
+
         &:hover {
             color: #fff;
         }
@@ -47,6 +49,34 @@
 
     &__sep {
         margin: 0 10px;
+    }
+
+    &__btns {
+        display: flex;
+        column-gap: 20px;
+        align-items: center;
+
+        .like-btn {
+            opacity: 1;
+            position: relative;
+            font-size: 22px;
+            background-color: rgb(255 255 255 / 18%);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+
+            &:active {
+                transform: scale(0.9);
+            }
+        }
     }
 
     &__play-btn {
@@ -69,6 +99,7 @@
         &:hover {
             color: #8870ff;
             background-color: #fff;
+            transform: scale(1.1);
         }
 
         &:active {

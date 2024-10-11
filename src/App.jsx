@@ -29,6 +29,7 @@ import UserCollectionFavoriteArtists from './components/UserCollection/UserColle
 import ListeningHistory from './components/UserCollection/ListeningHistory/ListeningHistory';
 import PopularAlbumsPage from './pages/PopularAlbumsPage/PopularAlbumsPage';
 import SingleAlbumPage from './pages/SingleAlbumPage/SingleAlbumPage';
+import UserCollectionFavoriteAlbums from './components/UserCollection/UserCollectionFavoriteAlbums/UserCollectionFavoriteAlbums';
 import './App.scss';
 
 function App() {
@@ -95,6 +96,10 @@ function App() {
                             <Route
                                 path="favorite-artists"
                                 element={<UserCollectionFavoriteArtists />}
+                            ></Route>
+                            <Route
+                                path="favorite-albums"
+                                element={<UserCollectionFavoriteAlbums />}
                             ></Route>
                             <Route
                                 path="listening-history"
