@@ -123,8 +123,6 @@
             }
 
             &-artist {
-                display: inline;
-
                 &::before {
                     content: "&";
                     color: #ffffffb3;
@@ -139,8 +137,12 @@
                 }
             }
 
-            &-link:hover {
-                color: #8870ff;
+            &-link {
+                display: inline;
+
+                &:hover {
+                    color: #8870ff;
+                }
             }
         }
     }

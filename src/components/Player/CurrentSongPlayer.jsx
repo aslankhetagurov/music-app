@@ -16,6 +16,7 @@ import {
     RxSpeakerModerate,
     RxSpeakerLoud,
 } from 'react-icons/rx';
+import { HiOutlineQueueList } from 'react-icons/hi2';
 
 import {
     selectCurrentSongsList,
@@ -38,6 +39,10 @@ import {
 } from '../RecentlyPlayedList/store/recentlyPlayedSlice';
 import { selectUserInfo } from '../../store/slices/authSlice';
 import LikeBtn from '../LikeBtn/LikeBtn';
+import {
+    selectShowPlaybackQueuePopup,
+    setShowPlaybackQueuePopup,
+} from '../PlaybackQueuePopup/store/playbackQueuePopupSlice';
 import './CurrentSongPlayer.scss';
 
 const CurrentSongPlayer = () => {
@@ -58,6 +63,7 @@ const CurrentSongPlayer = () => {
     const { pathname } = useLocation();
     const showAllItems = pathname === '/songs/recently-played';
     let volumeInputRef = useRef(null);
+    const showPlaybackQueuePopup = useSelector(selectShowPlaybackQueuePopup);
 
     useEffect(() => {
         //pause prev song
@@ -251,10 +257,11 @@ const CurrentSongPlayer = () => {
     };
 
     const renderVolumeIcon = () => {
-        if (volume == 0) return <RxSpeakerOff />;
-        if (volume <= 25) return <RxSpeakerQuiet />;
-        if (volume > 25 && volume <= 75) return <RxSpeakerModerate />;
-        if (volume > 75) return <RxSpeakerLoud />;
+        if (volume == 0) return <RxSpeakerOff title="Unmute" />;
+        if (volume <= 25) return <RxSpeakerQuiet title="Mute" />;
+        if (volume > 25 && volume <= 75)
+            return <RxSpeakerModerate title="Mute" />;
+        if (volume > 75) return <RxSpeakerLoud title="Mute" />;
     };
 
     const handleVolumeOffToggle = () => {
@@ -335,6 +342,11 @@ const CurrentSongPlayer = () => {
         }
     };
 
+    const handleShowQueuePopup = () => {
+        dispatch(setShowPlaybackQueuePopup());
+        document.body.classList.toggle('scroll-lock');
+    };
+
     const renderCurrentPlayer = (data) => {
         const { image, artist, name } = data;
 
@@ -374,6 +386,15 @@ const CurrentSongPlayer = () => {
                             </div>
                         </div>
                         <LikeBtn data={currentSongData} itemType="song" />
+                        <HiOutlineQueueList
+                            onClick={handleShowQueuePopup}
+                            className={`current-song__queue-btn ${
+                                showPlaybackQueuePopup
+                                    ? 'current-song__btn-active'
+                                    : ''
+                            }`}
+                            title="Playback queue"
+                        />
                     </div>
 
                     <div className="current-song__controls-center">
@@ -381,6 +402,7 @@ const CurrentSongPlayer = () => {
                             className="current-song__controls-btn current-song__controls-prev"
                             onClick={() => handlePrevOrNextSong('prev')}
                             disabled={!currentSongsList}
+                            title="Previous"
                         >
                             <FaStepBackward />
                         </button>
@@ -388,12 +410,17 @@ const CurrentSongPlayer = () => {
                             className="current-song__controls-btn current-song__controls-play"
                             onClick={handleSongPlay}
                         >
-                            {playing ? <FaPause /> : <FaPlay />}
+                            {playing ? (
+                                <FaPause title="Pause" />
+                            ) : (
+                                <FaPlay title="Play" />
+                            )}
                         </button>
                         <button
                             className="current-song__controls-btn current-song__controls-next"
                             onClick={() => handlePrevOrNextSong('next')}
                             disabled={!currentSongsList}
+                            title="Next"
                         >
                             <FaStepForward />
                         </button>
@@ -401,7 +428,9 @@ const CurrentSongPlayer = () => {
                     <div className="current-song__controls-right">
                         <div className="current-song__controls-volume-wrapper">
                             <div
-                                className="current-song__controls-volume-icon"
+                                className={`current-song__controls-volume-icon ${
+                                    !volume ? 'current-song__btn-active' : ''
+                                }`}
                                 onClick={handleVolumeOffToggle}
                             >
                                 {renderVolumeIcon()}
@@ -421,6 +450,7 @@ const CurrentSongPlayer = () => {
                                 repeating ? 'current-song__btn-active' : ''
                             }`}
                             onClick={handleRepeating}
+                            title="Repeat"
                         >
                             <FaRepeat />
                         </button>
@@ -429,6 +459,7 @@ const CurrentSongPlayer = () => {
                                 random ? 'current-song__btn-active' : ''
                             }`}
                             onClick={handleRandom}
+                            title="Shuffle"
                         >
                             <FaRandom />
                         </button>

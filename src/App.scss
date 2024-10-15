@@ -3,6 +3,8 @@
     padding: 0 10px;
     margin: 0 auto;
     min-height: 100vh;
+    background: -webkit-linear-gradient(90deg, #a3a3a3, #787a75, #787a75, #a3a3a3);
+    background: linear-gradient(90deg, #a3a3a3, #787a75, #787a75, #a3a3a3);
 }
 
 .spinner {
@@ -30,4 +32,8 @@
     overflow: visible;
     justify-content: flex-start;
     max-height: 100%;
+}
+
+.scroll-lock {
+    overflow: hidden;
 }

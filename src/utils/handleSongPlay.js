@@ -18,7 +18,7 @@ const handleSongPlay = (
         dispatch(setAddCurrentSong(songData));
         dispatch(setAddSidebarInfoType('Song'));
         dispatch(setAddSidebarList(null));
-        handleAddCurrentList();
+        handleAddCurrentList && handleAddCurrentList();
     }
     if (currentSongData?.song_id === songId) {
         dispatch(setTogglePlaying());

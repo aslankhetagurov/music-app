@@ -1,0 +1,76 @@
+.playback-queue-popup {
+    position: fixed;
+    width: 100%;
+    height: calc(100vh - 72px);
+    z-index: 998;
+    padding: 10px 20px 20px;
+    transition:
+        opacity 0.2s,
+        visibility 0.2s,
+        transform 0.5s;
+    transform: translateY(2000px) scale(0.05);
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    max-width: 1280px;
+    backdrop-filter: blur(50px);
+
+    &__show {
+        opacity: 1;
+        visibility: visible;
+        transition:
+            opacity 0.3s,
+            visibility 0.3s,
+            transform 0.3s;
+        transform: scale(1) translateY(0px);
+    }
+
+    &__container {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    &__head {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 15px 10px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2392156863);
+    }
+
+    &__title {
+        font-size: 28px;
+        line-height: 30px;
+    }
+
+    &__close-btn {
+        font-size: 20px;
+        line-height: 0;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+            transform: scale(1.2);
+            color: #8870ff;
+        }
+
+        &:active {
+            transform: scale(0.9);
+        }
+    }
+
+    &__list {
+        overflow: auto;
+        position: absolute;
+        top: 52px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        &-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+    }
+}

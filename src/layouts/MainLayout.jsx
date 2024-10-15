@@ -1,9 +1,11 @@
 import { Outlet } from 'react-router-dom';
+
 import Menu from '../components/Menu/Menu';
-import './MainLayout.scss';
 import Header from '../components/Header/Header';
 import CurrentSongPlayer from '../components/Player/CurrentSongPlayer';
 import Sidebar from '../components/Sidebar/Sidebar';
+import PlaybackQueuePopup from '../components/PlaybackQueuePopup/PlaybackQueuePopup';
+import './MainLayout.scss';
 
 const MainLayout = () => {
     return (
@@ -15,6 +17,7 @@ const MainLayout = () => {
                 <Sidebar />
             </div>
             <CurrentSongPlayer />
+            <PlaybackQueuePopup />
         </div>
     );
 };

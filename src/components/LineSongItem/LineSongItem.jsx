@@ -14,7 +14,12 @@ import handleSongPlay from '../../utils/handleSongPlay';
 import handleAddSidebarInfo from '../Sidebar/utils/handleAddSidebarInfo';
 import './LineSongItem.scss';
 
-const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
+const LineSongItem = ({
+    handleAddCurrentList,
+    songData,
+    songNum,
+    handleClosePlaybackQueue,
+}) => {
     const { song_id, image, name, duration, artist } = songData;
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
@@ -103,7 +108,10 @@ const LineSongItem = ({ handleAddCurrentList, songData, songNum }) => {
                         <div className="line-song-item__info-title line-song-item__info-text">
                             {name}
                         </div>
-                        <div className="line-song-item__info-feat">
+                        <div
+                            onClick={handleClosePlaybackQueue}
+                            className="line-song-item__info-feat"
+                        >
                             {artist && renderFeaturingArtists(artist)}
                         </div>
                     </div>

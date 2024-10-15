@@ -41,9 +41,9 @@
     &__main {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        background: -webkit-linear-gradient(90deg, #787a75, #a5a4a1, #787a75); /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(180deg, #787a75, #a5a4a1, #787a75); /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(
-            90deg,
+            180deg,
             #787a75,
             #a5a4a1,
             #787a75
@@ -61,6 +61,15 @@
             align-items: center;
             opacity: 1;
             position: inherit;
+            transform: none;
+
+            &:hover {
+                color: #8870ff;
+            }
+
+            &:active {
+                transform: scale(0.8);
+            }
         }
     }
 
@@ -82,6 +91,27 @@
         &-artist {
             max-width: 340px;
             display: grid;
+        }
+    }
+
+    &__queue {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__queue-btn {
+        font-size: 24px;
+        transition: transform 0.3s;
+        min-width: 24px;
+        cursor: pointer;
+
+        &:hover {
+            color: #8870ff;
+        }
+
+        &:active {
+            transform: scale(0.8);
         }
     }
 
@@ -148,6 +178,10 @@
             font-size: 20px;
             line-height: 0px;
             cursor: pointer;
+
+            &:hover {
+                color: #8870ff;
+            }
         }
 
         &-volume-line {
