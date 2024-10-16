@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FaPause, FaPlay } from 'react-icons/fa6';
@@ -11,8 +10,6 @@ import {
     setTogglePlaying,
 } from '../../store/slices/generalStateSlice';
 import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
-import supabase from '../../../supabaseClient';
-import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
 import LikeBtn from '../LikeBtn/LikeBtn';
 import './SmallArtistItem.scss';
 
@@ -21,37 +18,11 @@ const SmallArtistItem = ({ artistInfo }) => {
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
     const currentSongsList = useSelector(selectCurrentSongsList);
-    const [artistSongs, setArtistSongs] = useState(null);
-
-    const fetchSongs = async (artistName) => {
-        try {
-            const { data: currentArtistSongs, error } = await supabase
-                .from('music')
-                .select()
-                .contains('artist', [artistName]);
-
-            if (error) {
-                dispatch(setAddAlertText(error.message));
-                dispatch(setAddAlertType('error'));
-            }
-
-            currentArtistSongs && setArtistSongs(currentArtistSongs);
-        } catch (error) {
-            dispatch(setAddAlertText(error.message));
-            dispatch(setAddAlertType('error'));
-        }
-    };
-
-    useEffect(
-        () => {
-            artistInfo && fetchSongs(artistInfo.name);
-        }, // eslint-disable-next-line
-        [artistInfo]
-    );
+    const { music } = artistInfo;
 
     const handleAudio = (firstSong) => {
         if (
-            artistSongs.some(
+            music.some(
                 (songObj) => currentSongData?.song_id === songObj.song_id
             )
         ) {
@@ -60,7 +31,7 @@ const SmallArtistItem = ({ artistInfo }) => {
             dispatch(setAddCurrentSong(firstSong));
         }
 
-        handleAddCurrentSongsList(currentSongsList, artistSongs);
+        handleAddCurrentSongsList(currentSongsList, music);
     };
 
     const renderContent = () => {
@@ -70,16 +41,16 @@ const SmallArtistItem = ({ artistInfo }) => {
             <div className="small-artist-item">
                 <div className="small-artist-item__left">
                     <button
-                        onClick={() => handleAudio(artistSongs[0])}
+                        onClick={() => handleAudio(music[0])}
                         className={`small-artist-item__btn ${
-                            currentSongData?.artist.includes(name)
+                            currentSongData?.main_artist === name
                                 ? 'small-artist-item__btn-active'
                                 : ''
                         }`}
                     >
                         <div className="small-artist-item__btn-icon">
                             {playing &&
-                            currentSongData?.artist.includes(name) ? (
+                            currentSongData?.main_artist === name ? (
                                 <FaPause />
                             ) : (
                                 <FaPlay className="play-svg" />
@@ -100,7 +71,7 @@ const SmallArtistItem = ({ artistInfo }) => {
                         {name}
                     </Link>
                 </div>
-                <LikeBtn data={artistInfo} />
+                <LikeBtn data={artistInfo} itemType="artist" />
             </div>
         );
     };
