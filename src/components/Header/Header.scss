@@ -23,17 +23,22 @@
         align-items: center;
         column-gap: 20px;
         position: relative;
-        width: 40px;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
-        cursor: pointer;
         border: 2px solid #8870ff;
+        cursor: pointer;
     }
 
     &__avatar {
-        width: 40px;
+        max-width: 45px;
+        max-height: 45px;
+        height: 100%;
+        width: 100%;
         border-radius: 50%;
         background-color: #fff;
         z-index: 10;
+        object-fit: cover;
     }
 
     &__user-menu {

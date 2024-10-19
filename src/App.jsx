@@ -30,6 +30,10 @@ import ListeningHistory from './components/UserCollection/ListeningHistory/Liste
 import PopularAlbumsPage from './pages/PopularAlbumsPage/PopularAlbumsPage';
 import SingleAlbumPage from './pages/SingleAlbumPage/SingleAlbumPage';
 import UserCollectionFavoriteAlbums from './components/UserCollection/UserCollectionFavoriteAlbums/UserCollectionFavoriteAlbums';
+import {
+    setAddAlertText,
+    setAddAlertType,
+} from './components/Alert/store/alertSlice';
 import './App.scss';
 
 function App() {
@@ -38,9 +42,44 @@ function App() {
     useEffect(
         () => {
             supabase.auth.onAuthStateChange((event, session) => {
-                if (session && event === 'INITIAL_SESSION') {
-                    dispatch(setAddUserInfo(session.user));
-                    dispatch(fetchUserCollection(session.user.email));
+                try {
+                    if (session && event === 'INITIAL_SESSION') {
+                        (async () => {
+                            const { data: userInfo, error } = await supabase
+                                .from('users')
+                                .select('*')
+                                .eq('id', session.user.id);
+
+                            if (error) {
+                                dispatch(
+                                    setAddAlertText(
+                                        `Failed to load user data;
+                            ${error.message}`
+                                    )
+                                );
+
+                                dispatch(setAddAlertType('error'));
+                            }
+
+                            if (userInfo) {
+                                dispatch(
+                                    setAddUserInfo({
+                                        ...session.user,
+                                        ...userInfo[0],
+                                    })
+                                );
+                            }
+                        })();
+                        dispatch(fetchUserCollection(session.user.email));
+                    }
+                } catch (error) {
+                    dispatch(
+                        setAddAlertText(
+                            `Failed to load user data;
+                            ${error.message}`
+                        )
+                    );
+                    dispatch(setAddAlertType('error'));
                 }
             });
         }, // eslint-disable-next-line

@@ -61,7 +61,11 @@ const Header = () => {
                     onClick={handleUserMenu}
                     title={usernameFromEmail}
                 >
-                    <img className="header__avatar" src={avatar} alt="avatar" />
+                    <img
+                        className="header__avatar"
+                        src={userInfo.avatar || avatar}
+                        alt="avatar"
+                    />
                     <div
                         className={`header__user-menu ${
                             userMenu ? 'header__user-menu-show' : ''
