@@ -9,12 +9,13 @@ const initialState = {
 
 export const fetchPopularSongs = createAsyncThunk(
     'popularSongs/fetchPopularSongs',
-    async (_, thunkAPI) => {
+    async (limit, thunkAPI) => {
         try {
             const { data } = await supabase
                 .from('music')
                 .select('*, albums(*)')
-                .order('rating', { ascending: false });
+                .order('rating', { ascending: false })
+                .limit(limit);
             return data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error);

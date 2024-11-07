@@ -31,7 +31,9 @@
 .show-all-items {
     overflow: visible;
     justify-content: flex-start;
+    flex-wrap: wrap;
     max-height: 100%;
+    max-width: 100%;
 }
 
 .scroll-lock {
