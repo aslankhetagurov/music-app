@@ -1,6 +1,7 @@
 .artist {
     margin-bottom: 10px;
-    width: 145px;
+    max-width: 145px;
+    min-width: 145px;
 
     &__img-wrapper {
         display: flex;
@@ -10,7 +11,7 @@
 
         &:hover {
             .artist__img {
-                filter: brightness(50%);
+                filter: brightness(50%) drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
             }
 
             .like-btn {
@@ -25,12 +26,12 @@
         width: 100%;
         border-radius: 50%;
         object-fit: cover;
-        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
         padding: 10px;
         transition: filter 0.3s;
-        filter: brightness(100%);
+        filter: brightness(100%) drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
     }
     &__name {
+        position: relative;
         display: block;
         text-align: center;
         text-overflow: ellipsis;
@@ -39,7 +40,7 @@
         transition: all 0.5s;
 
         &:hover {
-            transform: scale(1.2);
+            transform: scale(1.1);
             filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
         }
     }

@@ -9,6 +9,7 @@ import {
     selectPopularAlbumsLoadingStatus,
 } from './store/popularAlbumsListSlice';
 import AlbumItem from '../AlbumItem/AlbumItem';
+import Slider from '../Slider/Slider';
 import './PopularAlbumsList.scss';
 
 const PopularAlbumsList = () => {
@@ -23,7 +24,7 @@ const PopularAlbumsList = () => {
 
     useEffect(
         () => {
-            dispatch(fetchPopularAlbums());
+            dispatch(fetchPopularAlbums(showAllItems ? 50 : 10));
         }, // eslint-disable-next-line
         []
     );
@@ -50,13 +51,11 @@ const PopularAlbumsList = () => {
             ) : popularAlbumsLoadingStatus === 'error' ? (
                 'An error has occurred, reload the page...'
             ) : (
-                <div
-                    className={`popular-albums__list ${
-                        showAllItems ? 'show-all-items' : ''
-                    }`}
-                >
-                    {renderItems}
-                </div>
+                <Slider
+                    sliderItems={renderItems}
+                    showAllItems={showAllItems}
+                    duration={500}
+                />
             )}
         </div>
     );

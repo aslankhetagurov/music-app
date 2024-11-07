@@ -14,7 +14,7 @@ export const fetchPopularArtists = createAsyncThunk(
             const { data: artists } = await supabase
                 .from('artists')
                 .select()
-                .range(0, every ? 49 : 6);
+                .limit(every ? 50 : 10);
             return artists;
         } catch (err) {
             return thunkApi.rejectWithValue(err);

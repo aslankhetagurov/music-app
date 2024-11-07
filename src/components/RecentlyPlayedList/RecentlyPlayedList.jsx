@@ -13,6 +13,7 @@ import SquareSongItem from '../SquareSongItem/SquareSongItem';
 import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
 import { selectCurrentSongsList } from '../../store/slices/generalStateSlice';
 import LineSongItem from '../LineSongItem/LineSongItem';
+import Slider from '../Slider/Slider';
 import './RecentlyPlayedList.scss';
 
 const RecentlyPlayedList = () => {
@@ -29,7 +30,12 @@ const RecentlyPlayedList = () => {
 
     useEffect(() => {
         userInfo &&
-            dispatch(fetchRecentlyPlayed({ userId: userInfo.id, limit: 19 }));
+            dispatch(
+                fetchRecentlyPlayed({
+                    userId: userInfo.id,
+                    limit: showAllItems ? '' : 10,
+                })
+            );
         // eslint-disable-next-line
     }, [userInfo]);
 
@@ -80,16 +86,14 @@ const RecentlyPlayedList = () => {
                     <ImSpinner2 className="spinner" />
                 ) : recentlyPlayedLoadingStatus === 'error' ? (
                     'An error has occurred, reload the page...'
+                ) : showAllItems ? (
+                    <div className="recently-played__list">{renderItems}</div>
                 ) : (
-                    <div
-                        className={`recently-played__list ${
-                            showAllItems
-                                ? 'show-all-items recently-played__list-column'
-                                : ''
-                        }`}
-                    >
-                        {renderItems}
-                    </div>
+                    <Slider
+                        sliderItems={renderItems}
+                        showAllItems={showAllItems}
+                        duration={500}
+                    />
                 )}
             </div>
         )

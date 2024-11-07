@@ -9,7 +9,7 @@ import {
     selectPopularArtists,
     selectPopularArtistsLoadingStatus,
 } from './store/popularArtistsSlice';
-
+import Slider from '../Slider/Slider';
 import './PopularArtistsList.scss';
 
 const PopularArtistsList = () => {
@@ -51,13 +51,11 @@ const PopularArtistsList = () => {
             ) : popularArtistsLoadingStatus === 'error' ? (
                 'An error has occurred, reload the page...'
             ) : (
-                <div
-                    className={`popular-artists__list ${
-                        showAllItems ? 'show-all-items' : ''
-                    }`}
-                >
-                    {renderItems}
-                </div>
+                <Slider
+                    sliderItems={renderItems}
+                    showAllItems={showAllItems}
+                    duration={500}
+                />
             )}
         </div>
     );
