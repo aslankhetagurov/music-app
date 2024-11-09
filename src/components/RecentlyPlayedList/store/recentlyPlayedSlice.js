@@ -32,6 +32,28 @@ export const fetchRecentlyPlayed = createAsyncThunk(
     }
 );
 
+export const fetchClearListeningHistory = createAsyncThunk(
+    'recentlyPlayed/fetchClearListeningHistory',
+    async (userId, thunkAPI) => {
+        try {
+            const { error } = await supabase
+                .from('recently_played')
+                .delete()
+                .eq('user_id', userId);
+
+            if (error) {
+                thunkAPI.dispatch(setAddAlertText(error.message));
+                thunkAPI.dispatch(setAddAlertType('error'));
+            }
+        } catch (error) {
+            thunkAPI.dispatch(setAddAlertText(error.message));
+            thunkAPI.dispatch(setAddAlertType('error'));
+
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
 const recentlyPlayedSlice = createSlice({
     name: 'recentlyPlayed',
     initialState,
@@ -59,6 +81,14 @@ const recentlyPlayedSlice = createSlice({
         });
 
         builder.addCase(fetchRecentlyPlayed.rejected, (state) => {
+            state.recentlyPlayedLoadingStatus = 'error';
+        });
+
+        builder.addCase(fetchClearListeningHistory.fulfilled, (state) => {
+            state.recentlyPlayed = [];
+        });
+
+        builder.addCase(fetchClearListeningHistory.rejected, (state) => {
             state.recentlyPlayedLoadingStatus = 'error';
         });
 

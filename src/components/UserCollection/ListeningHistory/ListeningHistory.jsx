@@ -4,6 +4,7 @@ import { ImSpinner2 } from 'react-icons/im';
 
 import { selectUserInfo } from '../../../store/slices/authSlice';
 import {
+    fetchClearListeningHistory,
     fetchRecentlyPlayed,
     selectRecentlyPlayed,
     selectRecentlyPlayedLoadingStatus,
@@ -39,9 +40,22 @@ const ListeningHistory = () => {
         />
     ));
 
+    const handleClearListeningHistory = () => {
+        recentlyPlayed.length &&
+            dispatch(fetchClearListeningHistory(userInfo.id));
+    };
+
     return (
         <div className="listening-history">
-            <h2 className="listening-history__title">Listening History</h2>
+            <div className="listening-history__top">
+                <h2 className="listening-history__title">Listening History</h2>
+                <button
+                    className="listening-history__clear-btn"
+                    onClick={handleClearListeningHistory}
+                >
+                    Clear
+                </button>
+            </div>
 
             {recentlyPlayedLoadingStatus === 'loading' ? (
                 <ImSpinner2 className="spinner" />
