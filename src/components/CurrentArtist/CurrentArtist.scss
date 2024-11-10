@@ -8,6 +8,7 @@
             border-radius: 50%;
             object-fit: cover;
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.9));
+            background-color: #fff;
         }
 
         &-main {
@@ -31,9 +32,32 @@
         }
 
         &-btns {
-            display: flex;
-            column-gap: 20px;
             position: relative;
+            display: flex;
+            justify-content: space-between;
+            column-gap: 20px;
+
+            .like-btn {
+                position: relative;
+                opacity: 1;
+                font-size: 22px;
+                background-color: rgb(255 255 255 / 18%);
+                width: 35px;
+                height: 35px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                margin: 0;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+
+                &:active {
+                    transform: scale(0.9);
+                }
+            }
         }
         &-btn {
             width: 100px;
@@ -52,12 +76,23 @@
                 color: rgba(136, 112, 255, 0.9);
                 background-color: #fff;
             }
+
             &-share {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 column-gap: 5px;
                 transition: all 0.3s;
+                background-color: rgb(255 255 255 / 18%);
+
+                &:hover {
+                    background-color: rgb(153 155 152);
+                    color: #fff;
+                }
+
+                &:active {
+                    transform: scale(0.9);
+                }
 
                 &:hover::before {
                     content: "Copy link";
@@ -70,10 +105,10 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    background-color: #fff;
                     font-size: 16px;
                     color: #fff;
-                    background-color: rgb(136, 112, 255);
+                    background-color: rgb(153 155 152);
+
                     box-shadow: 5px 5px 10px rgb(64, 63, 63);
                 }
 
@@ -86,7 +121,7 @@
                     bottom: -16px;
                     transform: rotate(45deg);
                     background-color: #fff;
-                    background-color: rgb(136, 112, 255);
+                    background-color: rgb(153 155 152);
                     border-right-color: transparent;
                     border-bottom-color: transparent;
                 }
@@ -111,8 +146,8 @@
         align-items: center;
         font-size: 16px;
         font-family: "Roboto Condensed", sans-serif;
-        background-color: #fff;
-        color: rgba(136, 112, 255, 0.9);
+        background-color: rgb(153 155 152);
+        color: #fff;
         z-index: 10;
         opacity: 0;
         transition: all 0.3s;
@@ -127,7 +162,7 @@
             position: absolute;
             top: -7px;
             transform: rotate(45deg);
-            background-color: #fff;
+            background-color: rgb(153 155 152);
             border-right-color: transparent;
             border-bottom-color: transparent;
         }

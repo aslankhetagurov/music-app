@@ -18,7 +18,8 @@ import {
     selectCurrentSongsList,
 } from '../../store/slices/generalStateSlice';
 import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
-
+import defaultImg from '../../assets/avatar.png';
+import LikeBtn from '../LikeBtn/LikeBtn';
 import './CurrentArtist.scss';
 
 const CurrentArtist = () => {
@@ -77,7 +78,10 @@ const CurrentArtist = () => {
         return (
             <div className="current-artist">
                 <div className="current-artist__head">
-                    <img className="current-artist__head-img" src={image} />
+                    <img
+                        className="current-artist__head-img"
+                        src={image || defaultImg}
+                    />
                     <div className="current-artist__head-main">
                         <div className="current-artist__head-top">
                             <span className="current-artist__head-label">
@@ -108,6 +112,7 @@ const CurrentArtist = () => {
                                     )}
                                 </div>
                             </button>
+                            <LikeBtn data={artistInfo[0]} itemType="artist" />
                             <button
                                 className="current-artist__head-btn current-artist__head-btn-share "
                                 onClick={handleShareArtistLink}
