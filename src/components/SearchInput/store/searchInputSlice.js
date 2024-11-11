@@ -26,7 +26,7 @@ export const fetchSearchLists = createAsyncThunk(
                 const { data: searchSongsList, error: musicError } =
                     await supabase
                         .from('music')
-                        .select()
+                        .select('*, albums(*)')
                         .ilike('name', `%${searchValue}%`)
                         .range(0, 9);
 
@@ -72,6 +72,9 @@ const searchInputSlice = createSlice({
         setAddSearchSongsList: (state, action) => {
             state.searchSongsList = action.payload;
         },
+        setAddSearchAlbumsList: (state, action) => {
+            state.searchAlbumsList = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchSearchLists.pending, (state) => {
@@ -79,12 +82,12 @@ const searchInputSlice = createSlice({
         });
 
         builder.addCase(fetchSearchLists.fulfilled, (state, action) => {
-            if (action.payload) {
+            if (action.payload && state.searchValue) {
                 state.searchDataLoadingStatus = 'idle';
                 state.searchArtistsList = action.payload.searchArtistsList;
                 state.searchSongsList = action.payload.searchSongsList;
                 state.searchAlbumsList = action.payload.searchAlbumsList;
-            } else {
+            } else if (!action.payload) {
                 state.searchDataLoadingStatus = 'error';
             }
         });
@@ -101,6 +104,7 @@ export const {
     setAddSearchValue,
     setAddSearchArtistsList,
     setAddSearchSongsList,
+    setAddSearchAlbumsList,
 } = actions;
 
 export const selectSearchValue = (state) => state.searchInput.searchValue;

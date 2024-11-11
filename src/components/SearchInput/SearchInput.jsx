@@ -9,6 +9,7 @@ import {
     selectSearchArtistsList,
     selectSearchSongsList,
     selectSearchValue,
+    setAddSearchAlbumsList,
     setAddSearchArtistsList,
     setAddSearchSongsList,
     setAddSearchValue,
@@ -32,11 +33,15 @@ const SearchInput = () => {
         () => {
             const debounceFetchId =
                 searchValue &&
-                setTimeout(() => dispatch(fetchSearchLists(searchValue)), 300);
+                setTimeout(() => dispatch(fetchSearchLists(searchValue)), 400);
 
-            if (!searchValue && (searchArtistsList || searchSongsList)) {
-                dispatch(setAddSearchArtistsList(null));
-                dispatch(setAddSearchSongsList(null));
+            if (!searchValue) {
+                !!searchArtistsList?.length &&
+                    dispatch(setAddSearchArtistsList(null));
+                !!searchSongsList?.length &&
+                    dispatch(setAddSearchSongsList(null));
+                !!searchAlbumsList?.length &&
+                    dispatch(setAddSearchAlbumsList(null));
             }
 
             return () => {
@@ -51,7 +56,8 @@ const SearchInput = () => {
             if (
                 !searchResultRef.current?.contains(e.target) ||
                 e.target.className === 'small-artist-item__artist-name' ||
-                e.target.className === 'artist-name__item'
+                e.target.className === 'artist-name__item' ||
+                e.target.className === 'small-song-item__title'
             ) {
                 setSearchResultToggle(!searchResultToggle);
             }
@@ -100,17 +106,18 @@ const SearchInput = () => {
     };
 
     return (
-        <div ref={searchResultRef} onFocus={handleFocus} className="search">
+        <div ref={searchResultRef} className="search">
             <div className="search__input-wrapper">
                 <div className="search__img">
                     <IoMdSearch />
                 </div>
                 <input
                     className="search__input"
-                    placeholder="Search by title, or artist..."
+                    placeholder="Search by title, artist, or album..."
                     type="search"
                     value={searchValue}
                     onChange={handleInputValueChange}
+                    onFocus={handleFocus}
                 />
                 {searchValue && (
                     <button
