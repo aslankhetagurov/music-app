@@ -1,7 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import { IoHomeOutline } from 'react-icons/io5';
-import { TbMicrophone2 } from 'react-icons/tb';
-import { LuMusic } from 'react-icons/lu';
 import { LuListMusic } from 'react-icons/lu';
 import { useSelector } from 'react-redux';
 import { selectUserInfo } from '../../store/slices/authSlice';
@@ -29,33 +27,7 @@ const Menu = () => {
                 </li>
                 <li className="menu__item">
                     <NavLink
-                        to="songs"
-                        className={({ isActive }) =>
-                            isActive
-                                ? 'menu__link menu__link-active'
-                                : 'menu__link'
-                        }
-                    >
-                        <LuMusic className="menu__item-icon" />
-                        Songs
-                    </NavLink>
-                </li>
-                <li className="menu__item">
-                    <NavLink
-                        to="artists"
-                        className={({ isActive }) =>
-                            isActive
-                                ? 'menu__link menu__link-active'
-                                : 'menu__link'
-                        }
-                    >
-                        <TbMicrophone2 className="menu__item-icon" />
-                        Artists
-                    </NavLink>
-                </li>
-                <li className="menu__item">
-                    <NavLink
-                        to={`users/${userCollectionLink}/favorite-songs`}
+                        to={`users/${userCollectionLink}`}
                         className={({ isActive }) =>
                             isActive
                                 ? 'menu__link menu__link-active'

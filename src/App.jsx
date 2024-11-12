@@ -4,9 +4,6 @@ import { useDispatch } from 'react-redux';
 
 import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage/HomePage';
-import SongsPage from './pages/SongsPage/SongsPage';
-import ArtistsPage from './pages/ArtistsPage/ArtistsPage';
-import AlbumsPage from './pages/AlbumsPage/AlbumsPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import PopularArtistsPage from './pages/PopularArtistsPage/PopularArtistsPage';
 import CurrentArtistPage from './pages/CurrentArtistPage/CurrentArtistPage';
@@ -93,7 +90,6 @@ function App() {
                 <Routes>
                     <Route path="/" element={<MainLayout />}>
                         <Route index element={<HomePage />} />
-                        <Route path="songs" element={<SongsPage />} />
                         <Route
                             path="songs/popular-songs"
                             element={<PopularSongsPage />}
@@ -102,7 +98,6 @@ function App() {
                             path="songs/recently-played"
                             element={<RecentlyPlayedPage />}
                         />
-                        <Route path="artists" element={<ArtistsPage />} />
                         <Route
                             path="artists/popular-artists"
                             element={<PopularArtistsPage />}
@@ -145,7 +140,6 @@ function App() {
                                 element={<ListeningHistory />}
                             ></Route>
                         </Route>
-                        <Route path="albums" element={<AlbumsPage />} />
                         <Route
                             path="albums/popular-albums"
                             element={<PopularAlbumsPage />}
