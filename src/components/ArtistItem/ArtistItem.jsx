@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import defaultImg from '../../assets/avatar.png';
 import LikeBtn from '../LikeBtn/LikeBtn';
 import './ArtistItem.scss';
 
@@ -9,7 +10,7 @@ const ArtistItem = ({ artistData }) => {
         <div className="artist">
             <div className="artist__img-wrapper">
                 <LikeBtn data={artistData} itemType="artist" />
-                <img src={image} className="artist__img"></img>
+                <img src={image || defaultImg} className="artist__img" />
             </div>
             <Link className="artist__name" to={`/artists/${name}/songs`}>
                 {name}

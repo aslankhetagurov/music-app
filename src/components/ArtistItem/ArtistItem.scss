@@ -1,7 +1,8 @@
 .artist {
-    margin-bottom: 10px;
+    // margin-bottom: 10px;
     max-width: 145px;
     min-width: 145px;
+    padding: 10px;
 
     &__img-wrapper {
         display: flex;
@@ -22,13 +23,15 @@
     }
 
     &__img {
-        height: 145px;
+        max-height: 125px;
+        max-width: 125px;
         width: 100%;
         border-radius: 50%;
         object-fit: cover;
-        padding: 10px;
+        margin-bottom: 10px;
         transition: filter 0.3s;
         filter: brightness(100%) drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
+        background-color: #fff;
     }
     &__name {
         position: relative;

@@ -11,6 +11,7 @@ import {
 } from '../../store/slices/generalStateSlice';
 import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
 import LikeBtn from '../LikeBtn/LikeBtn';
+import defaultImg from '../../assets/avatar.png';
 import './SmallArtistItem.scss';
 
 const SmallArtistItem = ({ artistInfo }) => {
@@ -59,7 +60,7 @@ const SmallArtistItem = ({ artistInfo }) => {
                     </button>
                     <img
                         className="small-artist-item__img"
-                        src={image}
+                        src={image || defaultImg}
                         alt="artist image"
                     />
                 </div>

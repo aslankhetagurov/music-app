@@ -43,6 +43,7 @@ import {
     selectShowPlaybackQueuePopup,
     setShowPlaybackQueuePopup,
 } from '../PlaybackQueuePopup/store/playbackQueuePopupSlice';
+import defaultImg from '../../assets/default-img.webp';
 import './CurrentSongPlayer.scss';
 
 const CurrentSongPlayer = () => {
@@ -376,7 +377,10 @@ const CurrentSongPlayer = () => {
 
                 <div className="current-song__main">
                     <div className="current-song__left-side">
-                        <img className="current-song__img" src={image} />
+                        <img
+                            className="current-song__img"
+                            src={image || defaultImg}
+                        />
                         <div className="current-song__info">
                             <div className="current-song__info-title">
                                 {name}
