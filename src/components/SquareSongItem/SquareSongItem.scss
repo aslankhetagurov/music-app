@@ -3,12 +3,15 @@
     border-radius: 10px;
     min-width: 145px;
     background-color: rgb(226 225 225 / 6%);
-    padding: 15px;
     display: flex;
     flex-direction: column;
     transition: background-color 0.3s;
     cursor: pointer;
     max-width: 145px;
+
+    &__content-wrapper {
+        padding: 15px;
+    }
 
     .like-btn {
         top: 20px;
@@ -83,33 +86,12 @@
     &__info {
         max-width: 115px;
 
-        &-text {
+        &-title {
             max-width: 100%;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
-        }
-
-        &-title {
-            margin-bottom: 10px;
-        }
-
-        &-artist {
-            font-size: 14px;
-            opacity: 0.7;
-            display: inline;
-            transition: all 0.5s;
-
-            &::before {
-                content: ", ";
-                color: #fff;
-            }
-
-            &:first-child {
-                &::before {
-                    content: "";
-                }
-            }
+            margin-bottom: 5px;
 
             &:hover {
                 color: #8870ff;

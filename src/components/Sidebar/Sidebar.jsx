@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FaPause, FaPlay } from 'react-icons/fa6';
@@ -9,7 +8,6 @@ import {
     selectSidebarInfo,
     selectSidebarInfoType,
     selectSidebarList,
-    setAddSidebarInfo,
     setToggleShowSidebar,
 } from './store/sidebarSlice';
 import RenderArtistNames from '../RenderArtistNames/RenderArtistNames';
@@ -23,6 +21,7 @@ import {
 import LikeBtn from '../LikeBtn/LikeBtn';
 import defaultImg from '../../assets/default-img.webp';
 import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
+import { setAddSingleSongData } from '../SingleSong/store/singleSongSlice';
 import './Sidebar.scss';
 
 const Sidebar = () => {
@@ -38,15 +37,6 @@ const Sidebar = () => {
     const handleCloseSidebar = () => {
         dispatch(setToggleShowSidebar(false));
     };
-
-    useEffect(
-        () => {
-            if (currentSongData && showSidebar && sidebarInfoType === 'Song') {
-                currentSongData && dispatch(setAddSidebarInfo(currentSongData));
-            }
-        }, // eslint-disable-next-line
-        [currentSongData]
-    );
 
     const handlePlaySong = (songData) => {
         if (currentSongData?.song_id !== songData.song_id) {
@@ -81,9 +71,13 @@ const Sidebar = () => {
         }
     };
 
+    const handleDispatchSingleSongData = (songData) => {
+        dispatch(setAddSingleSongData(songData));
+    };
+
     const renderSidebarList = () => {
         return sidebarList?.map((songData) => {
-            const { song_id, image, name, artist } = songData;
+            const { song_id, image, name, artist, id } = songData;
 
             return (
                 <div key={songData.song_id} className="sidebar__list-item">
@@ -109,12 +103,20 @@ const Sidebar = () => {
                         </button>
                         <img
                             className="sidebar__item-img"
-                            src={image}
+                            src={image || defaultImg}
                             alt="song image"
                         />
                     </div>
                     <div className="sidebar__item-main">
-                        <div className="sidebar__list-item-name">{name}</div>
+                        <Link
+                            className="sidebar__list-item-name"
+                            to={`/songs/${id}`}
+                            onClick={() =>
+                                handleDispatchSingleSongData(songData)
+                            }
+                        >
+                            {name}
+                        </Link>
                         <div className="sidebar__list-item-artist">
                             {artist && <RenderArtistNames names={artist} />}
                         </div>
@@ -177,12 +179,20 @@ const Sidebar = () => {
                     {sidebarInfoType === 'Album' ? (
                         <Link
                             to={`/albums/${id}`}
-                            className="sidebar__item-name sidebar__item-name-album"
+                            className="sidebar__item-name"
                         >
                             {name}
                         </Link>
                     ) : (
-                        <span className="sidebar__item-name">{name}</span>
+                        <Link
+                            className="sidebar__item-name"
+                            to={`/songs/${id}`}
+                            onClick={() =>
+                                handleDispatchSingleSongData(sidebarInfo)
+                            }
+                        >
+                            {name}
+                        </Link>
                     )}
                     <div className="sidebar__artist">
                         {artist && (

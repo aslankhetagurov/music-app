@@ -31,6 +31,7 @@ import {
     setAddAlertText,
     setAddAlertType,
 } from './components/Alert/store/alertSlice';
+import SingleSongPage from './pages/SingleSongPage/SingleSongPage';
 import './App.scss';
 
 function App() {
@@ -148,6 +149,11 @@ function App() {
                             path="albums/:albumId"
                             element={<SingleAlbumPage />}
                         />
+                        <Route
+                            path="songs/:songId"
+                            element={<SingleSongPage />}
+                        />
+
                         <Route path="*" element={<NotFoundPage />} />
                     </Route>
                     <Route path="/signup" element={<SignUpPage />} />

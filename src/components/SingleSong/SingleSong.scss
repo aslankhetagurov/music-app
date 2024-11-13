@@ -1,0 +1,114 @@
+.single-song {
+    width: 100%;
+
+    &__inner {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+    }
+
+    &__img {
+        width: 200px;
+        height: 200px;
+        border-radius: 10px;
+        object-fit: cover;
+        background-color: #fff;
+        margin-left: 20px;
+    }
+
+    &__main {
+        margin-left: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &__label {
+        font-size: 30px;
+        line-height: 34px;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    &__title {
+        font-size: 52px;
+        line-height: 54px;
+        font-weight: 700;
+        margin: 20px 0 10px;
+    }
+
+    &__more-info {
+        display: flex;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 18px;
+        line-height: 20px;
+    }
+
+    &__artist {
+        transition: color 0.3s;
+
+        &:hover {
+            color: #fff;
+        }
+    }
+
+    &__sep {
+        margin: 0 10px;
+    }
+
+    &__btns {
+        display: flex;
+        column-gap: 20px;
+        align-items: center;
+
+        .like-btn {
+            opacity: 1;
+            position: relative;
+            font-size: 22px;
+            background-color: rgb(255 255 255 / 18%);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+
+            &:active {
+                transform: scale(0.9);
+            }
+        }
+    }
+
+    &__play-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 10px;
+        padding: 10px;
+        width: 100px;
+        height: 35px;
+        font-size: 20px;
+        border-radius: 20px;
+        border: none;
+        background-color: #8870ff;
+        color: rgba(255, 255, 255, 0.7);
+        transition: all 0.3s;
+        cursor: pointer;
+        font-family: "Roboto Condensed", sans-serif;
+
+        &:hover {
+            color: #8870ff;
+            background-color: #fff;
+            transform: scale(1.1);
+        }
+
+        &:active {
+            transform: scale(0.9);
+        }
+    }
+}

@@ -13,6 +13,7 @@ import userCollection from '../components/UserCollection/store/userCollectionSli
 import popularAlbums from '../components/PopularAlbumsList/store/popularAlbumsListSlice';
 import singleAlbum from '../pages/SingleAlbumPage/store/singleAlbumSlice';
 import playbackQueuePopup from '../components/PlaybackQueuePopup/store/playbackQueuePopupSlice';
+import singleSong from '../components/SingleSong/store/singleSongSlice';
 
 const store = configureStore({
     reducer: {
@@ -29,6 +30,7 @@ const store = configureStore({
         popularAlbums,
         singleAlbum,
         playbackQueuePopup,
+        singleSong,
     },
 });
 

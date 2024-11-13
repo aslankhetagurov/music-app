@@ -12,6 +12,8 @@ import durationFormat from '../../utils/durationFormat';
 import LikeBtn from '../LikeBtn/LikeBtn';
 import handleSongPlay from '../../utils/handleSongPlay';
 import handleAddSidebarInfo from '../Sidebar/utils/handleAddSidebarInfo';
+import defaultImg from '../../assets/default-img.webp';
+import { setAddSingleSongData } from '../SingleSong/store/singleSongSlice';
 import './LineSongItem.scss';
 
 const LineSongItem = ({
@@ -20,10 +22,14 @@ const LineSongItem = ({
     songNum,
     handleClosePlaybackQueue,
 }) => {
-    const { song_id, image, name, duration, artist } = songData;
+    const { song_id, image, name, duration, artist, id } = songData;
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
     const dispatch = useDispatch();
+
+    const handleDispatchSingleSongData = () => {
+        dispatch(setAddSingleSongData(songData));
+    };
 
     const renderFeaturingArtists = (artists) => {
         return artists.map((artist, id, arr) => (
@@ -89,25 +95,32 @@ const LineSongItem = ({
                 </div>
                 <div
                     className="line-song-item__content-wrapper"
-                    onClick={(e) =>
+                    onClick={(e) => {
                         handleAddSidebarInfo(
                             e,
                             dispatch,
-                            ['line-song-item__info-feat-link'],
+                            [
+                                'line-song-item__info-feat-link',
+                                'line-song-item__info-title',
+                            ],
                             songData,
                             'Song'
-                        )
-                    }
+                        );
+                    }}
                 >
                     <img
                         className="line-song-item__img"
-                        src={image}
+                        src={image || defaultImg}
                         alt="img"
                     />
                     <div className="line-song-item__info">
-                        <div className="line-song-item__info-title line-song-item__info-text">
+                        <Link
+                            className="line-song-item__info-title"
+                            to={`/songs/${id}`}
+                            onClick={handleDispatchSingleSongData}
+                        >
                             {name}
-                        </div>
+                        </Link>
                         <div
                             onClick={handleClosePlaybackQueue}
                             className="line-song-item__info-feat"

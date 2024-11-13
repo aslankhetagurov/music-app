@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { FaPause, FaPlay } from 'react-icons/fa6';
 
 import {
@@ -9,6 +10,8 @@ import {
 } from '../../store/slices/generalStateSlice';
 import RenderArtistNames from '../RenderArtistNames/RenderArtistNames';
 import LikeBtn from '../LikeBtn/LikeBtn';
+import { setAddSingleSongData } from '../SingleSong/store/singleSongSlice';
+import defaultImg from '../../assets/default-img.webp';
 import './SmallSongItem.scss';
 
 const SmallSongItem = ({ songData }) => {
@@ -25,8 +28,12 @@ const SmallSongItem = ({ songData }) => {
         }
     };
 
+    const handleDispatchSingleSongData = () => {
+        dispatch(setAddSingleSongData(songData));
+    };
+
     const renderContent = () => {
-        const { song_id, image, name, artist } = songData;
+        const { song_id, image, name, artist, id } = songData;
 
         return (
             <div className="small-song-item">
@@ -49,12 +56,18 @@ const SmallSongItem = ({ songData }) => {
                     </button>
                     <img
                         className="small-song-item__img"
-                        src={image}
+                        src={image || defaultImg}
                         alt="song image"
                     />
                 </div>
                 <div className="small-song-item__main">
-                    <div className="small-song-item__title">{name}</div>
+                    <Link
+                        className="small-song-item__title"
+                        to={`/songs/${id}`}
+                        onClick={handleDispatchSingleSongData}
+                    >
+                        {name}
+                    </Link>
                     <div className="small-song-item__artist">
                         {artist && <RenderArtistNames names={artist} />}
                     </div>

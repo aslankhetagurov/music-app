@@ -115,7 +115,7 @@
         display: inline-block;
         margin-bottom: 5px;
 
-        &-album:hover {
+        &:hover {
             color: #8870ff;
         }
     }
@@ -238,6 +238,10 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+
+        &:hover {
+            color: #8870ff;
+        }
     }
     &__list-item-artist {
         display: grid;

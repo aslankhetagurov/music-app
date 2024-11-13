@@ -91,6 +91,10 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+
+        &:hover {
+            color: #8870ff;
+        }
     }
 
     &__artist {

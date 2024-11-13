@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { FaPlay, FaPause } from 'react-icons/fa6';
 
 import {
@@ -9,13 +10,19 @@ import RenderArtistNames from '../RenderArtistNames/RenderArtistNames';
 import LikeBtn from '../LikeBtn/LikeBtn';
 import handleSongPlay from '../../utils/handleSongPlay';
 import handleAddSidebarInfo from '../Sidebar/utils/handleAddSidebarInfo';
+import defaultImg from '../../assets/default-img.webp';
+import { setAddSingleSongData } from '../SingleSong/store/singleSongSlice';
 import './SquareSongItem.scss';
 
 const SquareSongItem = ({ handleAddCurrentList, songData }) => {
-    const { song_id, image, artist, name } = songData;
+    const { song_id, image, artist, name, id } = songData;
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
     const dispatch = useDispatch();
+
+    const handleDispatchSingleSongData = () => {
+        dispatch(setAddSingleSongData(songData));
+    };
 
     const renderItem = () => {
         return (
@@ -50,18 +57,27 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
                         handleAddSidebarInfo(
                             e,
                             dispatch,
-                            ['artist-name__item'],
+                            ['artist-name__item', 'song-item__info-title'],
                             songData,
                             'Song'
                         )
                     }
                     className="song-item__content-wrapper"
                 >
-                    <img className="song-item__img" src={image} alt="img" />
+                    <img
+                        className="song-item__img"
+                        src={image || defaultImg}
+                        alt="img"
+                    />
                     <div className="song-item__info">
-                        <div className="song-item__info-title song-item__info-text">
+                        <Link
+                            className="song-item__info-title"
+                            to={`/songs/${id}`}
+                            onClick={handleDispatchSingleSongData}
+                        >
                             {name}
-                        </div>
+                        </Link>
+
                         {artist && <RenderArtistNames names={artist} />}
                     </div>
                 </div>
