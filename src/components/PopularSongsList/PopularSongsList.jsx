@@ -29,9 +29,9 @@ const PopularSongsList = () => {
         []
     );
 
-    const renderItems = popularSongs.map(({ id, ...data }) => (
+    const renderItems = popularSongs.map((data) => (
         <SquareSongItem
-            key={id}
+            key={data.id}
             songData={data}
             handleAddCurrentList={() =>
                 handleAddCurrentList(currentSongslist, popularSongs)

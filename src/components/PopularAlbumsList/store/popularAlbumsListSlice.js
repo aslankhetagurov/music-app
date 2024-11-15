@@ -14,7 +14,7 @@ export const fetchPopularAlbums = createAsyncThunk(
         try {
             let { data: popularAlbums, error } = await supabase
                 .from('albums')
-                .select('*, music(*)')
+                .select('*, music(*, albums(*))')
                 .order('rating', { ascending: false })
                 .limit(limit);
 

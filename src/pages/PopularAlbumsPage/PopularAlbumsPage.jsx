@@ -4,7 +4,7 @@ import './PopularAlbumsPage.scss';
 const PopularAlbumsPage = () => {
     return (
         <div className="popular-albums-page">
-            <h1 className="popular-albums-page__title">Popular Artists</h1>
+            <h1 className="popular-albums-page__title">Popular Albums</h1>
             <PopularAlbumsList />
         </div>
     );

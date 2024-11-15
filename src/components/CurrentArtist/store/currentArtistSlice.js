@@ -14,7 +14,7 @@ export const fetchCurrentArtist = createAsyncThunk(
         try {
             const { data: currentArtistInfo } = await supabase
                 .from('artists')
-                .select('*, music(*), albums(*, music(*))')
+                .select('*, music(*,albums(*)), albums(*, music(*))')
                 .eq('name', artistName);
 
             return currentArtistInfo;

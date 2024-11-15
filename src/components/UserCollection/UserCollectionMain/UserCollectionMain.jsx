@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaPlay, FaPause } from 'react-icons/fa6';
 import { MdAddCircleOutline } from 'react-icons/md';
@@ -29,6 +30,12 @@ const UserCollectionMain = () => {
     const currentSongsList = useSelector(selectCurrentSongsList);
     const playing = useSelector(selectPlaying);
     const uploadAvatarStatus = useSelector(selectUploadAvatarStatus);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        navigate('favorite-songs');
+        // eslint-disable-next-line
+    }, []);
 
     const handleAudio = (firstSong) => {
         if (
