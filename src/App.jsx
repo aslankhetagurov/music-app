@@ -32,6 +32,7 @@ import {
     setAddAlertType,
 } from './components/Alert/store/alertSlice';
 import SingleSongPage from './pages/SingleSongPage/SingleSongPage';
+import NewReleasesPage from './pages/NewReleasesPage/NewReleasesPage';
 import './App.scss';
 
 function App() {
@@ -144,6 +145,10 @@ function App() {
                         <Route
                             path="albums/popular-albums"
                             element={<PopularAlbumsPage />}
+                        />
+                        <Route
+                            path="songs/new-releases"
+                            element={<NewReleasesPage />}
                         />
                         <Route
                             path="albums/:albumId"

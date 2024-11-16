@@ -1,0 +1,22 @@
+.new-releases-list {
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding: 0 3px;
+    }
+
+    &__title {
+        font-size: 22px;
+        line-height: 24px;
+    }
+
+    &__link-all {
+        transition: all 0.5s;
+
+        &:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
+        }
+    }
+}

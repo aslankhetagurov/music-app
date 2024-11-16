@@ -14,6 +14,7 @@ import popularAlbums from '../components/PopularAlbumsList/store/popularAlbumsLi
 import singleAlbum from '../pages/SingleAlbumPage/store/singleAlbumSlice';
 import playbackQueuePopup from '../components/PlaybackQueuePopup/store/playbackQueuePopupSlice';
 import singleSong from '../components/SingleSong/store/singleSongSlice';
+import newReleasesList from '../components/NewReleasesList/store/newReleasesListSlice';
 
 const store = configureStore({
     reducer: {
@@ -31,6 +32,7 @@ const store = configureStore({
         singleAlbum,
         playbackQueuePopup,
         singleSong,
+        newReleasesList,
     },
 });
 
