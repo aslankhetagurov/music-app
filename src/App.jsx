@@ -33,6 +33,7 @@ import {
 } from './components/Alert/store/alertSlice';
 import SingleSongPage from './pages/SingleSongPage/SingleSongPage';
 import NewReleasesPage from './pages/NewReleasesPage/NewReleasesPage';
+import RecommendedSongsPage from './pages/RecommendedSongsPage/RecommendedSongsPage';
 import './App.scss';
 
 function App() {
@@ -105,7 +106,11 @@ function App() {
                             element={<PopularArtistsPage />}
                         />
                         <Route
-                            path="/artists/:artistName"
+                            path="songs/recommended-songs"
+                            element={<RecommendedSongsPage />}
+                        />
+                        <Route
+                            path="artists/:artistName"
                             element={<CurrentArtistPage />}
                         >
                             <Route
@@ -122,7 +127,7 @@ function App() {
                             ></Route>
                         </Route>
                         <Route
-                            path="/users/:userId"
+                            path="users/:userId"
                             element={<UserCollectionPage />}
                         >
                             <Route
