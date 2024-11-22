@@ -45,7 +45,7 @@ const ListeningHistory = () => {
             dispatch(fetchClearListeningHistory(userInfo.id));
     };
 
-    return (
+    return recentlyPlayed.length ? (
         <div className="listening-history">
             <div className="listening-history__top">
                 <h2 className="listening-history__title">Listening History</h2>
@@ -61,12 +61,12 @@ const ListeningHistory = () => {
                 <ImSpinner2 className="spinner" />
             ) : recentlyPlayedLoadingStatus === 'error' ? (
                 'An error has occurred, reload the page...'
-            ) : !recentlyPlayed.length ? (
-                <h3>No songs listened yet</h3>
             ) : (
                 <div className="listening-history__list">{renderItems}</div>
             )}
         </div>
+    ) : (
+        <h3>No songs listened yet</h3>
     );
 };
 

@@ -24,9 +24,7 @@ const UserCollectionFavoriteAlbums = () => {
                     </div>
                 </>
             ) : (
-                <h2 className="favorite-albums__message">
-                    No saved albums yet...
-                </h2>
+                <h3>No favorite albums added yet</h3>
             )}
         </div>
     );

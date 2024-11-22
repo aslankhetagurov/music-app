@@ -14,6 +14,7 @@ export const fetchRecentlyPlayed = createAsyncThunk(
             const { data: recentlyPlayed, error } = await supabase
                 .from('recently_played')
                 .select('music(*,albums(*))')
+                .order('date', { ascending: false })
                 .eq('user_id', data.userId)
                 .limit(data.limit);
 
@@ -69,11 +70,9 @@ const recentlyPlayedSlice = createSlice({
 
         builder.addCase(fetchRecentlyPlayed.fulfilled, (state, action) => {
             if (action.payload) {
-                state.recentlyPlayed = action.payload
-                    .map((obj) => ({
-                        ...obj.music,
-                    }))
-                    .reverse();
+                state.recentlyPlayed = action.payload.map((obj) => ({
+                    ...obj.music,
+                }));
                 state.recentlyPlayedLoadingStatus = 'idle';
             } else {
                 state.recentlyPlayedLoadingStatus = 'error';

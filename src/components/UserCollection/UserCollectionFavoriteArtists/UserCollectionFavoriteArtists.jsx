@@ -18,7 +18,7 @@ const UserCollectionFavoriteArtists = () => {
         return <ArtistItem key={data.artist_id} artistData={data} />;
     });
 
-    return (
+    return favoriteArtists.length ? (
         <div className="favorite-artists">
             <h1 className="favorite-artists__title">Favorite Artists</h1>
 
@@ -30,6 +30,8 @@ const UserCollectionFavoriteArtists = () => {
                 <div className="favorite-artists__list">{renderItems}</div>
             )}
         </div>
+    ) : (
+        <h3>No favorite artists added yet</h3>
     );
 };
 

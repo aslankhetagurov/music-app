@@ -53,9 +53,9 @@ const RecentlyPlayedList = () => {
                   songNum={i + 1}
               />
           ))
-        : recentlyPlayed.map((data, i) => (
+        : recentlyPlayed.map((data) => (
               <SquareSongItem
-                  key={i}
+                  key={data.song_id}
                   songData={data}
                   handleAddCurrentList={() =>
                       handleAddCurrentSongsList(
