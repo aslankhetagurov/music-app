@@ -134,11 +134,17 @@ const Slider = ({ sliderItems, showAllItems, duration, timingFn }) => {
         <div ref={sliderRef} className="slider">
             {sliderOn && !showAllItems && (
                 <div className="slider__arrows">
-                    <button onClick={handlePrevSlide} className="slider__arrow">
+                    <button
+                        onClick={handlePrevSlide}
+                        className="slider__arrow slider__arrow-left"
+                    >
                         <FaCircleArrowLeft />
                     </button>
 
-                    <button onClick={handleNextSlide} className="slider__arrow">
+                    <button
+                        onClick={handleNextSlide}
+                        className="slider__arrow slider__arrow-right"
+                    >
                         <FaCircleArrowRight />
                     </button>
                 </div>

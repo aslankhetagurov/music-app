@@ -2,6 +2,15 @@
     position: relative;
     overflow: hidden;
 
+    &:hover {
+        .slider__arrow-left {
+            left: 0;
+        }
+        .slider__arrow-right {
+            right: 0;
+        }
+    }
+
     &__arrows {
         position: absolute;
         display: flex;
@@ -21,10 +30,18 @@
         height: 35px;
         border-radius: 50%;
         font-size: 30px;
-        transition: transform 0.3s;
+        transition: all 0.3s;
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
+
+        &-left {
+            left: -50px;
+        }
+        &-right {
+            right: -50px;
+        }
 
         &:hover {
             transform: scale(1.1);
