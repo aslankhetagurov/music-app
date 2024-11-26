@@ -80,6 +80,8 @@ const CurrentSongPlayer = () => {
         };
         newSong && newSong.addEventListener('loadeddata', addSongAndDuration);
 
+        currentSongData && fetchUpdateSongListeningsCount();
+
         return () => {
             newSong.removeEventListener('loadeddata', addSongAndDuration);
         };
@@ -128,7 +130,7 @@ const CurrentSongPlayer = () => {
             timelineRef.current.innerHTML = '00:00 /';
             progressLineRef.current.style.width = '0%';
             repeating
-                ? song.play()
+                ? song.play() && fetchUpdateSongListeningsCount()
                 : currentSongsList
                 ? handlePrevOrNextSong('next')
                 : dispatch(setTogglePlaying());
@@ -346,6 +348,14 @@ const CurrentSongPlayer = () => {
     const handleShowQueuePopup = () => {
         dispatch(setShowPlaybackQueuePopup());
         document.body.classList.toggle('scroll-lock');
+    };
+
+    const fetchUpdateSongListeningsCount = async () => {
+        const { error } = await supabase.rpc('increment_day_listenings', {
+            row_id: currentSongData.song_id,
+        });
+
+        if (error) console.error(error);
     };
 
     const renderCurrentPlayer = (data) => {
