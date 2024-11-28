@@ -19,6 +19,12 @@
         .line-song-item__btn {
             opacity: 1;
         }
+
+        .line-song-item__num,
+        .line-song-item__rating {
+            opacity: 0;
+            visibility: hidden;
+        }
     }
 
     &:focus {
@@ -42,11 +48,38 @@
 
     &__num-btn {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         min-width: 50px;
         padding: 0 10px;
         position: absolute;
+    }
+
+    &__rating {
+        line-height: 0;
+        height: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__dash {
+        height: 2px;
+        width: 10px;
+        background-color: #bfbebe;
+    }
+
+    &__new-item {
+        font-size: 14px;
+        font-weight: 700;
+        background-color: #8870ff;
+        width: 25px;
+        height: 14px;
+        padding-bottom: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     &__btn {

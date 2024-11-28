@@ -1,0 +1,63 @@
+.chart {
+    width: 100%;
+
+    &__header {
+        margin-bottom: 20px;
+    }
+
+    &__header-top {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 3px;
+    }
+
+    &__title {
+        font-size: 22px;
+        line-height: 24px;
+    }
+    &__subtitle {
+        font-size: 16px;
+        line-height: 18px;
+        font-weight: 400;
+        color: #ffffffb3;
+    }
+
+    &__link-all {
+        transition: all 0.5s;
+
+        &:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9));
+        }
+    }
+
+    &__list {
+        display: flex;
+        column-gap: 20px;
+        background-color: rgba(226, 225, 225, 0.06);
+        border-radius: 10px;
+
+        &-all {
+            flex-direction: column;
+            background: none;
+        }
+    }
+
+    &__list-left,
+    &__list-right {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        row-gap: 5px;
+    }
+
+    .line-song-item {
+        &__img {
+            width: 50px;
+        }
+
+        &__num {
+            font-weight: 700;
+        }
+    }
+}

@@ -3,6 +3,9 @@ import { FaPlay, FaPause } from 'react-icons/fa6';
 import { HiSpeakerWave } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { MdKeyboardArrowUp, MdKeyboardArrowDown } from 'react-icons/md';
+import { RiMedalFill } from 'react-icons/ri';
+import { setAddSingleSongData } from '../SingleSong/store/singleSongSlice';
 
 import {
     selectCurrentSong,
@@ -13,7 +16,6 @@ import LikeBtn from '../LikeBtn/LikeBtn';
 import handleSongPlay from '../../utils/handleSongPlay';
 import handleAddSidebarInfo from '../Sidebar/utils/handleAddSidebarInfo';
 import defaultImg from '../../assets/default-img.webp';
-import { setAddSingleSongData } from '../SingleSong/store/singleSongSlice';
 import './LineSongItem.scss';
 
 const LineSongItem = ({
@@ -21,6 +23,7 @@ const LineSongItem = ({
     songData,
     songNum,
     handleClosePlaybackQueue,
+    prevPosition,
 }) => {
     const { song_id, image, name, duration, artist, id } = songData;
     const currentSongData = useSelector(selectCurrentSong);
@@ -49,6 +52,36 @@ const LineSongItem = ({
         ));
     };
 
+    const itemPositionChange = () => {
+        if (songNum === 1) {
+            return <RiMedalFill style={{ color: 'gold' }} />;
+        }
+
+        if (prevPosition < 0) {
+            return <div className="line-song-item__new-item">new</div>;
+        }
+
+        if (prevPosition < songNum) {
+            return (
+                <MdKeyboardArrowDown
+                    style={{ color: '#fa6d6d', fontSize: '20px' }}
+                />
+            );
+        }
+
+        if (prevPosition > songNum) {
+            return (
+                <MdKeyboardArrowUp
+                    style={{ color: '#65bf65', fontSize: '20px' }}
+                />
+            );
+        }
+
+        if (prevPosition === songNum) {
+            return <div className="line-song-item__dash"></div>;
+        }
+    };
+
     const renderItem = () => {
         return (
             <div tabIndex={0} className="line-song-item">
@@ -68,6 +101,11 @@ const LineSongItem = ({
                             songNum
                         )}
                     </div>
+                    {prevPosition && currentSongData?.song_id !== song_id && (
+                        <div className="line-song-item__rating">
+                            {itemPositionChange()}
+                        </div>
+                    )}
                     <button
                         onClick={() =>
                             handleSongPlay(

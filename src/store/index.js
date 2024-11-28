@@ -16,6 +16,7 @@ import playbackQueuePopup from '../components/PlaybackQueuePopup/store/playbackQ
 import singleSong from '../components/SingleSong/store/singleSongSlice';
 import newReleasesList from '../components/NewReleasesList/store/newReleasesListSlice';
 import recommendedSongsList from '../components/RecommendedSongsList/store/recommendedSongsListSlice';
+import chart from '../components/Chart/store/chartSlice';
 
 const store = configureStore({
     reducer: {
@@ -35,6 +36,7 @@ const store = configureStore({
         singleSong,
         newReleasesList,
         recommendedSongsList,
+        chart,
     },
 });
 

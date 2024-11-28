@@ -34,6 +34,7 @@ import {
 import SingleSongPage from './pages/SingleSongPage/SingleSongPage';
 import NewReleasesPage from './pages/NewReleasesPage/NewReleasesPage';
 import RecommendedSongsPage from './pages/RecommendedSongsPage/RecommendedSongsPage';
+import ChartPage from './pages/ChartPage/ChartPage';
 import './App.scss';
 
 function App() {
@@ -109,6 +110,7 @@ function App() {
                             path="songs/recommended-songs"
                             element={<RecommendedSongsPage />}
                         />
+                        <Route path="songs/chart" element={<ChartPage />} />
                         <Route
                             path="artists/:artistName"
                             element={<CurrentArtistPage />}

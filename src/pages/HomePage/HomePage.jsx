@@ -4,6 +4,7 @@ import RecentlyPlayedList from '../../components/RecentlyPlayedList/RecentlyPlay
 import PopularAlbumsList from '../../components/PopularAlbumsList/PopularAlbumsList';
 import NewReleasesList from '../../components/NewReleasesList/NewReleasesList';
 import RecommendedSongsList from '../../components/RecommendedSongsList/RecommendedSongsList';
+import Chart from '../../components/Chart/Chart';
 import './HomePage.scss';
 
 const HomePage = () => {
@@ -12,6 +13,7 @@ const HomePage = () => {
             <NewReleasesList />
             <RecentlyPlayedList />
             <RecommendedSongsList />
+            <Chart />
             <PopularSongsList />
             <PopularArtistsList />
             <PopularAlbumsList />
