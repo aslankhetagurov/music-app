@@ -58,11 +58,6 @@ export const fetchClearListeningHistory = createAsyncThunk(
 const recentlyPlayedSlice = createSlice({
     name: 'recentlyPlayed',
     initialState,
-    reducers: {
-        setAddRecentlyPlayed: (state, action) => {
-            state.recentlyPlayed = action.payload;
-        },
-    },
     extraReducers: (builder) => {
         builder.addCase(fetchRecentlyPlayed.pending, (state) => {
             state.recentlyPlayedLoadingStatus = 'loading';
@@ -95,13 +90,9 @@ const recentlyPlayedSlice = createSlice({
     },
 });
 
-const { reducer, actions } = recentlyPlayedSlice;
-
-export const { setAddRecentlyPlayed } = actions;
-
 export const selectRecentlyPlayed = (state) =>
     state.recentlyPlayed.recentlyPlayed;
 export const selectRecentlyPlayedLoadingStatus = (state) =>
     state.recentlyPlayed.recentlyPlayedLoadingStatus;
 
-export default reducer;
+export default recentlyPlayedSlice.reducer;

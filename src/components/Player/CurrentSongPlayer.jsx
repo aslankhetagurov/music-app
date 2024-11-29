@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import { FaRepeat } from 'react-icons/fa6';
 import {
     FaRandom,
@@ -33,10 +32,6 @@ import durationFormat from '../../utils/durationFormat';
 import RenderArtistNames from '../RenderArtistNames/RenderArtistNames';
 import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
 import supabase from '../../../supabaseClient';
-import {
-    selectRecentlyPlayed,
-    setAddRecentlyPlayed,
-} from '../RecentlyPlayedList/store/recentlyPlayedSlice';
 import { selectUserInfo } from '../../store/slices/authSlice';
 import LikeBtn from '../LikeBtn/LikeBtn';
 import {
@@ -60,9 +55,6 @@ const CurrentSongPlayer = () => {
     const timelineRef = useRef(null);
     let { current: temporaryProgressLineRef } = useRef(null);
     const userInfo = useSelector(selectUserInfo);
-    const recentlyPlayed = useSelector(selectRecentlyPlayed);
-    const { pathname } = useLocation();
-    const showAllItems = pathname === '/songs/recently-played';
     let volumeInputRef = useRef(null);
     const showPlaybackQueuePopup = useSelector(selectShowPlaybackQueuePopup);
 
@@ -146,7 +138,7 @@ const CurrentSongPlayer = () => {
     }, [song, repeating]);
 
     useEffect(() => {
-        currentSongData && sendRecentlyPlayedSong();
+        currentSongData && userInfo && sendRecentlyPlayedSong();
         // eslint-disable-next-line
     }, [currentSongData]);
 
@@ -281,67 +273,34 @@ const CurrentSongPlayer = () => {
         }
     };
 
-    const sendRecentlyPlayedSong = () => {
-        const findCopy = (element) =>
-            element.song_id === currentSongData?.song_id;
-        const isCopy = recentlyPlayed.some(findCopy);
-
-        const insertSong = async () => {
-            try {
-                const { error } = await supabase
-                    .from('recently_played')
-                    .insert([
+    const sendRecentlyPlayedSong = async () => {
+        try {
+            const { error } = await supabase
+                .from('recently_played')
+                .upsert(
+                    [
                         {
                             song_id: currentSongData?.song_id,
                             user_id: userInfo?.id,
+                            date: new Date().toISOString(),
                         },
-                    ])
-                    .select();
+                    ],
+                    {
+                        onConflict: 'song_id, user_id',
+                        ignoreDuplicates: false,
+                    }
+                )
+                .select();
 
-                if (error) {
-                    dispatch(setAddAlertText(error.message));
-                    dispatch(setAddAlertType('error'));
-                }
-            } catch (error) {
+            if (error) {
+                console.log(error);
                 dispatch(setAddAlertText(error.message));
                 dispatch(setAddAlertType('error'));
             }
-        };
-
-        const updateSong = async () => {
-            try {
-                const { error } = await supabase
-                    .from('recently_played')
-                    .update({ date: new Date().toISOString() })
-                    .eq('song_id', currentSongData.song_id)
-                    .eq('user_id', userInfo.id);
-
-                if (error) {
-                    dispatch(setAddAlertText(error.message));
-                    dispatch(setAddAlertType('error'));
-                }
-            } catch (error) {
-                dispatch(setAddAlertText(error.message));
-                dispatch(setAddAlertType('error'));
-            }
-        };
-
-        if (isCopy) {
-            updateSong();
-
-            if (!showAllItems) {
-                const findIndex = recentlyPlayed.findIndex(findCopy);
-                const recentlyPlayedCopy = recentlyPlayed.slice();
-                recentlyPlayedCopy.splice(findIndex, 1);
-                recentlyPlayedCopy.unshift(currentSongData);
-                dispatch(setAddRecentlyPlayed(recentlyPlayedCopy));
-            }
-        } else {
-            insertSong();
-
-            const recentlyPlayedCopy = recentlyPlayed.slice();
-            recentlyPlayedCopy.unshift(currentSongData);
-            dispatch(setAddRecentlyPlayed(recentlyPlayedCopy));
+        } catch (error) {
+            console.log(error);
+            dispatch(setAddAlertText(error.message));
+            dispatch(setAddAlertType('error'));
         }
     };
 

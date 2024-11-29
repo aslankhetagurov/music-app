@@ -33,7 +33,7 @@ const RecentlyPlayedList = () => {
             dispatch(
                 fetchRecentlyPlayed({
                     userId: userInfo.id,
-                    limit: showAllItems ? '' : 10,
+                    limit: showAllItems ? 1000 : 10,
                 })
             );
         // eslint-disable-next-line
