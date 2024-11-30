@@ -14,6 +14,7 @@ export const fetchPopularArtists = createAsyncThunk(
             const { data: artists } = await supabase
                 .from('artists')
                 .select()
+                .order('likes', { ascending: false })
                 .limit(every ? 50 : 10);
             return artists;
         } catch (err) {
