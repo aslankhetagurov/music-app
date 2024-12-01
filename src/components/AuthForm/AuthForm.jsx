@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ErrorMessage, Form, Formik, useField } from 'formik';
 import { ImSpinner2 } from 'react-icons/im';
 import * as Yup from 'yup';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 
 import supabase from '../../../supabaseClient';
 import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
+import { setAddUserInfo } from '../../store/slices/authSlice';
 import './AuthForm.scss';
 
 const MyTextInput = ({ label, ...props }) => {
@@ -16,7 +19,11 @@ const MyTextInput = ({ label, ...props }) => {
             <label className="auth-form__label" htmlFor={props.name}>
                 {label}
             </label>
-            <input className="auth-form__input" {...field} {...props} />
+            <input
+                className="auth-form__input auth-form__input-password"
+                {...field}
+                {...props}
+            />
         </>
     );
 };
@@ -24,6 +31,7 @@ const MyTextInput = ({ label, ...props }) => {
 const AuthForm = ({ textBtn, title, type }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [toggleShowPassword, setToggleShowPassword] = useState(false);
 
     const handleSubmit = async ({ email, password }) => {
         const action =
@@ -39,20 +47,48 @@ const AuthForm = ({ textBtn, title, type }) => {
                 password,
             });
 
-            const link =
-                type === 'signUp' ? '/login' : type === 'logIn' ? '/' : '/';
-
-            data?.user && navigate(link);
-
             if (error) {
                 dispatch(setAddAlertText(error.message));
                 dispatch(setAddAlertType('error'));
             }
+            data?.user && navigate('/');
+
+            if (data?.user && type === 'signUp') {
+                dispatch(setAddAlertText('Please confirm your email'));
+                dispatch(setAddAlertType('info'));
+            }
+
+            if (type === 'logIn') {
+                const { data: userInfo, error: userInfoError } = await supabase
+                    .from('users')
+                    .select('*')
+                    .eq('id', data.user.id);
+
+                if (userInfoError) {
+                    console.log(userInfoError);
+                    dispatch(setAddAlertText('Failed to load user data'));
+                    dispatch(setAddAlertType('error'));
+                }
+
+                if (userInfo.length) {
+                    dispatch(
+                        setAddUserInfo({
+                            ...data.user,
+                            ...userInfo[0],
+                        })
+                    );
+                    navigate('/');
+                }
+            }
         } catch (error) {
+            console.log(error);
             dispatch(setAddAlertText(error.message));
             dispatch(setAddAlertType('error'));
         }
     };
+
+    const handleToggleShowPassword = () =>
+        setToggleShowPassword(!toggleShowPassword);
 
     return (
         <div className="auth-form">
@@ -87,18 +123,32 @@ const AuthForm = ({ textBtn, title, type }) => {
                                     name="email"
                                 />
                             </div>
-                            <div className="auth-form__form-item">
+                            <div className="auth-form__form-item ">
                                 <MyTextInput
                                     label="Password"
                                     name="password"
-                                    type="password"
+                                    type={
+                                        toggleShowPassword ? 'text' : 'password'
+                                    }
                                 />
+
+                                <button
+                                    className="auth-form__show-password-btn"
+                                    onClick={handleToggleShowPassword}
+                                    type="button"
+                                >
+                                    {toggleShowPassword ? (
+                                        <FaRegEyeSlash />
+                                    ) : (
+                                        <FaRegEye />
+                                    )}
+                                </button>
+
                                 <ErrorMessage
                                     component="div"
                                     className="auth-form__error"
                                     name="password"
                                 />
-
                                 {type === 'logIn' && (
                                     <div className="auth-form__recover-password">
                                         <span>Forgot your password? </span>

@@ -39,16 +39,22 @@ const PasswordRecovery = () => {
             );
 
             if (data) {
-                dispatch(setAddAlertText('Successfully reset password'));
+                dispatch(
+                    setAddAlertText(
+                        'Successfully reset password, check your email'
+                    )
+                );
                 dispatch(setAddAlertType('info'));
             }
 
             if (error) {
-                dispatch(setAddAlertText(error.message));
+                console.log(error);
+                dispatch(setAddAlertText('Failed to reset password'));
                 dispatch(setAddAlertType('error'));
             }
         } catch (error) {
-            dispatch(setAddAlertText(error.message));
+            console.log(error);
+            dispatch(setAddAlertText('Failed to reset password'));
             dispatch(setAddAlertType('error'));
         } finally {
             setLoading(false);
