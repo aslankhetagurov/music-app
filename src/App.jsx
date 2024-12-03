@@ -35,6 +35,7 @@ import SingleSongPage from './pages/SingleSongPage/SingleSongPage';
 import NewReleasesPage from './pages/NewReleasesPage/NewReleasesPage';
 import RecommendedSongsPage from './pages/RecommendedSongsPage/RecommendedSongsPage';
 import ChartPage from './pages/ChartPage/ChartPage';
+import RegisterPopup from './components/RegisterPopup/RegisterPopup';
 import './App.scss';
 
 function App() {
@@ -91,6 +92,7 @@ function App() {
         <BrowserRouter>
             <div className="app">
                 <Alert />
+                <RegisterPopup />
                 <Routes>
                     <Route path="/" element={<MainLayout />}>
                         <Route index element={<HomePage />} />
