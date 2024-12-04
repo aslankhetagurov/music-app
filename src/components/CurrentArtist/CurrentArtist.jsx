@@ -181,7 +181,7 @@ const CurrentArtist = () => {
     return currentArtistLoadingStatus === 'loading' ? (
         <ImSpinner2 className="spinner" />
     ) : currentArtistLoadingStatus === 'error' ? (
-        <h1>An has occurred, reload the page...</h1>
+        <h3>An has occurred, reload the page...</h3>
     ) : (
         artistInfo && renderContent()
     );

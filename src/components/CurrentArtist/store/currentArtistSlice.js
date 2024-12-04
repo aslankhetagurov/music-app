@@ -34,7 +34,7 @@ const currentArtistSlice = createSlice({
             state.currentArtistLoadingStatus = 'loading';
         });
         builder.addCase(fetchCurrentArtist.fulfilled, (state, action) => {
-            if (action.payload) {
+            if (action.payload.length) {
                 state.currentArtistLoadingStatus = 'idle';
                 state.currentArtistInfo = action.payload;
                 state.currentArtistSongs = action.payload[0].music;

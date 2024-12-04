@@ -1,7 +1,5 @@
 .search {
     position: relative;
-    display: flex;
-    width: 30%;
     margin: 0 15px;
 
     &__img {
@@ -20,7 +18,7 @@
     }
 
     &__input {
-        padding: 11px 11px 11px 32px;
+        padding: 11px 17px 11px 32px;
         border: 1px solid rgba(226, 225, 225, 0.35);
         border-radius: 10px;
         background-color: transparent;
@@ -49,6 +47,7 @@
 
         &:hover {
             transform: scale(1.2);
+            color: #fff;
         }
 
         &:active {
