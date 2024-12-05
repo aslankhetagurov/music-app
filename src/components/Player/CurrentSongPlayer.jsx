@@ -74,6 +74,15 @@ const CurrentSongPlayer = () => {
 
         currentSongData && fetchUpdateSongListeningsCount();
 
+        if (!userInfo && currentSongData) {
+            dispatch(
+                setAddAlertText(
+                    'Sign Up and get a chance to experience the app to the fullest'
+                )
+            );
+            dispatch(setAddAlertType('info'));
+        }
+
         return () => {
             newSong.removeEventListener('loadeddata', addSongAndDuration);
         };

@@ -8,6 +8,7 @@ import {
     selectFavoriteArtists,
     selectFavoriteSongs,
 } from '../UserCollection/store/userCollectionSlice';
+import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
 import './LikeBtn.scss';
 
 const LikeBtn = ({ data, itemType }) => {
@@ -27,6 +28,25 @@ const LikeBtn = ({ data, itemType }) => {
                   (album) => album.album_id === data?.album_id
               );
 
+    const handleLikeOrInfoMessage = () => {
+        if (userInfo) {
+            addOrDeleteFavoriteItem(
+                dispatch,
+                isFavorite,
+                data,
+                userInfo,
+                itemType
+            );
+        } else {
+            dispatch(
+                setAddAlertText(
+                    'Sign Up and get a chance to experience the app to the fullest'
+                )
+            );
+            dispatch(setAddAlertType('info'));
+        }
+    };
+
     return (
         <button
             className="like-btn"
@@ -35,15 +55,7 @@ const LikeBtn = ({ data, itemType }) => {
                     ? `Remove this ${itemType} from the Collection`
                     : `Add this ${itemType} to the Collection`
             }
-            onClick={() =>
-                addOrDeleteFavoriteItem(
-                    dispatch,
-                    isFavorite,
-                    data,
-                    userInfo,
-                    itemType
-                )
-            }
+            onClick={handleLikeOrInfoMessage}
         >
             {isFavorite ? (
                 <FaHeart style={{ color: 'rgb(255 99 99)' }} />

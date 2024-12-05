@@ -25,19 +25,21 @@ const Menu = () => {
                         Home
                     </NavLink>
                 </li>
-                <li className="menu__item">
-                    <NavLink
-                        to={`users/${userCollectionLink}`}
-                        className={({ isActive }) =>
-                            isActive
-                                ? 'menu__link menu__link-active'
-                                : 'menu__link'
-                        }
-                    >
-                        <LuListMusic className="menu__item-icon" />
-                        My Collection
-                    </NavLink>
-                </li>
+                {userInfo && (
+                    <li className="menu__item">
+                        <NavLink
+                            to={`users/${userCollectionLink}`}
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'menu__link menu__link-active'
+                                    : 'menu__link'
+                            }
+                        >
+                            <LuListMusic className="menu__item-icon" />
+                            My Collection
+                        </NavLink>
+                    </li>
+                )}
             </ul>
         </nav>
     );
