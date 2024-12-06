@@ -43,7 +43,6 @@ import './CurrentSongPlayer.scss';
 
 const CurrentSongPlayer = () => {
     const [song, setSong] = useState(null);
-    const [duration, setDuration] = useState(null);
     const [volume, setVolume] = useState(50);
     const dispatch = useDispatch();
     const currentSongsList = useSelector(selectCurrentSongsList);
@@ -65,7 +64,6 @@ const CurrentSongPlayer = () => {
         const newSong = new Audio(currentSongData?.link);
         const addSongAndDuration = () => {
             setSong(newSong);
-            setDuration(newSong.duration);
 
             newSong.volume = volume / 100;
             newSong.play();
@@ -104,7 +102,7 @@ const CurrentSongPlayer = () => {
 
             const changeProgressViaCurrentTime = ({ target }) => {
                 const { currentTime } = target;
-                let width = (currentTime * 100) / duration;
+                let width = (currentTime * 100) / currentSongData?.duration;
 
                 if (!temporaryProgressLineRef) {
                     timelineRef.current.innerHTML = `${durationFormat(
@@ -160,11 +158,11 @@ const CurrentSongPlayer = () => {
         const { clientWidth } = document.documentElement;
 
         if (clientWidth > 1280) {
-            const res = duration / 1280;
+            const res = currentSongData?.duration / 1280;
             const extraWidth = (clientWidth - 1280) / 2;
             song.currentTime = (clientX - extraWidth) * res;
         } else {
-            const res = duration / clientWidth;
+            const res = currentSongData?.duration / clientWidth;
             song.currentTime = clientX * res;
         }
     };
@@ -175,14 +173,15 @@ const CurrentSongPlayer = () => {
             const { clientWidth } = document.documentElement;
 
             if (clientWidth > 1280) {
-                const res = duration / 1280;
+                const res = currentSongData?.duration / 1280;
                 const extraWidth = (clientWidth - 1280) / 2;
                 temporaryProgressLineRef = (clientX - extraWidth) * res;
             } else {
-                const res = duration / clientWidth;
+                const res = currentSongData?.duration / clientWidth;
                 temporaryProgressLineRef = clientX * res;
             }
-            let width = (temporaryProgressLineRef * 100) / duration;
+            let width =
+                (temporaryProgressLineRef * 100) / currentSongData?.duration;
 
             timelineRef.current.innerHTML = `${durationFormat(
                 temporaryProgressLineRef
@@ -348,7 +347,7 @@ const CurrentSongPlayer = () => {
                             00:00 /
                         </span>
                         <span className="current-song__timeline-end">
-                            {durationFormat(duration)}
+                            {durationFormat(currentSongData?.duration)}
                         </span>
                     </div>
                 </div>
