@@ -1,0 +1,99 @@
+.share-btn {
+    position: relative;
+    width: 100px;
+    height: 35px;
+    font-size: 20px;
+    border-radius: 20px;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s;
+    font-family: "Roboto Condensed", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 5px;
+    transition: all 0.3s;
+    background-color: rgb(255 255 255 / 18%);
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgb(153 155 152);
+        color: #fff;
+    }
+
+    &:active {
+        transform: scale(0.9);
+    }
+
+    &:hover::before {
+        content: "Copy link";
+        width: 110px;
+        height: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: 5px;
+        position: absolute;
+        bottom: -33px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        color: #fff;
+        background-color: rgb(153 155 152);
+
+        box-shadow: 5px 5px 10px rgb(64, 63, 63);
+    }
+
+    &:hover::after {
+        content: "";
+        width: 12px;
+        height: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        position: absolute;
+        bottom: -16px;
+        transform: rotate(45deg);
+        background-color: #fff;
+        background-color: rgb(153 155 152);
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+    }
+
+    &__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__tooltip {
+        position: absolute;
+        width: 110px;
+        height: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: 5px;
+        top: 44px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-family: "Roboto Condensed", sans-serif;
+        background-color: rgb(153 155 152);
+        color: #fff;
+        z-index: 10;
+        opacity: 0;
+        transition: all 0.3s;
+        box-shadow: 5px 5px 10px rgb(64, 63, 63);
+        visibility: hidden;
+
+        &::after {
+            content: "";
+            width: 12px;
+            height: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            position: absolute;
+            top: -7px;
+            transform: rotate(45deg);
+            background-color: rgb(153 155 152);
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+        }
+    }
+}

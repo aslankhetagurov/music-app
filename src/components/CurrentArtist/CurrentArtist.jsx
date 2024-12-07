@@ -1,7 +1,7 @@
 import { useParams, NavLink } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaPlay, FaPause, FaShareNodes } from 'react-icons/fa6';
+import { FaPlay, FaPause } from 'react-icons/fa6';
 import { ImSpinner2 } from 'react-icons/im';
 
 import {
@@ -20,6 +20,7 @@ import {
 import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
 import defaultImg from '../../assets/avatar.png';
 import LikeBtn from '../LikeBtn/LikeBtn';
+import ShareBtn from '../ShareBtn/ShareBtn';
 import './CurrentArtist.scss';
 
 const CurrentArtist = () => {
@@ -33,23 +34,6 @@ const CurrentArtist = () => {
     const currentArtistLoadingStatus = useSelector(
         selectCurrentArtistLoadingStatus
     );
-    const copyTooltipRef = useRef();
-    let tooltipTimer = null;
-
-    const handleShareArtistLink = async () => {
-        try {
-            copyTooltipRef.current.style.opacity = '1';
-            copyTooltipRef.current.style.visibility = 'visible';
-            await navigator.clipboard.writeText(document.location.href);
-            tooltipTimer = setTimeout(() => {
-                copyTooltipRef.current.style.opacity = '0';
-                copyTooltipRef.current.style.visibility = 'hidden';
-                clearTimeout(tooltipTimer);
-            }, 1500);
-        } catch (err) {
-            console.error('error', err);
-        }
-    };
 
     useEffect(
         () => {
@@ -76,7 +60,7 @@ const CurrentArtist = () => {
         const { image, name } = artistInfo[0];
 
         return (
-            <div className="current-artist">
+            <section className="current-artist">
                 <div className="current-artist__head">
                     <img
                         className="current-artist__head-img"
@@ -112,24 +96,10 @@ const CurrentArtist = () => {
                                     )}
                                 </div>
                             </button>
+
                             <LikeBtn data={artistInfo[0]} itemType="artist" />
-                            <button
-                                className="current-artist__head-btn current-artist__head-btn-share "
-                                onClick={handleShareArtistLink}
-                            >
-                                <span className="current-artist__head-btn-icon">
-                                    <FaShareNodes />
-                                </span>
-                                <span className="current-artist__head-btn-text">
-                                    share
-                                </span>
-                                <span
-                                    ref={copyTooltipRef}
-                                    className="current-artist__share-tooltip"
-                                >
-                                    Link copied
-                                </span>
-                            </button>
+
+                            <ShareBtn />
                         </div>
                     </div>
                 </div>
@@ -174,7 +144,7 @@ const CurrentArtist = () => {
                         </li>
                     </ul>
                 </nav>
-            </div>
+            </section>
         );
     };
 

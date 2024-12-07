@@ -18,6 +18,7 @@ import {
 } from './store/singleSongSlice';
 import LikeBtn from '../LikeBtn/LikeBtn';
 import LineSongItem from '../LineSongItem/LineSongItem';
+import ShareBtn from '../ShareBtn/ShareBtn';
 import './SingleSong.scss';
 
 const SingleSong = () => {
@@ -50,7 +51,7 @@ const SingleSong = () => {
         };
 
         return (
-            <div className="single-song">
+            <section className="single-song">
                 <div className="single-song__inner">
                     <img
                         className="single-song__img"
@@ -90,13 +91,15 @@ const SingleSong = () => {
                             </button>
 
                             <LikeBtn data={singleSongData} itemType="song" />
+
+                            <ShareBtn />
                         </div>
                     </div>
                 </div>
                 <div className="single-song__item">
                     <LineSongItem songData={singleSongData} songNum="1" />
                 </div>
-            </div>
+            </section>
         );
     };
 

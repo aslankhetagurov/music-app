@@ -16,6 +16,7 @@ import {
 } from '../../../store/slices/generalStateSlice';
 import handleAddCurrentSongsList from '../../../utils/handleAddCurrentSongsList';
 import LikeBtn from '../../LikeBtn/LikeBtn';
+import ShareBtn from '../../ShareBtn/ShareBtn';
 import './SingleAlbumMain.scss';
 
 const SingleAlbumMain = () => {
@@ -47,7 +48,7 @@ const SingleAlbumMain = () => {
         };
 
         return (
-            <div className="single-album">
+            <section className="single-album">
                 <img className="single-album__img" src={image || defaultImg} />
                 <div className="single-album__main">
                     <div className="single-album__info">
@@ -86,9 +87,11 @@ const SingleAlbumMain = () => {
                         </button>
 
                         <LikeBtn data={singleAlbumInfo} itemType="album" />
+
+                        <ShareBtn />
                     </div>
                 </div>
-            </div>
+            </section>
         );
     };
 
