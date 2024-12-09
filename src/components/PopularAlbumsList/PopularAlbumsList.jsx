@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
-import { ImSpinner2 } from 'react-icons/im';
+import { useLocation } from 'react-router-dom';
 
 import {
     fetchPopularAlbums,
@@ -9,8 +8,7 @@ import {
     selectPopularAlbumsLoadingStatus,
 } from './store/popularAlbumsListSlice';
 import AlbumItem from '../AlbumItem/AlbumItem';
-import Slider from '../Slider/Slider';
-import './PopularAlbumsList.scss';
+import ItemListLayout from '../../layouts/ItemListLayout/ItemListLayout';
 
 const PopularAlbumsList = () => {
     const popularAlbums = useSelector(selectPopularAlbums);
@@ -34,30 +32,13 @@ const PopularAlbumsList = () => {
     ));
 
     return (
-        <div className="popular-albums">
-            {!showAllItems && (
-                <div className="popular-albums__top">
-                    <h2 className="popular-albums__title">Popular albums</h2>
-                    <Link
-                        to="/albums/popular-albums"
-                        className="popular-albums__link-all"
-                    >
-                        See all
-                    </Link>
-                </div>
-            )}
-            {popularAlbumsLoadingStatus === 'loading' ? (
-                <ImSpinner2 className="spinner" />
-            ) : popularAlbumsLoadingStatus === 'error' ? (
-                'An error has occurred, reload the page...'
-            ) : (
-                <Slider
-                    sliderItems={renderItems}
-                    showAllItems={showAllItems}
-                    duration={500}
-                />
-            )}
-        </div>
+        <ItemListLayout
+            showAllItems={showAllItems}
+            loadingStatus={popularAlbumsLoadingStatus}
+            items={renderItems}
+            title="Popular albums"
+            linkToAll="/albums/popular-albums"
+        />
     );
 };
 

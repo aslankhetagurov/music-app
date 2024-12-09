@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
-import { ImSpinner2 } from 'react-icons/im';
+import { useLocation } from 'react-router-dom';
 
 import {
     fetchNewReleasesList,
@@ -10,9 +9,8 @@ import {
 } from './store/newReleasesListSlice';
 import SquareSongItem from '../SquareSongItem/SquareSongItem';
 import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
-import Slider from '../Slider/Slider';
 import { selectCurrentSongsList } from '../../store/slices/generalStateSlice';
-import './NewReleasesList.scss';
+import ItemListLayout from '../../layouts/ItemListLayout/ItemListLayout';
 
 const NewReleasesList = () => {
     const currentSongslist = useSelector(selectCurrentSongsList);
@@ -42,30 +40,13 @@ const NewReleasesList = () => {
     ));
 
     return (
-        <div className="new-releases-list">
-            {!showAllItems && (
-                <div className="new-releases-list__top">
-                    <h2 className="new-releases-list__title">New Releases</h2>
-                    <Link
-                        to="/songs/new-releases"
-                        className="new-releases-list__link-all"
-                    >
-                        See all
-                    </Link>
-                </div>
-            )}
-            {newReleasesListLoadingStatus === 'loading' ? (
-                <ImSpinner2 className="spinner" />
-            ) : newReleasesListLoadingStatus === 'error' ? (
-                'An error has occurred, reload the page...'
-            ) : (
-                <Slider
-                    sliderItems={renderItems}
-                    showAllItems={showAllItems}
-                    duration={500}
-                />
-            )}
-        </div>
+        <ItemListLayout
+            showAllItems={showAllItems}
+            loadingStatus={newReleasesListLoadingStatus}
+            items={renderItems}
+            title="New Releases"
+            linkToAll="/songs/new-releases"
+        />
     );
 };
 

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
-import { ImSpinner2 } from 'react-icons/im';
+import { useLocation } from 'react-router-dom';
 
 import ArtistItem from '../ArtistItem/ArtistItem';
 import {
@@ -9,8 +8,7 @@ import {
     selectPopularArtists,
     selectPopularArtistsLoadingStatus,
 } from './store/popularArtistsSlice';
-import Slider from '../Slider/Slider';
-import './PopularArtistsList.scss';
+import ItemListLayout from '../../layouts/ItemListLayout/ItemListLayout';
 
 const PopularArtistsList = () => {
     const dispatch = useDispatch();
@@ -34,30 +32,13 @@ const PopularArtistsList = () => {
     });
 
     return (
-        <div className="popular-artists">
-            {!showAllItems && (
-                <div className="popular-artists__top">
-                    <h2 className="popular-artists__title">Popular Artists</h2>
-                    <Link
-                        to="/artists/popular-artists"
-                        className="popular-artists__link"
-                    >
-                        See all
-                    </Link>
-                </div>
-            )}
-            {popularArtistsLoadingStatus === 'loading' ? (
-                <ImSpinner2 className="spinner" />
-            ) : popularArtistsLoadingStatus === 'error' ? (
-                'An error has occurred, reload the page...'
-            ) : (
-                <Slider
-                    sliderItems={renderItems}
-                    showAllItems={showAllItems}
-                    duration={500}
-                />
-            )}
-        </div>
+        <ItemListLayout
+            showAllItems={showAllItems}
+            loadingStatus={popularArtistsLoadingStatus}
+            items={renderItems}
+            title="Popular Artists"
+            linkToAll="/artists/popular-artists"
+        />
     );
 };
 

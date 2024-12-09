@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
-import { ImSpinner2 } from 'react-icons/im';
+import { useLocation } from 'react-router-dom';
 
 import SquareSongItem from '../SquareSongItem/SquareSongItem';
 import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
@@ -11,9 +10,8 @@ import {
     selectRecommendedSongsList,
     selectRecommendedSongsListLoadingStatus,
 } from './store/recommendedSongsListSlice';
-import Slider from '../Slider/Slider';
 import { selectUserInfo } from '../../store/slices/authSlice';
-import './RecommendedSongsList.scss';
+import ItemListLayout from '../../layouts/ItemListLayout/ItemListLayout';
 
 const RecommendedSongsList = () => {
     const currentSongslist = useSelector(selectCurrentSongsList);
@@ -54,32 +52,13 @@ const RecommendedSongsList = () => {
 
     return (
         !!renderItems?.length && (
-            <div className="recommended-songs-list">
-                {!showAllItems && (
-                    <div className="recommended-songs-list__top">
-                        <h2 className="recommended-songs-list__title">
-                            Recommended for you
-                        </h2>
-                        <Link
-                            to="/songs/recommended-songs"
-                            className="recommended-songs-list__link-all"
-                        >
-                            See all
-                        </Link>
-                    </div>
-                )}
-                {recommendedSongsListLoadingStatus === 'loading' ? (
-                    <ImSpinner2 className="spinner" />
-                ) : recommendedSongsListLoadingStatus === 'error' ? (
-                    'An error has occurred, reload the page...'
-                ) : (
-                    <Slider
-                        sliderItems={renderItems}
-                        showAllItems={showAllItems}
-                        duration={500}
-                    />
-                )}
-            </div>
+            <ItemListLayout
+                showAllItems={showAllItems}
+                loadingStatus={recommendedSongsListLoadingStatus}
+                items={renderItems}
+                title="Recommended for you"
+                linkToAll="/songs/recommended-songs"
+            />
         )
     );
 };

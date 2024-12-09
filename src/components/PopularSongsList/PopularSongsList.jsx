@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ImSpinner2 } from 'react-icons/im';
 
 import SquareSongItem from '../SquareSongItem/SquareSongItem';
 import {
@@ -11,8 +10,7 @@ import {
 } from './store/popularSongsSlice';
 import { selectCurrentSongsList } from '../../store/slices/generalStateSlice';
 import handleAddCurrentList from '../../utils/handleAddCurrentSongsList';
-import Slider from '../Slider/Slider';
-import './PopularSongsList.scss';
+import ItemListLayout from '../../layouts/ItemListLayout/ItemListLayout';
 
 const PopularSongsList = () => {
     const currentSongslist = useSelector(selectCurrentSongsList);
@@ -40,30 +38,13 @@ const PopularSongsList = () => {
     ));
 
     return (
-        <div className="popular-songs">
-            {!showAllItems && (
-                <div className="popular-songs__top">
-                    <h2 className="popular-songs__title">Popular songs</h2>
-                    <Link
-                        to="/songs/popular-songs"
-                        className="popular-songs__link-all"
-                    >
-                        See all
-                    </Link>
-                </div>
-            )}
-            {songsLoadingStatus === 'loading' ? (
-                <ImSpinner2 className="spinner" />
-            ) : songsLoadingStatus === 'error' ? (
-                'An error has occurred, reload the page...'
-            ) : (
-                <Slider
-                    sliderItems={renderItems}
-                    showAllItems={showAllItems}
-                    duration={500}
-                />
-            )}
-        </div>
+        <ItemListLayout
+            showAllItems={showAllItems}
+            loadingStatus={songsLoadingStatus}
+            items={renderItems}
+            title="Popular songs"
+            linkToAll="/songs/popular-songs"
+        />
     );
 };
 
