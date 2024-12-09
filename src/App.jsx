@@ -5,12 +5,10 @@ import { useDispatch } from 'react-redux';
 import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage/HomePage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import PopularArtistsPage from './pages/PopularArtistsPage/PopularArtistsPage';
 import CurrentArtistPage from './pages/CurrentArtistPage/CurrentArtistPage';
 import CurrentArtistSongslist from './components/CurrentArtistSongsList/CurrentArtistSongsList';
 import CurrentArtistAbout from './components/CurrentArtistAbout/CurrentArtistAbout';
 import CurrentArtistAlbums from './components/CurrentArtistAlbums/CurrentArtistAlbums';
-import PopularSongsPage from './pages/PopularSongsPage/PopularSongsPage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import LogInPage from './pages/LogInPage/LogInPage';
 import { setAddUserInfo } from './store/slices/authSlice';
@@ -18,13 +16,11 @@ import supabase from '../supabaseClient';
 import LoginDataUpdatePage from './pages/LoginDataUpdatePage/LoginDataUpdatePage';
 import PasswordRecoveryPage from './pages/PasswordRecoveryPage/PasswordRecoveryPage';
 import Alert from './components/Alert/Alert';
-import RecentlyPlayedPage from './pages/RecentlyPlayedPage/RecentlyPlayedPage';
 import UserCollectionPage from './pages/UserCollectionPage/UserCollectionPage';
 import { fetchUserCollection } from './components/UserCollection/store/userCollectionSlice';
 import UserCollectionFavoriteSongs from './components/UserCollection/UserCollectionFavoriteSongs/UserCollectionFavoriteSongs';
 import UserCollectionFavoriteArtists from './components/UserCollection/UserCollectionFavoriteArtists/UserCollectionFavoriteArtists';
 import ListeningHistory from './components/UserCollection/ListeningHistory/ListeningHistory';
-import PopularAlbumsPage from './pages/PopularAlbumsPage/PopularAlbumsPage';
 import SingleAlbumPage from './pages/SingleAlbumPage/SingleAlbumPage';
 import UserCollectionFavoriteAlbums from './components/UserCollection/UserCollectionFavoriteAlbums/UserCollectionFavoriteAlbums';
 import {
@@ -32,10 +28,15 @@ import {
     setAddAlertType,
 } from './components/Alert/store/alertSlice';
 import SingleSongPage from './pages/SingleSongPage/SingleSongPage';
-import NewReleasesPage from './pages/NewReleasesPage/NewReleasesPage';
-import RecommendedSongsPage from './pages/RecommendedSongsPage/RecommendedSongsPage';
 import ChartPage from './pages/ChartPage/ChartPage';
 import RegisterPopup from './components/RegisterPopup/RegisterPopup';
+import ItemListPageLayout from './layouts/ItemListPageLayout/ItemListPageLayout';
+import NewReleasesList from './components/NewReleasesList/NewReleasesList';
+import PopularSongsList from './components/PopularSongsList/PopularSongsList';
+import RecentlyPlayedList from './components/RecentlyPlayedList/RecentlyPlayedList';
+import PopularArtistsList from './components/PopularArtistsList/PopularArtistsList';
+import RecommendedSongsList from './components/RecommendedSongsList/RecommendedSongsList';
+import PopularAlbumsList from './components/PopularAlbumsList/PopularAlbumsList';
 import './App.scss';
 
 function App() {
@@ -97,20 +98,52 @@ function App() {
                     <Route path="/" element={<MainLayout />}>
                         <Route index element={<HomePage />} />
                         <Route
+                            path="songs/new-releases"
+                            element={
+                                <ItemListPageLayout
+                                    Component={NewReleasesList}
+                                />
+                            }
+                        />
+                        <Route
                             path="songs/popular-songs"
-                            element={<PopularSongsPage />}
+                            element={
+                                <ItemListPageLayout
+                                    Component={PopularSongsList}
+                                />
+                            }
                         />
                         <Route
                             path="songs/recently-played"
-                            element={<RecentlyPlayedPage />}
+                            element={
+                                <ItemListPageLayout
+                                    Component={RecentlyPlayedList}
+                                />
+                            }
                         />
                         <Route
                             path="artists/popular-artists"
-                            element={<PopularArtistsPage />}
+                            element={
+                                <ItemListPageLayout
+                                    Component={PopularArtistsList}
+                                />
+                            }
                         />
                         <Route
                             path="songs/recommended-songs"
-                            element={<RecommendedSongsPage />}
+                            element={
+                                <ItemListPageLayout
+                                    Component={RecommendedSongsList}
+                                />
+                            }
+                        />
+                        <Route
+                            path="albums/popular-albums"
+                            element={
+                                <ItemListPageLayout
+                                    Component={PopularAlbumsList}
+                                />
+                            }
                         />
                         <Route path="songs/chart" element={<ChartPage />} />
                         <Route
@@ -151,14 +184,6 @@ function App() {
                                 element={<ListeningHistory />}
                             ></Route>
                         </Route>
-                        <Route
-                            path="albums/popular-albums"
-                            element={<PopularAlbumsPage />}
-                        />
-                        <Route
-                            path="songs/new-releases"
-                            element={<NewReleasesPage />}
-                        />
                         <Route
                             path="albums/:albumId"
                             element={<SingleAlbumPage />}
