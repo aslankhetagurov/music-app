@@ -1,8 +1,39 @@
 .search {
     position: relative;
     margin: 0 15px;
+    width: min(60%, 400px);
 
-    &__img {
+    @media (max-width: 500px) {
+        position: absolute;
+        width: 90%;
+        top: 69px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+    }
+
+    &__show-btn {
+        position: absolute;
+        font-size: 20px;
+        color: rgb(229, 229, 229);
+        visibility: hidden;
+        border: 2px solid;
+        padding: 3px;
+        border-radius: 5px;
+        top: -58px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+
+        @media (max-width: 500px) {
+            visibility: visible;
+        }
+    }
+
+    &__icon {
         position: absolute;
         left: 12px;
         top: 11px;
@@ -15,6 +46,19 @@
         z-index: 10;
         background-color: #787a75;
         border-radius: 10px;
+        transition:
+            top 300ms,
+            visibility 300ms,
+            opacity 100ms,
+            transform 300ms;
+
+        @media (max-width: 500px) {
+            transform: scale(0.1);
+            position: absolute;
+            top: -130px;
+            visibility: hidden;
+            opacity: 0;
+        }
     }
 
     &__input {
@@ -53,13 +97,21 @@
         &:active {
             transform: scale(0.9);
         }
+
+        &::after {
+            content: "";
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            left: 0;
+        }
     }
 
     &__result {
         position: absolute;
         width: 100%;
         max-height: 60vh;
-        top: 42px;
+        top: -510px;
         background-color: #787a75;
         padding: 15px;
         border-radius: 5px;
@@ -71,11 +123,12 @@
         overflow-x: hidden;
         opacity: 0;
         visibility: hidden;
-        transform: translateY(-40px);
+        transform: scale(0.1);
         transition:
-            opacity 300ms,
+            opacity 100ms,
             visibility 300ms,
-            transform 300ms;
+            transform 300ms,
+            top 300ms;
 
         &::-webkit-scrollbar {
             width: 10px;
@@ -89,6 +142,23 @@
         &::-webkit-scrollbar-thumb {
             background-color: #d7d7d7b0;
             border-radius: 5px;
+        }
+
+        &-show {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+            top: 42px;
+            transition:
+                opacity 600ms,
+                visibility 300ms,
+                transform 200ms,
+                top 300ms;
+            z-index: -1;
+
+            @media (max-width: 500px) {
+                top: 19px;
+            }
         }
     }
 
@@ -107,12 +177,17 @@
     }
 
     &__show {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-        transition:
-            opacity 300ms,
-            visibility 300ms,
-            transform 300ms;
+        @media (max-width: 500px) {
+            visibility: visible;
+            opacity: 1;
+            top: -20px;
+            position: absolute;
+            transform: scale(1);
+            transition:
+                top 300ms,
+                visibility 300ms,
+                opacity 300ms,
+                transform 300ms;
+        }
     }
 }

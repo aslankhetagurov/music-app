@@ -27,6 +27,7 @@ const SearchInput = () => {
     const searchSongsList = useSelector(selectSearchSongsList);
     const searchAlbumsList = useSelector(selectSearchAlbumsList);
     const [searchResultToggle, setSearchResultToggle] = useState(false);
+    const [showInputToggle, setShowInputToggle] = useState(false);
     const searchResultRef = useRef(null);
 
     useEffect(
@@ -53,24 +54,29 @@ const SearchInput = () => {
 
     useEffect(() => {
         const handleHideSearchResult = (e) => {
-            if (
+            if (e.target.className === 'search__close-btn') {
+                searchResultToggle &&
+                    setSearchResultToggle(!searchResultToggle);
+            } else if (
                 !searchResultRef.current?.contains(e.target) ||
                 e.target.className === 'small-artist-item__artist-name' ||
                 e.target.className === 'artist-name__item' ||
                 e.target.className === 'small-song-item__title'
             ) {
-                setSearchResultToggle(!searchResultToggle);
+                searchResultToggle &&
+                    setSearchResultToggle(!searchResultToggle);
+                showInputToggle && setShowInputToggle(!showInputToggle);
             }
         };
 
-        searchResultToggle &&
+        (searchResultToggle || showInputToggle) &&
             document.addEventListener('click', handleHideSearchResult);
 
         return () =>
             document.removeEventListener('click', handleHideSearchResult);
 
         // eslint-disable-next-line
-    }, [searchResultToggle]);
+    }, [searchResultToggle, showInputToggle]);
 
     function handleInputValueChange(e) {
         dispatch(setAddSearchValue(e.target.value));
@@ -105,10 +111,22 @@ const SearchInput = () => {
         !searchResultToggle && setSearchResultToggle(!searchResultToggle);
     };
 
+    const handleShowInput = () => {
+        setShowInputToggle(!showInputToggle);
+        searchResultToggle && setSearchResultToggle(!searchResultToggle);
+    };
+
     return (
         <div ref={searchResultRef} className="search">
-            <div className="search__input-wrapper">
-                <div className="search__img">
+            <div className="search__show-btn" onClick={handleShowInput}>
+                <IoMdSearch />
+            </div>
+            <div
+                className={`search__input-wrapper ${
+                    showInputToggle ? 'search__show' : ''
+                }`}
+            >
+                <div className="search__icon">
                     <IoMdSearch />
                 </div>
                 <input
@@ -131,14 +149,16 @@ const SearchInput = () => {
 
             <div
                 className={`search__result ${
-                    (searchResultToggle &&
+                    ((searchResultToggle || showInputToggle) &&
                         searchValue &&
                         (searchArtistsList?.length ||
                             searchSongsList?.length)) ||
                     searchDataLoadingStatus === 'error'
-                        ? 'search__show'
+                        ? 'search__result-show'
                         : ''
-                }`}
+                } 
+                
+                `}
             >
                 {!!searchArtistsList?.length && (
                     <ul className="search__result-items">
