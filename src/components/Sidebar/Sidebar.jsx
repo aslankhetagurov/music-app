@@ -39,9 +39,16 @@ const Sidebar = () => {
     };
 
     const handlePlaySong = (songData) => {
-        if (currentSongData?.song_id !== songData.song_id) {
+        if (
+            currentSongData?.song_id !== songData.song_id &&
+            sidebarInfoType === 'Album'
+        ) {
+            dispatch(setAddCurrentSong(songData));
+            handleAddCurrentSongsList(currentSongsList, sidebarList);
+        } else if (currentSongData?.song_id !== songData.song_id) {
             dispatch(setAddCurrentSong(songData));
         }
+
         if (currentSongData?.song_id === songData.song_id) {
             dispatch(setTogglePlaying());
         }
