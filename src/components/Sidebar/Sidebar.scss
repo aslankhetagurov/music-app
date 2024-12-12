@@ -1,7 +1,7 @@
 .sidebar {
     background-color: rgba(226, 225, 225, 0.06);
-    max-width: 280px;
-    width: 100%;
+    width: max(33%, 280px);
+    min-width: 230px;
     height: calc(100vh - 182px);
     padding: 15px;
     border-radius: 15px;
@@ -10,7 +10,15 @@
     margin-left: auto;
     overflow: hidden;
     box-shadow: 5px 5px 10px #6c6a6a;
-    flex: 1 0 100%;
+
+    @media (max-width: 600px) {
+        display: none;
+    }
+
+    @media (max-width: 840px) {
+        height: calc(100vh - 225px);
+        top: 130px;
+    }
 
     &__info {
         border-bottom: 2px solid rgba(255, 255, 255, 0.2392156863);
@@ -21,8 +29,8 @@
             position: relative;
             font-size: 30px;
             background-color: rgba(78, 75, 75, 0.13);
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -74,8 +82,8 @@
     }
 
     &__main-btn {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
         border: none;
         background-color: #8870ff;
@@ -164,6 +172,10 @@
             background-color: #1f1f1e6e;
             border-radius: 2px;
         }
+
+        @media (max-width: 840px) {
+            height: calc(100vh - 566px);
+        }
     }
 
     &__list-item {
@@ -211,6 +223,12 @@
 
         &:active {
             transform: scale(0.9);
+        }
+
+        @media (max-width: 1024px) {
+            opacity: 0.9;
+            width: 25px;
+            height: 25px;
         }
     }
 
