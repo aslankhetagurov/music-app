@@ -29,10 +29,24 @@
     &:hover {
         background-color: rgb(226 225 225 / 25%);
 
-        .song-item__btn {
-            opacity: 1;
+        @media (max-width: 1024px) {
+            background-color: rgb(226 225 225 / 6%);
         }
 
+        .song-item__btn {
+            opacity: 1;
+
+            @media (max-width: 1024px) {
+                opacity: 0.9;
+            }
+        }
+
+        .like-btn {
+            opacity: 1;
+        }
+    }
+
+    @media (max-width: 1024px) {
         .like-btn {
             opacity: 1;
         }
@@ -65,10 +79,18 @@
 
         &_active {
             opacity: 1;
+
+            @media (max-width: 1024px) {
+                opacity: 0.9;
+            }
         }
 
         &:hover {
             transform: scale(1.2);
+
+            @media (max-width: 1024px) {
+                transform: none;
+            }
         }
 
         &:active {
@@ -80,6 +102,11 @@
             align-items: center;
             justify-content: center;
             color: #fff;
+        }
+
+        @media (max-width: 1024px) {
+            opacity: 0.9;
+            transform: none;
         }
     }
 

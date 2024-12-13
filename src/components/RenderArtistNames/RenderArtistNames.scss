@@ -25,6 +25,7 @@
             content: ", ";
             color: #d5d6d6;
         }
+
         &:first-child {
             &::before {
                 content: "";
@@ -32,7 +33,9 @@
         }
 
         &:hover {
-            color: #8870ff;
+            @media (min-width: 1025px) {
+                color: #8870ff;
+            }
         }
     }
 }
