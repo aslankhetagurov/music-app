@@ -16,14 +16,28 @@
 
     &:hover {
         background-color: rgba(255, 255, 255, 0.2);
+
+        @media (max-width: 1024px) {
+            background-color: transparent;
+        }
+
         .line-song-item__btn {
             opacity: 1;
+
+            @media (max-width: 1024px) {
+                opacity: 0.9;
+            }
         }
 
         .line-song-item__num,
         .line-song-item__rating {
             opacity: 0;
             visibility: hidden;
+
+            @media (max-width: 1024px) {
+                opacity: 1;
+                visibility: visible;
+            }
         }
     }
 
@@ -44,6 +58,10 @@
         align-items: center;
         padding-left: 50px;
         width: 100%;
+
+        @media (max-width: 500px) {
+            padding-left: 40px;
+        }
     }
 
     &__num-btn {
@@ -54,6 +72,12 @@
         min-width: 50px;
         padding: 0 10px;
         position: absolute;
+    }
+
+    &__num {
+        @media (max-width: 500px) {
+            font-weight: 700;
+        }
     }
 
     &__rating {
@@ -96,6 +120,10 @@
 
         &:hover {
             transform: scale(1.2);
+
+            @media (max-width: 1024px) {
+                transform: none;
+            }
         }
 
         &:focus-visible {
@@ -112,6 +140,10 @@
             border-radius: 50%;
             border: none;
             background-color: #8870ff;
+
+            @media (max-width: 1024px) {
+                display: none;
+            }
         }
 
         &-icon {
@@ -120,12 +152,25 @@
             justify-content: center;
             color: rgba(255, 255, 255, 0.7);
         }
+
+        @media (max-width: 1024px) {
+            opacity: 0.9;
+            left: 58px;
+        }
+
+        @media (max-width: 500px) {
+            left: 48px;
+        }
     }
 
     &__img {
         width: 40px;
         border-radius: 3px;
         margin-right: 10px;
+
+        @media (max-width: 500px) {
+            width: 40px;
+        }
     }
 
     &__info {

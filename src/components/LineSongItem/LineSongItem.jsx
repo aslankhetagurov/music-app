@@ -87,11 +87,15 @@ const LineSongItem = ({
             <div tabIndex={0} className="line-song-item">
                 <div className="line-song-item__num-btn">
                     <div className="line-song-item__num">
-                        {currentSongData?.song_id === song_id && playing ? (
+                        {currentSongData?.song_id === song_id &&
+                        playing &&
+                        window.innerWidth > 1024 ? (
                             <HiSpeakerWave
                                 style={{ color: '#fff', fontSize: '20px' }}
                             />
-                        ) : currentSongData?.song_id === song_id && !playing ? (
+                        ) : currentSongData?.song_id === song_id &&
+                          !playing &&
+                          window.innerWidth > 1024 ? (
                             <button className="line-song-item__btn-playing-state">
                                 <span className="line-song-item__btn-icon">
                                     <FaPlay className="play-svg" />
@@ -101,7 +105,11 @@ const LineSongItem = ({
                             songNum
                         )}
                     </div>
-                    {prevPosition && currentSongData?.song_id !== song_id && (
+                    {((window.innerWidth <= 1024 &&
+                        !!prevPosition &&
+                        currentSongData?.song_id === song_id) ||
+                        (prevPosition &&
+                            currentSongData?.song_id !== song_id)) && (
                         <div className="line-song-item__rating">
                             {itemPositionChange()}
                         </div>
