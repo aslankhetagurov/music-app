@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { ImSpinner2 } from 'react-icons/im';
@@ -22,11 +22,33 @@ const Chart = () => {
     const prevChartList = useSelector(selectPrevChartList);
     const chartListLoadingStatus = useSelector(selectChartListLoadingStatus);
     const showAllItems = pathname === '/songs/chart';
+    const [oneItemsColumnToggle, setOneItemsColumnToggle] = useState(false);
+    const chartRef = useRef(null);
 
     useEffect(() => {
         dispatch(fetchChartList());
         // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        const chart = chartRef.current;
+
+        const oneOrTwoColumnToggle = (entries) => {
+            if (entries[0].contentRect.width < 690) {
+                !oneItemsColumnToggle && setOneItemsColumnToggle(true);
+            } else if (entries[0].contentRect.width > 690) {
+                oneItemsColumnToggle && setOneItemsColumnToggle(false);
+            }
+        };
+
+        const resizeObserver = new ResizeObserver(oneOrTwoColumnToggle);
+
+        if (chart) resizeObserver.observe(chart);
+
+        return () => {
+            if (chart) resizeObserver.unobserve(chart);
+        };
+    }, [chartList, oneItemsColumnToggle]);
 
     const renderLeftItems = () =>
         chartList
@@ -100,7 +122,7 @@ const Chart = () => {
         });
 
     return (
-        <div className="chart">
+        <div className="chart" ref={chartRef}>
             <div className="chart__header">
                 <div className="chart__header-top">
                     <h1 className="chart__title">Chart</h1>
@@ -123,16 +145,28 @@ const Chart = () => {
                 <div
                     className={`chart__list ${
                         showAllItems ? 'chart__list-all' : ''
-                    }`}
+                    } ${oneItemsColumnToggle ? 'chart__one-column' : ''}`}
                 >
                     {showAllItems ? (
                         renderAllItems()
                     ) : (
                         <>
-                            <div className="chart__list-left">
+                            <div
+                                className={`chart__list-left ${
+                                    oneItemsColumnToggle
+                                        ? 'chart__one-column'
+                                        : ''
+                                }`}
+                            >
                                 {renderLeftItems()}
                             </div>
-                            <div className="chart__list-right">
+                            <div
+                                className={`chart__list-right ${
+                                    oneItemsColumnToggle
+                                        ? 'chart__one-column'
+                                        : ''
+                                }`}
+                            >
                                 {renderRightItems()}
                             </div>
                         </>
