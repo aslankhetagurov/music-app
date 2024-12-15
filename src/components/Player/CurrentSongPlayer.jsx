@@ -39,6 +39,9 @@ import {
     setShowPlaybackQueuePopup,
 } from '../PlaybackQueuePopup/store/playbackQueuePopupSlice';
 import defaultImg from '../../assets/default-img.webp';
+import handleAddCurrentSongsList from '../../utils/handleAddCurrentSongsList';
+import { Link } from 'react-router-dom';
+import { setAddSingleSongData } from '../SingleSong/store/singleSongSlice';
 import './CurrentSongPlayer.scss';
 
 const CurrentSongPlayer = () => {
@@ -149,6 +152,12 @@ const CurrentSongPlayer = () => {
         // eslint-disable-next-line
     }, [currentSongData]);
 
+    useEffect(() => {
+        randomSongsList &&
+            handleAddCurrentSongsList(currentSongsList, randomSongsList);
+        // eslint-disable-next-line
+    }, [random]);
+
     const handleSongPlay = () => {
         dispatch(setTogglePlaying());
     };
@@ -208,11 +217,13 @@ const CurrentSongPlayer = () => {
 
     const randomSongsList = useMemo(() => {
         if (currentSongsList && random) {
-            return currentSongsList.sort(
-                () =>
-                    Math.floor(Math.random() * 1000) -
-                    Math.floor(Math.random() * 1000)
-            );
+            return currentSongsList
+                .slice()
+                .sort(
+                    () =>
+                        Math.floor(Math.random() * 1000) -
+                        Math.floor(Math.random() * 1000)
+                );
         }
         // eslint-disable-next-line
     }, [random]);
@@ -326,7 +337,11 @@ const CurrentSongPlayer = () => {
     };
 
     const renderCurrentPlayer = (data) => {
-        const { image, artist, name } = data;
+        const { image, artist, name, id } = data;
+
+        const handleDispatchSingleSongData = () => {
+            dispatch(setAddSingleSongData(data));
+        };
 
         return (
             <div className="current-song ">
@@ -359,8 +374,16 @@ const CurrentSongPlayer = () => {
                             src={image || defaultImg}
                         />
                         <div className="current-song__info">
-                            <div className="current-song__info-title">
-                                {name}
+                            <div
+                                className="current-song__info-title"
+                                onClick={handleDispatchSingleSongData}
+                            >
+                                <Link
+                                    className="current-song__info-title-link"
+                                    to={`/songs/${id}`}
+                                >
+                                    {name}
+                                </Link>
                             </div>
                             <div className="current-song__info-artist">
                                 {artist && <RenderArtistNames names={artist} />}
