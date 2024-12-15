@@ -176,9 +176,18 @@ const CurrentSongPlayer = () => {
         }
     };
 
-    const changeSongProgressByMove = () => {
+    const changeSongProgressByMove = (evt) => {
+        const { type } = evt;
+
         const changeProgress = (evt) => {
-            const { clientX } = evt;
+            let clientX;
+
+            if (evt.type === 'touchmove') {
+                clientX = evt.changedTouches[0].clientX;
+            } else {
+                clientX = evt.clientX;
+            }
+
             const { clientWidth } = document.documentElement;
 
             if (clientWidth > 1280) {
@@ -199,16 +208,29 @@ const CurrentSongPlayer = () => {
         };
 
         const offMouseUp = () => {
-            document.removeEventListener('mousemove', changeProgress);
+            if (type === 'mousedown') {
+                document.removeEventListener('mousemove', changeProgress);
+                document.removeEventListener('mouseup', offMouseUp);
+            } else if (type === 'touchstart') {
+                document.removeEventListener('touchmove', changeProgress);
+                document.removeEventListener('touchend', offMouseUp);
+                document.body.classList.toggle('scroll-lock');
+            }
+
             if (temporaryProgressLineRef) {
                 song.currentTime = temporaryProgressLineRef;
             }
             temporaryProgressLineRef = null;
-            document.removeEventListener('mouseup', offMouseUp);
         };
 
-        document.addEventListener('mousemove', changeProgress);
-        document.addEventListener('mouseup', offMouseUp);
+        if (type === 'mousedown') {
+            document.addEventListener('mousemove', changeProgress);
+            document.addEventListener('mouseup', offMouseUp);
+        } else if (type === 'touchstart') {
+            document.addEventListener('touchmove', changeProgress);
+            document.addEventListener('touchend', offMouseUp);
+            document.body.classList.toggle('scroll-lock');
+        }
     };
 
     const handleRepeating = () => {
@@ -349,6 +371,7 @@ const CurrentSongPlayer = () => {
                     className="current-song__progress"
                     onClick={changeSongProgressByClick}
                     onMouseDown={changeSongProgressByMove}
+                    onTouchStart={changeSongProgressByMove}
                 >
                     <div
                         className="current-song__progress-line"
