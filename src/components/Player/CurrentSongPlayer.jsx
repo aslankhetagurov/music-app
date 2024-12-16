@@ -75,20 +75,29 @@ const CurrentSongPlayer = () => {
 
         currentSongData && fetchUpdateSongListeningsCount();
 
-        if (!userInfo && currentSongData) {
-            dispatch(
-                setAddAlertText(
-                    'Sign Up and get a chance to experience the app to the fullest'
-                )
-            );
-            dispatch(setAddAlertType('info'));
-        }
-
         return () => {
             newSong.removeEventListener('loadeddata', addSongAndDuration);
         };
         // eslint-disable-next-line
     }, [currentSongData]);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            if (!userInfo && currentSongData) {
+                dispatch(
+                    setAddAlertText(
+                        'Sign Up and get a chance to experience the app to the fullest'
+                    )
+                );
+                dispatch(setAddAlertType('info'));
+            }
+        }, 2000);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
+        // eslint-disable-next-line
+    }, [currentSongData, userInfo]);
 
     // play after audio creation
     useEffect(() => {
