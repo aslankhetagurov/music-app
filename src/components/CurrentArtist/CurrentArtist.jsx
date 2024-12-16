@@ -139,7 +139,7 @@ const CurrentArtist = () => {
                                 }
                                 to="about"
                             >
-                                About the artist
+                                About
                             </NavLink>
                         </li>
                     </ul>
