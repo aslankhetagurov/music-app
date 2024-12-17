@@ -27,7 +27,9 @@
         background-color: rgba(255, 255, 255, 0.2);
 
         .small-artist-item__btn {
-            opacity: 1;
+            @media (min-width: 1025px) {
+                opacity: 1;
+            }
         }
     }
 
@@ -74,10 +76,18 @@
         &:focus-visible {
             opacity: 1;
         }
+
+        @media (max-width: 1024px) {
+            opacity: 0.9;
+        }
     }
 
     &__btn-active {
         opacity: 1;
+
+        @media (max-width: 1024px) {
+            opacity: 0.9;
+        }
     }
 
     &__btn-icon {
