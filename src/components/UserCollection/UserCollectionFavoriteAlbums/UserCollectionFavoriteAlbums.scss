@@ -1,8 +1,8 @@
 .favorite-albums {
     &__title {
-        font-size: 22px;
-        line-height: 24px;
-        margin-bottom: 20px;
+        font-size: 2.4rem;
+        line-height: 1.2;
+        margin-bottom: 3rem;
     }
 
     &__items {
@@ -10,5 +10,11 @@
         justify-content: flex-start;
         flex-wrap: wrap;
         gap: 20px 9px;
+
+        @media (max-width: 475px) {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 145px);
+            justify-content: space-around;
+        }
     }
 }

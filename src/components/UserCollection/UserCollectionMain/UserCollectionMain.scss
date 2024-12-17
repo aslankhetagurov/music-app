@@ -2,25 +2,43 @@
     &__head {
         display: flex;
         flex-wrap: wrap;
+        row-gap: 10px;
+        column-gap: 20px;
+
+        @media (max-width: 520px) {
+            justify-content: center;
+            text-align: center;
+        }
 
         &-main {
-            margin: 0 30px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+
+            @media (max-width: 550px) {
+                margin: 0;
+                align-items: center;
+            }
+        }
+
+        &-top {
+            display: grid;
         }
 
         &-label {
-            font-size: 30px;
-            line-height: 34px;
+            font-size: 3rem;
+            line-height: 1.2;
             color: rgba(255, 255, 255, 0.7);
         }
 
         &-title {
-            font-size: 50px;
-            line-height: 54px;
+            font-size: 4rem;
+            line-height: 1.2;
             font-weight: 700;
-            margin-top: 20px;
+            margin: 2rem 0;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         &-btn {
@@ -43,6 +61,11 @@
             &:hover {
                 color: #8870ff;
                 background-color: #fff;
+
+                @media (max-width: 1024px) {
+                    background-color: #8870ff;
+                    color: rgba(255, 255, 255, 0.7);
+                }
             }
 
             &:active {
@@ -82,6 +105,11 @@
         object-fit: cover;
         background-color: #fff;
         transition: filter 0.3s;
+
+        @media (max-width: 520px) {
+            width: 160px;
+            height: 160px;
+        }
     }
 
     &__avatar-input-wrapper {
