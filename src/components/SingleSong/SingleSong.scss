@@ -5,6 +5,13 @@
         display: flex;
         flex-wrap: wrap;
         margin-bottom: 40px;
+        column-gap: 30px;
+        row-gap: 10px;
+
+        @media (max-width: 550px) {
+            justify-content: center;
+            text-align: center;
+        }
     }
 
     &__img {
@@ -14,26 +21,48 @@
         object-fit: cover;
         background-color: #fff;
         margin-left: 20px;
+
+        @media (max-width: 550px) {
+            margin-left: 0;
+        }
+
+        @media (max-width: 450px) {
+            width: 160px;
+            height: 160px;
+        }
     }
 
     &__main {
-        margin-left: 30px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        margin-left: 20px;
+        row-gap: 15px;
+
+        @media (max-width: 550px) {
+            align-items: center;
+            margin-left: 0;
+        }
+    }
+
+    &__info {
+        display: grid;
     }
 
     &__label {
-        font-size: 30px;
-        line-height: 34px;
+        font-size: 3rem;
+        line-height: 1.2;
         color: rgba(255, 255, 255, 0.7);
     }
 
     &__title {
-        font-size: 52px;
-        line-height: 54px;
+        font-size: 5rem;
+        line-height: 1.2;
         font-weight: 700;
-        margin: 20px 0 10px;
+        margin: 1.5rem 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
     &__more-info {
@@ -42,10 +71,22 @@
         color: rgba(255, 255, 255, 0.7);
         font-size: 18px;
         line-height: 20px;
+
+        @media (max-width: 550px) {
+            margin-bottom: 15px;
+            justify-content: center;
+        }
     }
 
     &__artist {
+        display: grid;
         transition: color 0.3s;
+
+        a {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
 
         &:hover {
             color: #fff;
@@ -82,6 +123,10 @@
                 transform: scale(0.9);
             }
         }
+
+        @media (max-width: 550px) {
+            justify-content: center;
+        }
     }
 
     &__play-btn {
@@ -102,9 +147,11 @@
         font-family: "Roboto Condensed", sans-serif;
 
         &:hover {
-            color: #8870ff;
-            background-color: #fff;
-            transform: scale(1.1);
+            @media (min-width: 1025px) {
+                color: #8870ff;
+                background-color: #fff;
+                transform: scale(1.1);
+            }
         }
 
         &:active {
