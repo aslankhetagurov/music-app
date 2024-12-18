@@ -9,6 +9,7 @@ import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import supabase from '../../../supabaseClient';
 import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
 import { setAddUserInfo } from '../../store/slices/authSlice';
+import logo from '../../assets/logo.png';
 import './AuthForm.scss';
 
 const MyTextInput = ({ label, ...props }) => {
@@ -93,7 +94,16 @@ const AuthForm = ({ textBtn, title, type }) => {
     return (
         <div className="auth-form">
             <div className="auth-form__container">
-                <h1 className="auth-form__title">{title}</h1>
+                <div className="auth-form__header">
+                    <Link className="auth-form__logo" to="/">
+                        <img
+                            className="auth-form__logo-img"
+                            src={logo}
+                            alt="logo"
+                        />
+                    </Link>
+                    <h1 className="auth-form__title">{title}</h1>
+                </div>
                 <Formik
                     initialValues={{
                         email: '',
