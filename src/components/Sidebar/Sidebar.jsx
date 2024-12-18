@@ -213,7 +213,7 @@ const Sidebar = () => {
                         <span style={{ margin: '0 10px' }}>*</span>
                         <span className="sidebar__genre">{genre}</span>
                     </div>
-                    {sidebarInfoType === 'Song' && (
+                    {sidebarInfoType === 'Song' && albums && (
                         <div className="sidebar__album">
                             <span className="sidebar__album-label">
                                 Album:{' '}
