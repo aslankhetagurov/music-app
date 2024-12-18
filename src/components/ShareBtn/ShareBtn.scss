@@ -26,35 +26,38 @@
     }
 
     &:hover::before {
-        content: "Copy link";
-        width: 110px;
-        height: 24px;
-        border: 1px solid rgba(255, 255, 255, 0.7);
-        border-radius: 5px;
-        position: absolute;
-        bottom: -33px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 16px;
-        color: #fff;
-        background-color: rgb(153 155 152);
-
-        box-shadow: 5px 5px 10px rgb(64, 63, 63);
+        @media (min-width: 1025px) {
+            content: "Copy link";
+            width: 110px;
+            height: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+            position: absolute;
+            bottom: -33px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: #fff;
+            background-color: rgb(153 155 152);
+            box-shadow: 5px 5px 10px rgb(64, 63, 63);
+        }
     }
 
     &:hover::after {
-        content: "";
-        width: 12px;
-        height: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.7);
-        position: absolute;
-        bottom: -16px;
-        transform: rotate(45deg);
-        background-color: #fff;
-        background-color: rgb(153 155 152);
-        border-right-color: transparent;
-        border-bottom-color: transparent;
+        @media (min-width: 1025px) {
+            content: "";
+            width: 12px;
+            height: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            position: absolute;
+            bottom: -16px;
+            transform: rotate(45deg);
+            background-color: #fff;
+            background-color: rgb(153 155 152);
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+        }
     }
 
     &__icon {
