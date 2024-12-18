@@ -7,7 +7,7 @@ import './CurrentArtistAlbums.scss';
 const CurrentArtistAlbums = () => {
     const currentArtistAlbums = useSelector(selectCurrentArtistAlbums);
 
-    return currentArtistAlbums ? (
+    return currentArtistAlbums.length ? (
         <div className="current-artist-albums">
             <h1 className="current-artist-albums__title">Albums</h1>
             <div className="current-artist-albums__items">
