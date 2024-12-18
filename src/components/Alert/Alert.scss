@@ -1,8 +1,7 @@
 .alert {
     position: fixed;
     z-index: 1000;
-    right: -350px;
-    top: 70px;
+    transform: translateY(-100px);
     border-radius: 5px;
     padding: 7px;
     width: 220px;
@@ -17,7 +16,7 @@
     align-items: center;
 
     &__show {
-        transform: translateX(-360px);
+        transform: translateY(70px);
         visibility: visible;
         opacity: 0.9;
         transition:

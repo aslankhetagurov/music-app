@@ -34,7 +34,7 @@ const Alert = () => {
     return (
         <div
             className={`alert alert__type-${alertType} ${
-                alertText && 'alert__show'
+                alertText ? 'alert__show' : ''
             }`}
         >
             <p className="alert__text">{alertText}</p>
