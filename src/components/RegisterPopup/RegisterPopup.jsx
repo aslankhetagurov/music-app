@@ -16,7 +16,7 @@ const RegisterPopup = () => {
             setTimeout(() => {
                 setShowPopup(!showPopup);
                 turnOffScroll();
-            }, 5000);
+            }, 10000);
 
         return () => {
             clearTimeout(timeoutId);
@@ -33,8 +33,10 @@ const RegisterPopup = () => {
     };
 
     const handleClosePopupByBackgroundClick = ({ currentTarget, target }) => {
-        if (currentTarget === target) setShowPopup(!showPopup);
-        turnOnScroll();
+        if (currentTarget === target) {
+            setShowPopup(!showPopup);
+            turnOnScroll();
+        }
     };
 
     const renderContent = () => {

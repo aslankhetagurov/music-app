@@ -7,6 +7,9 @@
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(15px);
+    left: 0;
+    right: 0;
+    cursor: pointer;
 
     &__wrapper {
         height: 400px;
@@ -22,6 +25,7 @@
         box-shadow:
             5px 5px 20px #424242,
             -5px -5px 20px #c8c8c8;
+        cursor: default;
     }
 
     &__close-btn {
