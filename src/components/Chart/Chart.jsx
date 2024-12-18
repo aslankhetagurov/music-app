@@ -55,10 +55,9 @@ const Chart = () => {
             ?.slice()
             .splice(0, 5)
             .map((data, i) => {
-                const prevPosition =
-                    prevChartList.findIndex(
-                        (el) => el.song_id === data.song_id
-                    ) + 1;
+                const prevPosition = prevChartList.findIndex(
+                    (el) => el.song_id === data.song_id
+                );
 
                 return (
                     <LineSongItem
@@ -71,7 +70,9 @@ const Chart = () => {
                             )
                         }
                         songNum={i + 1}
-                        prevPosition={prevPosition}
+                        prevPosition={
+                            prevPosition >= 0 ? prevPosition + 1 : prevPosition
+                        }
                     />
                 );
             });
@@ -81,10 +82,9 @@ const Chart = () => {
             ?.slice()
             .splice(5, 5)
             .map((data, i) => {
-                const prevPosition =
-                    prevChartList.findIndex(
-                        (el) => el.song_id === data.song_id
-                    ) + 1;
+                const prevPosition = prevChartList.findIndex(
+                    (el) => el.song_id === data.song_id
+                );
 
                 return (
                     <LineSongItem
@@ -97,17 +97,18 @@ const Chart = () => {
                             )
                         }
                         songNum={i + 6}
-                        prevPosition={prevPosition}
+                        prevPosition={
+                            prevPosition >= 0 ? prevPosition + 1 : prevPosition
+                        }
                     />
                 );
             });
 
     const renderAllItems = () =>
         chartList?.map((data, i) => {
-            const prevPosition =
-                prevChartList.findIndex((el) => el.song_id === data.song_id) +
-                1;
-
+            const prevPosition = prevChartList.findIndex(
+                (el) => el.song_id === data.song_id
+            );
             return (
                 <LineSongItem
                     key={data.song_id}
@@ -116,7 +117,9 @@ const Chart = () => {
                         handleAddCurrentSongsList(currentSongslist, chartList)
                     }
                     songNum={i + 1}
-                    prevPosition={prevPosition}
+                    prevPosition={
+                        prevPosition >= 0 ? prevPosition + 1 : prevPosition
+                    }
                 />
             );
         });
