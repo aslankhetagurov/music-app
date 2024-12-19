@@ -67,7 +67,13 @@ const RecentlyPlayedList = () => {
     );
 
     return (
-        !!recentlyPlayed.length && (
+        !!recentlyPlayed.length &&
+        (showAllItems ? (
+            <div className="recently-played">
+                <h1 className="recently-played__title">Recently played</h1>
+                {renderItems}
+            </div>
+        ) : (
             <ItemListLayout
                 showAllItems={showAllItems}
                 loadingStatus={recentlyPlayedLoadingStatus}
@@ -75,7 +81,7 @@ const RecentlyPlayedList = () => {
                 title="Recently played"
                 linkToAll="/songs/recently-played"
             />
-        )
+        ))
     );
 };
 
