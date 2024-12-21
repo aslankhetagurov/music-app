@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { selectUserInfo } from '../../store/slices/authSlice';
@@ -9,10 +9,17 @@ import './RegisterPopup.scss';
 const RegisterPopup = () => {
     const [showPopup, setShowPopup] = useState(false);
     const userInfo = useSelector(selectUserInfo);
+    const { pathname } = useLocation();
 
     useEffect(() => {
+        const onPopup =
+            pathname !== '/login' &&
+            pathname !== '/signup' &&
+            pathname !== '/recover';
+
         const timeoutId =
             !userInfo &&
+            onPopup &&
             setTimeout(() => {
                 setShowPopup(!showPopup);
                 turnOffScroll();
