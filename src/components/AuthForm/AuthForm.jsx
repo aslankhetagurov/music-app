@@ -10,6 +10,7 @@ import supabase from '../../../supabaseClient';
 import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
 import { setAddUserInfo } from '../../store/slices/authSlice';
 import logo from '../../assets/logo.png';
+import { fetchUserCollection } from '../UserCollection/store/userCollectionSlice';
 import './AuthForm.scss';
 
 const MyTextInput = ({ label, ...props }) => {
@@ -49,9 +50,12 @@ const AuthForm = ({ textBtn, title, type }) => {
             });
 
             if (error) {
+                console.log(error);
                 dispatch(setAddAlertText(error.message));
                 dispatch(setAddAlertType('error'));
+                return;
             }
+
             data?.user && navigate('/');
 
             if (data?.user && type === 'signUp') {
@@ -72,6 +76,7 @@ const AuthForm = ({ textBtn, title, type }) => {
                 }
 
                 if (userInfo.length) {
+                    dispatch(fetchUserCollection(userInfo[0].email));
                     dispatch(
                         setAddUserInfo({
                             ...data.user,
