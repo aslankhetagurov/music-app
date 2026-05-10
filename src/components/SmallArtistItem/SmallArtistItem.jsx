@@ -30,9 +30,8 @@ const SmallArtistItem = ({ artistInfo }) => {
             dispatch(setTogglePlaying());
         } else {
             dispatch(setAddCurrentSong(firstSong));
+            handleAddCurrentSongsList(currentSongsList, music);
         }
-
-        handleAddCurrentSongsList(currentSongsList, music);
     };
 
     const renderContent = () => {
@@ -48,6 +47,11 @@ const SmallArtistItem = ({ artistInfo }) => {
                                 ? 'small-artist-item__btn-active'
                                 : ''
                         }`}
+                        aria-label={
+                            playing && currentSongData?.main_artist === name
+                                ? `Pause ${name}`
+                                : `Play ${name}`
+                        }
                     >
                         <div className="small-artist-item__btn-icon">
                             {playing &&

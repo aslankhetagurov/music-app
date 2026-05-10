@@ -430,6 +430,10 @@ const CurrentSongPlayer = () => {
                                     : ''
                             }`}
                             title="Playback queue"
+                            role="button"
+                            tabIndex={0}
+                            aria-label="Show playback queue"
+                            aria-hidden="false"
                         />
                     </div>
 
@@ -438,27 +442,30 @@ const CurrentSongPlayer = () => {
                             className="current-song__controls-btn current-song__controls-prev"
                             onClick={() => handlePrevOrNextSong('prev')}
                             disabled={!currentSongsList}
-                            title="Previous"
+                            aria-label="Previous song"
                         >
-                            <FaStepBackward />
+                            <FaStepBackward aria-hidden="true" />
                         </button>
+
                         <button
                             className="current-song__controls-btn current-song__controls-play"
                             onClick={handleSongPlay}
+                            aria-label={playing ? 'Pause' : 'Play'}
                         >
                             {playing ? (
-                                <FaPause title="Pause" />
+                                <FaPause aria-hidden="true" />
                             ) : (
-                                <FaPlay title="Play" />
+                                <FaPlay />
                             )}
                         </button>
+
                         <button
                             className="current-song__controls-btn current-song__controls-next"
                             onClick={() => handlePrevOrNextSong('next')}
                             disabled={!currentSongsList}
-                            title="Next"
+                            aria-label="Next song"
                         >
-                            <FaStepForward />
+                            <FaStepForward aria-hidden="true" />
                         </button>
                     </div>
                     <div className="current-song__controls-right">
@@ -468,6 +475,9 @@ const CurrentSongPlayer = () => {
                                     !volume ? 'current-song__btn-active' : ''
                                 }`}
                                 onClick={handleVolumeOffToggle}
+                                role="button"
+                                tabIndex={0}
+                                aria-label={song?.muted ? 'Unmute' : 'Mute'}
                             >
                                 {renderVolumeIcon()}
                             </div>
@@ -481,23 +491,25 @@ const CurrentSongPlayer = () => {
                                 max="100"
                             />
                         </div>
+
                         <button
-                            className={`current-song__controls-btn current-song__controls-repeat ${
-                                repeating ? 'current-song__btn-active' : ''
-                            }`}
+                            className={`current-song__controls-btn current-song__controls-repeat ${repeating ? 'current-song__btn-active' : ''}`}
                             onClick={handleRepeating}
-                            title="Repeat"
+                            aria-label={
+                                repeating ? 'Repeat is on' : 'Repeat is off'
+                            }
                         >
-                            <FaRepeat />
+                            <FaRepeat aria-hidden="true" />
                         </button>
+
                         <button
-                            className={`current-song__controls-btn current-song__controls-random ${
-                                random ? 'current-song__btn-active' : ''
-                            }`}
+                            className={`current-song__controls-btn current-song__controls-random ${random ? 'current-song__btn-active' : ''}`}
                             onClick={handleRandom}
-                            title="Shuffle"
+                            aria-label={
+                                random ? 'Shuffle is on' : 'Shuffle is off'
+                            }
                         >
-                            <FaRandom />
+                            <FaRandom aria-hidden="true" />
                         </button>
                     </div>
                 </div>

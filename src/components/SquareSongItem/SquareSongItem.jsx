@@ -43,6 +43,11 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
                             ? 'song-item__btn_active'
                             : ''
                     }`}
+                    aria-label={
+                        playing && currentSongData?.song_id === song_id
+                            ? `Pause ${name}`
+                            : `Play ${name}`
+                    }
                 >
                     <span className="song-item__btn-circle">
                         {playing && currentSongData?.song_id === song_id ? (

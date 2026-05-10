@@ -85,6 +85,9 @@ const Sidebar = () => {
     const renderSidebarList = () => {
         return sidebarList?.map((songData) => {
             const { song_id, image, name, artist, id } = songData;
+            const isActive =
+                currentSongData?.song_id === song_id &&
+                currentSongsList === sidebarList;
 
             return (
                 <div key={songData.song_id} className="sidebar__list-item">
@@ -92,16 +95,16 @@ const Sidebar = () => {
                         <button
                             onClick={() => handlePlaySong(songData)}
                             className={`sidebar__item-btn ${
-                                currentSongData?.song_id === song_id &&
-                                currentSongsList === sidebarList
-                                    ? 'sidebar__item-btn-active'
-                                    : ''
+                                isActive ? 'sidebar__item-btn-active' : ''
                             }`}
+                            aria-label={
+                                playing && isActive
+                                    ? `Pause ${name}`
+                                    : `Play ${name}`
+                            }
                         >
                             <div className="sidebar__btn-icon">
-                                {playing &&
-                                currentSongData?.song_id === song_id &&
-                                currentSongsList === sidebarList ? (
+                                {playing && isActive ? (
                                     <FaPause />
                                 ) : (
                                     <FaPlay className="play-svg" />
@@ -138,6 +141,14 @@ const Sidebar = () => {
         const { name, artist, image, genre, date, song_id, albums, id } =
             sidebarInfo;
 
+        const isMainPlaying =
+            playing &&
+            ((currentSongsList?.some(
+                (song) => song.song_id === currentSongData?.song_id
+            ) &&
+                currentSongsList === sidebarList) ||
+                currentSongData?.song_id === song_id);
+
         return (
             <aside className="sidebar">
                 <div className="sidebar__info">
@@ -146,8 +157,9 @@ const Sidebar = () => {
                         <button
                             onClick={handleCloseSidebar}
                             className="sidebar__close-btn"
+                            aria-label="Close sidebar"
                         >
-                            <IoMdClose />
+                            <IoMdClose aria-hidden="true" />
                         </button>
                     </div>
                     <div className="sidebar__top">
@@ -155,6 +167,11 @@ const Sidebar = () => {
                             <button
                                 onClick={handlePlayMain}
                                 className="sidebar__main-btn"
+                                aria-label={
+                                    isMainPlaying
+                                        ? `Pause ${sidebarInfoType}`
+                                        : `Play ${sidebarInfoType}`
+                                }
                             >
                                 <span className="sidebar__main-btn-circle">
                                     {(playing &&

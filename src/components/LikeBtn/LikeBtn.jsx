@@ -21,12 +21,12 @@ const LikeBtn = ({ data, itemType }) => {
         itemType === 'song'
             ? favoriteSongs?.some((song) => song.song_id === data.song_id)
             : itemType === 'artist'
-            ? favoriteArtists?.some(
-                  (artist) => artist.artist_id === data?.artist_id
-              )
-            : favoriteAlbums?.some(
-                  (album) => album.album_id === data?.album_id
-              );
+              ? favoriteArtists?.some(
+                    (artist) => artist.artist_id === data?.artist_id
+                )
+              : favoriteAlbums?.some(
+                    (album) => album.album_id === data?.album_id
+                );
 
     const handleLikeOrInfoMessage = () => {
         if (userInfo) {
@@ -55,12 +55,21 @@ const LikeBtn = ({ data, itemType }) => {
                     ? `Remove this ${itemType} from the Collection`
                     : `Add this ${itemType} to the Collection`
             }
+            aria-label={
+                isFavorite
+                    ? `Remove this ${itemType} from your collection`
+                    : `Add this ${itemType} to your collection`
+            }
             onClick={handleLikeOrInfoMessage}
+            aria-pressed={isFavorite}
         >
             {isFavorite ? (
-                <FaHeart style={{ color: 'rgb(255 99 99)' }} />
+                <FaHeart
+                    style={{ color: 'rgb(255 99 99)' }}
+                    aria-hidden="true"
+                />
             ) : (
-                <FaRegHeart />
+                <FaRegHeart aria-hidden="true" />
             )}
         </button>
     );

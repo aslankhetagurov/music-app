@@ -81,6 +81,12 @@ const SingleSong = () => {
                             <button
                                 className="single-song__play-btn"
                                 onClick={handleAudio}
+                                aria-label={
+                                    playing &&
+                                    currentSongData?.song_id === song_id
+                                        ? `Pause ${name}`
+                                        : `Play ${name}`
+                                }
                             >
                                 {playing &&
                                 currentSongData?.song_id === song_id ? (

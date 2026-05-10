@@ -57,6 +57,7 @@ const RegisterPopup = () => {
                         className="register-popup__close-btn"
                         type="button"
                         onClick={handleClosePopupByBtnClick}
+                        aria-label="Close registration popup"
                     >
                         +
                     </button>
@@ -73,6 +74,7 @@ const RegisterPopup = () => {
                         className="register-popup__signup-link"
                         to="/signup"
                         onClick={handleClosePopupByBtnClick}
+                        aria-label="Sign up for a new account"
                     >
                         Sign Up
                     </Link>

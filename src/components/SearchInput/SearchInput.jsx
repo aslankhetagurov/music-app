@@ -118,9 +118,13 @@ const SearchInput = () => {
 
     return (
         <div ref={searchResultRef} className="search">
-            <div className="search__show-btn" onClick={handleShowInput}>
-                <IoMdSearch />
-            </div>
+            <button
+                className="search__show-btn"
+                onClick={handleShowInput}
+                aria-label="Open search"
+            >
+                <IoMdSearch aria-hidden="true" />
+            </button>
             <div
                 className={`search__input-wrapper ${
                     showInputToggle ? 'search__show' : ''
@@ -136,13 +140,15 @@ const SearchInput = () => {
                     value={searchValue}
                     onChange={handleInputValueChange}
                     onFocus={handleFocus}
+                    aria-label="Search for songs, artists, or albums"
                 />
                 {searchValue && (
                     <button
                         className="search__close-btn"
                         onClick={handleInputValueClear}
+                        aria-label="Clear search"
                     >
-                        <IoMdClose />
+                        <IoMdClose aria-hidden="true" />
                     </button>
                 )}
             </div>

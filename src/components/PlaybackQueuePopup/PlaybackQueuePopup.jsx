@@ -34,17 +34,24 @@ const PlaybackQueuePopup = () => {
             className={`playback-queue-popup  ${
                 showPlaybackQueuePopup ? 'playback-queue-popup__show' : ''
             } `}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="playback-queue-title"
         >
             <div className="playback-queue-popup__container">
                 <div className="playback-queue-popup__head">
-                    <h1 className="playback-queue-popup__title">
+                    <h1
+                        className="playback-queue-popup__title"
+                        id="playback-queue-title"
+                    >
                         Playback Queue
                     </h1>
                     <button
                         onClick={handleClosePlaybackQueue}
                         className="playback-queue-popup__close-btn"
+                        aria-label="Close playback queue"
                     >
-                        <IoMdClose />
+                        <IoMdClose aria-hidden="true" />
                     </button>
                 </div>
                 {currentSongsList && (

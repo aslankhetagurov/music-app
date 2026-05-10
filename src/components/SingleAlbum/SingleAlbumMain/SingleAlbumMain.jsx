@@ -31,15 +31,16 @@ const SingleAlbumMain = () => {
         const { image, name, main_artist, artist, year, genre } =
             singleAlbumInfo;
 
+        const isCurrentAlbumPlaying =
+            singleAlbumSongs?.some(
+                (song) => currentSongData?.song_id === song.song_id
+            ) &&
+            currentSongsList?.every(
+                (song, i) => song.song_id === singleAlbumSongs[i]?.song_id
+            );
+
         const handleAudio = () => {
-            if (
-                singleAlbumSongs.some(
-                    (songObj) => currentSongData?.song_id === songObj.song_id
-                ) &&
-                currentSongsList?.every(
-                    (song, i) => song.song_id === singleAlbumSongs[i].song_id
-                )
-            ) {
+            if (isCurrentAlbumPlaying) {
                 dispatch(setTogglePlaying());
             } else {
                 dispatch(setAddCurrentSong(singleAlbumSongs[0]));
@@ -57,7 +58,7 @@ const SingleAlbumMain = () => {
                         <div className="single-album__more-info">
                             <div className="single-album__artist">
                                 <Link to={`/artists/${main_artist}/songs`}>
-                                    {artist}
+                                    {main_artist}
                                 </Link>
                             </div>
                             <span className="single-album__sep">*</span>
@@ -70,16 +71,13 @@ const SingleAlbumMain = () => {
                         <button
                             className="single-album__play-btn"
                             onClick={handleAudio}
+                            aria-label={
+                                isCurrentAlbumPlaying && playing
+                                    ? `Pause ${name} album`
+                                    : `Play ${name} album`
+                            }
                         >
-                            {playing &&
-                            singleAlbumSongs?.some(
-                                (song) =>
-                                    currentSongData?.song_id === song.song_id
-                            ) &&
-                            currentSongsList?.every(
-                                (song, i) =>
-                                    song.name === singleAlbumSongs[i].name
-                            ) ? (
+                            {playing && isCurrentAlbumPlaying ? (
                                 <FaPause />
                             ) : (
                                 <FaPlay className="play-svg" />

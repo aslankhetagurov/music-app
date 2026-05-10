@@ -23,7 +23,11 @@ const ShareBtn = () => {
     };
 
     return (
-        <button className="share-btn" onClick={handleShareLink}>
+        <button
+            className="share-btn"
+            onClick={handleShareLink}
+            aria-label="Copy link to clipboard"
+        >
             <span className="share-btn__icon">
                 <FaShareNodes />
             </span>

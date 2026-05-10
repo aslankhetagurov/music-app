@@ -76,7 +76,7 @@ const Header = () => {
                                 onClick={handleUserMenu}
                                 className="header__close-btn"
                             >
-                                <IoMdClose />
+                                <IoMdClose aria-hidden="true" />
                             </button>
                             <span className="header__username">
                                 {usernameFromEmail}
@@ -85,6 +85,7 @@ const Header = () => {
                         <button
                             className="header__logout-btn"
                             onClick={handleLogOut}
+                            aria-label="Log out from account"
                         >
                             log out
                         </button>
@@ -93,12 +94,18 @@ const Header = () => {
             ) : (
                 <div className="header__auth">
                     <div className="header__auth-links">
-                        <Link className="header__auth-link" to="/signup">
+                        <Link
+                            className="header__auth-link"
+                            to="/signup"
+                            aria-label="Sign up for new account"
+                        >
                             Sign Up
                         </Link>
+
                         <Link
                             className="header__auth-link header__auth-login"
                             to="/login"
+                            aria-label="Log in to existing account"
                         >
                             Log In
                         </Link>

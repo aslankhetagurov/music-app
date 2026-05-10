@@ -34,6 +34,13 @@ const CurrentArtist = () => {
     const currentArtistLoadingStatus = useSelector(
         selectCurrentArtistLoadingStatus
     );
+    const isCurrentArtistPlaying =
+        artistSongs?.some(
+            (song) => currentSongData?.song_id === song.song_id
+        ) &&
+        currentSongsList?.every((song) =>
+            song.artist?.some((artistName) => artistName === name)
+        );
 
     useEffect(
         () => {
@@ -43,12 +50,7 @@ const CurrentArtist = () => {
     );
 
     const handleAudio = (firstSong, name) => {
-        if (
-            artistSongs.some(
-                (songObj) => currentSongData?.song_id === songObj.song_id
-            ) &&
-            currentSongsList.every((song) => song.artist.includes(name))
-        ) {
+        if (isCurrentArtistPlaying) {
             dispatch(setTogglePlaying());
         } else {
             dispatch(setAddCurrentSong(firstSong));
@@ -81,15 +83,14 @@ const CurrentArtist = () => {
                                 onClick={() =>
                                     handleAudio(artistSongs[0], name)
                                 }
+                                aria-label={
+                                    playing && isCurrentArtistPlaying
+                                        ? `Pause ${name}`
+                                        : `Play ${name}`
+                                }
                             >
                                 <div className="current-artist__head-btn-icon">
-                                    {playing &&
-                                    currentSongData?.artist.includes(
-                                        artistName
-                                    ) &&
-                                    currentSongsList.every((song) =>
-                                        song.artist.includes(name)
-                                    ) ? (
+                                    {playing && isCurrentArtistPlaying ? (
                                         <FaPause />
                                     ) : (
                                         <FaPlay className="play-svg" />
@@ -114,6 +115,7 @@ const CurrentArtist = () => {
                                         : 'current-artist__tab-link current-artist__tab-link-songs'
                                 }
                                 to="songs"
+                                aria-label="View songs by this artist"
                             >
                                 Songs
                             </NavLink>
@@ -126,6 +128,7 @@ const CurrentArtist = () => {
                                         : 'current-artist__tab-link'
                                 }
                                 to="albums"
+                                aria-label="View albums by this artist"
                             >
                                 Albums
                             </NavLink>
@@ -138,6 +141,7 @@ const CurrentArtist = () => {
                                         : 'current-artist__tab-link current-artist__tab-link-about'
                                 }
                                 to="about"
+                                aria-label="Learn more about this artist"
                             >
                                 About
                             </NavLink>

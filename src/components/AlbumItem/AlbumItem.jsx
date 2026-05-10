@@ -49,30 +49,28 @@ const AlbumItem = ({ albumData }) => {
     };
 
     const renderItem = () => {
+        const isActiveAlbum =
+            music?.some((song) => currentSongData?.song_id === song.song_id) &&
+            currentSongsList?.every(
+                (song, i) => song.song_id === music[i].song_id
+            );
+
         return (
             <div className="album-item">
                 <LikeBtn data={albumData} itemType="album" />
                 <button
                     onClick={handleAudio}
                     className={`album-item__btn ${
-                        music?.some(
-                            (song) => currentSongData?.song_id === song.song_id
-                        ) &&
-                        currentSongsList?.every(
-                            (song, i) => song.song_id === music[i].song_id
-                        )
-                            ? 'album-item__btn_active'
-                            : ''
+                        isActiveAlbum ? 'album-item__btn_active' : ''
                     }`}
+                    aria-label={
+                        isActiveAlbum && playing
+                            ? `Pause ${name} album`
+                            : `Play ${name} album`
+                    }
                 >
                     <span className="album-item__btn-circle">
-                        {playing &&
-                        music?.some(
-                            (song) => currentSongData?.song_id === song.song_id
-                        ) &&
-                        currentSongsList?.every(
-                            (song, i) => song.song_id === music[i].song_id
-                        ) ? (
+                        {playing && isActiveAlbum ? (
                             <FaPause />
                         ) : (
                             <FaPlay className="play-svg" />

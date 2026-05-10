@@ -45,6 +45,11 @@ const SmallSongItem = ({ songData }) => {
                                 ? 'small-song-item__btn-active'
                                 : ''
                         }`}
+                        aria-label={
+                            playing && currentSongData?.song_id === song_id
+                                ? `Pause ${name}`
+                                : `Play ${name}`
+                        }
                     >
                         <div className="small-song-item__btn-icon">
                             {playing && currentSongData?.song_id === song_id ? (

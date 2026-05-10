@@ -129,6 +129,11 @@ const LineSongItem = ({
                                 ? 'line-song-item__btn_active'
                                 : ''
                         }`}
+                        aria-label={
+                            playing && currentSongData?.song_id === song_id
+                                ? `Pause ${name}`
+                                : `Play ${name}`
+                        }
                     >
                         <span className="line-song-item__btn-icon">
                             {playing && currentSongData?.song_id === song_id ? (

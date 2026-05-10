@@ -23,9 +23,8 @@ const Slider = ({ sliderItems, showAllItems, duration, timingFn }) => {
                 itemCount - Math.abs(itemCounter - 1)
             ].style.transform = `translateX(-${154 * itemCount}px)`; //154 = item width + column-gap
         } else {
-            sliderItemsRef.current.childNodes[
-                itemCounter - 1
-            ].style.transform = `translateX(${0}px)`;
+            sliderItemsRef.current.childNodes[itemCounter - 1].style.transform =
+                `translateX(${0}px)`;
         }
 
         sliderItemsRef.current.style.transform = `translateX(${
@@ -131,31 +130,44 @@ const Slider = ({ sliderItems, showAllItems, duration, timingFn }) => {
     }, [itemCount, sliderOn]);
 
     return (
-        <div ref={sliderRef} className="slider">
+        <div
+            ref={sliderRef}
+            className="slider"
+            role="region"
+            aria-label="Music songs carousel"
+            tabIndex={0}
+        >
             {sliderOn && !showAllItems && (
                 <div className="slider__arrows">
                     <button
                         onClick={handlePrevSlide}
                         className="slider__arrow slider__arrow-left"
+                        aria-label="Previous song"
+                        type="button"
                     >
-                        <FaCircleArrowLeft />
+                        <FaCircleArrowLeft aria-hidden="true" />
                     </button>
 
                     <button
                         onClick={handleNextSlide}
                         className="slider__arrow slider__arrow-right"
+                        aria-label="Next song"
+                        type="button"
                     >
-                        <FaCircleArrowRight />
+                        <FaCircleArrowRight aria-hidden="true" />
                     </button>
                 </div>
             )}
+
             <div
-                className={`slider__items ${
-                    showAllItems ? 'show-all-items' : ''
-                }`}
+                className={`slider__items ${showAllItems ? 'show-all-items' : ''}`}
                 ref={sliderItemsRef}
                 onTouchMove={handleNextSlideByMove}
                 onTouchStart={handleSetStartTouchPosition}
+                role="group"
+                aria-roledescription="songs carousel"
+                aria-label="List of available songs"
+                aria-live="polite"
             >
                 {sliderItems}
             </div>

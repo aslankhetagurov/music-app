@@ -12,7 +12,11 @@ const ArtistItem = ({ artistData }) => {
                 <LikeBtn data={artistData} itemType="artist" />
                 <img src={image || defaultImg} className="artist__img" />
             </div>
-            <Link className="artist__name" to={`/artists/${name}/songs`}>
+            <Link
+                className="artist__name"
+                to={`/artists/${name}/songs`}
+                aria-label={`View all songs by ${name}`}
+            >
                 {name}
             </Link>
         </div>

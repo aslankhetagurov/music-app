@@ -100,6 +100,11 @@ const UserCollectionMain = () => {
                         <button
                             className="user-collection__head-btn"
                             onClick={() => handleAudio(favoriteSongs[0])}
+                            aria-label={
+                                playing && currentSongsList === favoriteSongs
+                                    ? 'Pause collection'
+                                    : 'Play collection'
+                            }
                         >
                             {playing && currentSongsList === favoriteSongs ? (
                                 <FaPause />

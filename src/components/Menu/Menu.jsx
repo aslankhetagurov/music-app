@@ -20,8 +20,12 @@ const Menu = () => {
                                 ? 'menu__link menu__link-active'
                                 : 'menu__link'
                         }
+                        aria-label="Go to homepage"
                     >
-                        <IoHomeOutline className="menu__item-icon" />
+                        <IoHomeOutline
+                            className="menu__item-icon"
+                            aria-hidden="true"
+                        />
                         Home
                     </NavLink>
                 </li>
@@ -34,8 +38,12 @@ const Menu = () => {
                                     ? 'menu__link menu__link-active'
                                     : 'menu__link'
                             }
+                            aria-label="Go to my collection"
                         >
-                            <LuListMusic className="menu__item-icon" />
+                            <LuListMusic
+                                className="menu__item-icon"
+                                aria-hidden="true"
+                            />
                             My Collection
                         </NavLink>
                     </li>

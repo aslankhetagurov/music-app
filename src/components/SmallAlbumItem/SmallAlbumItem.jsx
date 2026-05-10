@@ -21,16 +21,16 @@ const SmallAlbumItem = ({ albumData }) => {
     const playing = useSelector(selectPlaying);
     const currentSongsList = useSelector(selectCurrentSongsList);
     const { music } = albumData;
+    const isCurrentAlbumPlaying =
+        music?.some(
+            (songObj) => currentSongData?.song_id === songObj.song_id
+        ) &&
+        currentSongsList?.every(
+            (song, i) => song.song_id === music[i]?.song_id
+        );
 
     const handlePlayAlbum = () => {
-        if (
-            music.some(
-                (songObj) => currentSongData?.song_id === songObj.song_id
-            ) &&
-            currentSongsList?.every(
-                (song, i) => song.song_id === music[i].song_id
-            )
-        ) {
+        if (isCurrentAlbumPlaying) {
             dispatch(setTogglePlaying());
         } else {
             dispatch(setAddCurrentSong(music[0]));
@@ -47,26 +47,18 @@ const SmallAlbumItem = ({ albumData }) => {
                     <button
                         onClick={handlePlayAlbum}
                         className={`small-album-item__btn ${
-                            music.some(
-                                (songObj) =>
-                                    currentSongData?.song_id === songObj.song_id
-                            ) &&
-                            currentSongsList?.every(
-                                (song, i) => song.song_id === music[i].song_id
-                            )
+                            isCurrentAlbumPlaying
                                 ? 'small-album-item__btn-active'
                                 : ''
                         }`}
+                        aria-label={
+                            isCurrentAlbumPlaying && playing
+                                ? `Pause ${name} album`
+                                : `Play ${name} album`
+                        }
                     >
                         <div className="small-album-item__btn-icon">
-                            {playing &&
-                            music.some(
-                                (songObj) =>
-                                    currentSongData?.song_id === songObj.song_id
-                            ) &&
-                            currentSongsList?.every(
-                                (song, i) => song.song_id === music[i].song_id
-                            ) ? (
+                            {playing && isCurrentAlbumPlaying ? (
                                 <FaPause />
                             ) : (
                                 <FaPlay className="play-svg" />

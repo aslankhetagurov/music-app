@@ -39,14 +39,17 @@ const CurrentArtistAbout = () => {
                                           return (
                                               <li
                                                   className="artist-about__social-item"
-                                                  key={i}
+                                                  key={socialName + i}
                                                   title="Instagram"
                                               >
                                                   <a
                                                       className="artist-about__social-link"
                                                       href={socialLink}
+                                                      aria-label={`Follow on ${socialName}`}
+                                                      target="_blank"
+                                                      rel="noopener noreferrer"
                                                   >
-                                                      <FaSquareInstagram />
+                                                      <FaSquareInstagram aria-hidden="true" />
                                                   </a>
                                               </li>
                                           );
@@ -54,14 +57,17 @@ const CurrentArtistAbout = () => {
                                           return (
                                               <li
                                                   className="artist-about__social-item"
-                                                  key={i}
+                                                  key={socialName + i}
                                                   title="Facebook"
                                               >
                                                   <a
                                                       className="artist-about__social-link"
                                                       href={socialLink}
+                                                      aria-label={`Follow on ${socialName}`}
+                                                      target="_blank"
+                                                      rel="noopener noreferrer"
                                                   >
-                                                      <FaFacebook />
+                                                      <FaFacebook aria-hidden="true" />
                                                   </a>
                                               </li>
                                           );
@@ -69,14 +75,17 @@ const CurrentArtistAbout = () => {
                                           return (
                                               <li
                                                   className="artist-about__social-item"
-                                                  key={i}
+                                                  key={socialName + i}
                                                   title="X"
                                               >
                                                   <a
                                                       className="artist-about__social-link"
                                                       href={socialLink}
+                                                      aria-label={`Follow on ${socialName}`}
+                                                      target="_blank"
+                                                      rel="noopener noreferrer"
                                                   >
-                                                      <FaSquareXTwitter />
+                                                      <FaSquareXTwitter aria-hidden="true" />
                                                   </a>
                                               </li>
                                           );
@@ -84,14 +93,17 @@ const CurrentArtistAbout = () => {
                                           return (
                                               <li
                                                   className="artist-about__social-item"
-                                                  key={i}
+                                                  key={socialName + i}
                                                   title="Youtube"
                                               >
                                                   <a
                                                       className="artist-about__social-link"
                                                       href={socialLink}
+                                                      aria-label={`Follow on ${socialName}`}
+                                                      target="_blank"
+                                                      rel="noopener noreferrer"
                                                   >
-                                                      <FaSquareYoutube />
+                                                      <FaSquareYoutube aria-hidden="true" />
                                                   </a>
                                               </li>
                                           );
