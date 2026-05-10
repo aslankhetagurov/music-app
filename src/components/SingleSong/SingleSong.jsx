@@ -56,6 +56,12 @@ const SingleSong = () => {
                     <img
                         className="single-song__img"
                         src={image || defaultImg}
+                        alt={`${name} single cover by ${main_artist}`}
+                        width="200"
+                        height="200"
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
                     />
                     <div className="single-song__main">
                         <div className="single-song__info">

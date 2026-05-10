@@ -35,19 +35,23 @@ const LineSongItem = ({
     };
 
     const renderFeaturingArtists = (artists) => {
-        return artists.map((artist, id, arr) => (
-            <span className="line-song-item__info-feat-artist" key={uuidv4()}>
+        return artists.map((artist, index) => (
+            <span
+                className="line-song-item__info-feat-artist"
+                key={`${song_id}-artist-${index}`}
+            >
                 <Link
                     className="line-song-item__info-feat-link"
                     to={`/artists/${artist}/songs`}
+                    onClick={(e) => e.stopPropagation()}
                 >
                     {artist}
                 </Link>
-                {arr.length > 1 && !id ? (
+                {index < artists.length - 1 && (
                     <span className="line-song-item__info-feat-word">
                         feat.
                     </span>
-                ) : null}
+                )}
             </span>
         ));
     };
@@ -162,7 +166,11 @@ const LineSongItem = ({
                     <img
                         className="line-song-item__img"
                         src={image || defaultImg}
-                        alt="img"
+                        alt={`Cover of ${name}`}
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
                     />
                     <div className="line-song-item__info">
                         <Link

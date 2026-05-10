@@ -51,7 +51,16 @@ const Header = () => {
     return (
         <header className="header">
             <Link className="header__logo" to=".">
-                <img className="header__logo-img" src={logo} alt="logo" />
+                <img
+                    className="header__logo-img"
+                    src={logo}
+                    alt="LolMusic Logo"
+                    width="65"
+                    height="65"
+                    loading="eager"
+                    decoding="async"
+                    fetchpriority="high"
+                />
             </Link>
 
             <SearchInput />
@@ -64,7 +73,13 @@ const Header = () => {
                     <img
                         className="header__avatar"
                         src={userInfo.avatar || avatar}
-                        alt="avatar"
+                        alt={`${usernameFromEmail || 'User'}'s avatar`}
+                        width="49"
+                        height="49"
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
+                        onClick={() => setUserMenu(!userMenu)}
                     />
                     <div
                         className={`header__user-menu ${
@@ -75,6 +90,8 @@ const Header = () => {
                             <button
                                 onClick={handleUserMenu}
                                 className="header__close-btn"
+                                onClick={() => setUserMenu(false)}
+                                aria-label="Close user menu"
                             >
                                 <IoMdClose aria-hidden="true" />
                             </button>

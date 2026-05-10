@@ -51,15 +51,13 @@ const RecommendedSongsList = () => {
     ));
 
     return (
-        !!renderItems?.length && (
-            <ItemListLayout
-                showAllItems={showAllItems}
-                loadingStatus={recommendedSongsListLoadingStatus}
-                items={renderItems}
-                title="Recommended for you"
-                linkToAll="/songs/recommended-songs"
-            />
-        )
+        <ItemListLayout
+            showAllItems={showAllItems}
+            loadingStatus={recommendedSongsListLoadingStatus}
+            items={renderItems}
+            title="Recommended for you"
+            linkToAll="/songs/recommended-songs"
+        />
     );
 };
 

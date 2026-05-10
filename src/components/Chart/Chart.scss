@@ -1,5 +1,11 @@
 .chart {
     width: 100%;
+    min-height: 392px;
+    height: auto;
+
+    @media (max-width: 1024px) {
+        left: 712px;
+    }
 
     &__header {
         margin-bottom: 20px;
@@ -15,6 +21,7 @@
         font-size: 2.6rem;
         line-height: 1.2;
     }
+
     &__subtitle {
         font-size: 1.7rem;
         line-height: 1.2;

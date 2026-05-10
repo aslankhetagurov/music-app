@@ -68,7 +68,11 @@ const SmallAlbumItem = ({ albumData }) => {
                     <img
                         className="small-album-item__img"
                         src={image || defaultImg}
-                        alt="album image"
+                        alt={`${name} album cover  by ${artist[0]}`}
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
                     />
                 </div>
                 <div className="small-album-item__info">

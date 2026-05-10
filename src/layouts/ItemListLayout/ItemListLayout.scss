@@ -1,5 +1,7 @@
 .item-list-layout {
     width: 100%;
+    min-height: 255px;
+    height: auto;
 
     &__top {
         display: flex;

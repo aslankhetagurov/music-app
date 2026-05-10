@@ -67,6 +67,12 @@ const CurrentArtist = () => {
                     <img
                         className="current-artist__head-img"
                         src={image || defaultImg}
+                        alt={`${name} artist photo`}
+                        width="200"
+                        height="200"
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
                     />
                     <div className="current-artist__head-main">
                         <div className="current-artist__head-top">

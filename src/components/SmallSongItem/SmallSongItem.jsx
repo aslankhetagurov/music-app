@@ -62,7 +62,11 @@ const SmallSongItem = ({ songData }) => {
                     <img
                         className="small-song-item__img"
                         src={image || defaultImg}
-                        alt="song image"
+                        alt={`${name} cover${artist?.length ? ` by ${artist[0]}` : ''}`}
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
                     />
                 </div>
                 <div className="small-song-item__main">

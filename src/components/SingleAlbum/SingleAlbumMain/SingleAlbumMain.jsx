@@ -50,7 +50,16 @@ const SingleAlbumMain = () => {
 
         return (
             <section className="single-album">
-                <img className="single-album__img" src={image || defaultImg} />
+                <img
+                    className="single-album__img"
+                    src={image || defaultImg}
+                    alt={`${name} album cover  by ${artist}`}
+                    width="200"
+                    height="200"
+                    loading="eager"
+                    decoding="async"
+                    fetchpriority="high"
+                />
                 <div className="single-album__main">
                     <div className="single-album__info">
                         <span className="single-album__label">Album</span>

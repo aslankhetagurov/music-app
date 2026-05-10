@@ -114,7 +114,12 @@ const Sidebar = () => {
                         <img
                             className="sidebar__item-img"
                             src={image || defaultImg}
-                            alt="song image"
+                            alt={`${name} cover`}
+                            width="40"
+                            height="40"
+                            loading="eager"
+                            decoding="async"
+                            fetchpriority="high"
                         />
                     </div>
                     <div className="sidebar__item-main">
@@ -198,6 +203,12 @@ const Sidebar = () => {
                         <img
                             src={image || defaultImg}
                             className="sidebar__img"
+                            alt={`${sidebarInfoType === 'Album' ? 'Album' : 'Song'} cover for ${name}`}
+                            width="100%"
+                            height="auto"
+                            loading="eager"
+                            decoding="async"
+                            fetchpriority="high"
                         ></img>
                     </div>
                     {sidebarInfoType === 'Album' ? (

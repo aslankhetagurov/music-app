@@ -53,11 +53,12 @@
     }
 
     &__img {
-        width: 100%;
-        max-height: 115px;
-        max-width: 115px;
+        width: 115px;
+        height: 115px;
         border-radius: 10px;
         margin-bottom: 10px;
+        object-fit: cover;
+        display: block;
     }
 
     &__btn {

@@ -72,7 +72,11 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
                     <img
                         className="song-item__img"
                         src={image || defaultImg}
-                        alt="img"
+                        alt={`Cover of ${name}`}
+                        width="115"
+                        height="115"
+                        loading="lazy"
+                        decoding="async"
                     />
                     <div className="song-item__info">
                         <Link

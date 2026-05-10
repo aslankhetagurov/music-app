@@ -69,6 +69,12 @@ const UserCollectionMain = () => {
                         <img
                             className="user-collection__avatar-img"
                             src={userInfo.avatar || avatar}
+                            alt={`${userName}'s profile avatar`}
+                            width="200"
+                            height="200"
+                            loading="eager"
+                            decoding="async"
+                            fetchpriority="high"
                         />
                         {uploadAvatarStatus === 'loading' ? (
                             <ImSpinner2 className="spinner" />

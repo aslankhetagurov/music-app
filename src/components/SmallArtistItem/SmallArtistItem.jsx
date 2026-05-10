@@ -65,7 +65,11 @@ const SmallArtistItem = ({ artistInfo }) => {
                     <img
                         className="small-artist-item__img"
                         src={image || defaultImg}
-                        alt="artist image"
+                        alt={`${name} artist avatar`}
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
                     />
                 </div>
                 <div className="small-artist-item__artist">

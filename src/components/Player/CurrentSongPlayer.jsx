@@ -143,8 +143,8 @@ const CurrentSongPlayer = () => {
             repeating
                 ? song.play() && fetchUpdateSongListeningsCount()
                 : currentSongsList
-                ? handlePrevOrNextSong('next')
-                : dispatch(setTogglePlaying());
+                  ? handlePrevOrNextSong('next')
+                  : dispatch(setTogglePlaying());
         };
 
         if (song) {
@@ -404,6 +404,12 @@ const CurrentSongPlayer = () => {
                         <img
                             className="current-song__img"
                             src={image || defaultImg}
+                            alt={`${name} cover`}
+                            width="50"
+                            height="50"
+                            loading="eager"
+                            decoding="async"
+                            fetchpriority="high"
                         />
                         <div className="current-song__info">
                             <div

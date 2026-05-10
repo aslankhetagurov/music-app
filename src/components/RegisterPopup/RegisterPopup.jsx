@@ -64,7 +64,12 @@ const RegisterPopup = () => {
                     <img
                         className="register-popup__img"
                         src={logo}
-                        alt="logo"
+                        alt="LolMusic Logo"
+                        width="70"
+                        height="70"
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
                     />
                     <h2 className="register-popup__title">
                         Sign Up and get a chance to experience the app to the

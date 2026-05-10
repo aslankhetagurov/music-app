@@ -9,7 +9,7 @@ import './MainLayout.scss';
 
 const MainLayout = () => {
     return (
-        <div className="main">
+        <main className="main">
             <Menu />
             <Header />
             <div className="main__content">
@@ -18,7 +18,7 @@ const MainLayout = () => {
             </div>
             <CurrentSongPlayer />
             <PlaybackQueuePopup />
-        </div>
+        </main>
     );
 };
 
