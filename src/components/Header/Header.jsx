@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import logo from '../../assets/logo.png';
@@ -14,36 +14,31 @@ const Header = () => {
     const [userMenu, setUserMenu] = useState(false);
     const dispatch = useDispatch();
     const userInfo = useSelector(selectUserInfo);
+    const userMenuRef = useRef(null);
+    const avatarRef = useRef(null);
 
     useEffect(() => {
-        userMenu &&
-            document.addEventListener(
-                'click',
-                handleCloseUserMenuByOtsideClick
-            );
-        return () => {
-            document.removeEventListener(
-                'click',
-                handleCloseUserMenuByOtsideClick
-            );
+        if (!userMenu) return;
+
+        const handleClickOutside = (e) => {
+            if (
+                userMenuRef.current &&
+                !userMenuRef.current.contains(e.target) &&
+                !avatarRef.current?.contains(e.target)
+            ) {
+                setUserMenu(false);
+            }
         };
-        // eslint-disable-next-line
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () =>
+            document.removeEventListener('mousedown', handleClickOutside);
     }, [userMenu]);
 
     const handleLogOut = async () => {
         let { error } = await supabase.auth.signOut();
         error && console.log(error);
         !error && dispatch(setAddUserInfo(null));
-    };
-
-    const handleUserMenu = () => {
-        setUserMenu(!userMenu);
-    };
-
-    const handleCloseUserMenuByOtsideClick = (e) => {
-        if (e.target.className !== 'header__avatar') {
-            setUserMenu(!userMenu);
-        }
     };
 
     const usernameFromEmail = userInfo?.email.split('@')[0];
@@ -65,11 +60,7 @@ const Header = () => {
 
             <SearchInput />
             {userInfo ? (
-                <div
-                    className="header__user"
-                    onClick={handleUserMenu}
-                    title={usernameFromEmail}
-                >
+                <div className="header__user" title={usernameFromEmail}>
                     <img
                         className="header__avatar"
                         src={userInfo.avatar || avatar}
@@ -79,16 +70,17 @@ const Header = () => {
                         loading="eager"
                         decoding="async"
                         fetchpriority="high"
+                        ref={avatarRef}
                         onClick={() => setUserMenu(!userMenu)}
                     />
                     <div
                         className={`header__user-menu ${
                             userMenu ? 'header__user-menu-show' : ''
                         }`}
+                        ref={userMenuRef}
                     >
                         <div className="header__user-menu-top">
                             <button
-                                onClick={handleUserMenu}
                                 className="header__close-btn"
                                 onClick={() => setUserMenu(false)}
                                 aria-label="Close user menu"
