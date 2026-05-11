@@ -135,9 +135,9 @@ const Chart = () => {
                         </Link>
                     )}
                 </div>
-                <h4 className="chart__subtitle">
+                <h2 className="chart__subtitle">
                     The most popular songs based on the number of plays
-                </h4>
+                </h2>
             </div>
 
             {chartListLoadingStatus === 'loading' ? (

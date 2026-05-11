@@ -45,7 +45,12 @@ const Header = () => {
 
     return (
         <header className="header">
-            <Link className="header__logo" to=".">
+            <Link
+                className="header__logo"
+                to="/"
+                aria-label="Go to homepage"
+                tabIndex={0}
+            >
                 <img
                     className="header__logo-img"
                     src={logo}
@@ -61,18 +66,25 @@ const Header = () => {
             <SearchInput />
             {userInfo ? (
                 <div className="header__user" title={usernameFromEmail}>
-                    <img
-                        className="header__avatar"
-                        src={userInfo.avatar || avatar}
-                        alt={`${usernameFromEmail || 'User'}'s avatar`}
-                        width="49"
-                        height="49"
-                        loading="eager"
-                        decoding="async"
-                        fetchpriority="high"
+                    <button
+                        type="button"
+                        className="header__avatar-btn"
+                        onClick={() => setUserMenu((prev) => !prev)}
+                        aria-label="Open user menu"
                         ref={avatarRef}
-                        onClick={() => setUserMenu(!userMenu)}
-                    />
+                    >
+                        <img
+                            className="header__avatar"
+                            src={userInfo.avatar || avatar}
+                            alt={`${usernameFromEmail || 'User'}'s avatar`}
+                            width="49"
+                            height="49"
+                            loading="eager"
+                            decoding="async"
+                            fetchpriority="high"
+                        />
+                    </button>
+
                     <div
                         className={`header__user-menu ${
                             userMenu ? 'header__user-menu-show' : ''

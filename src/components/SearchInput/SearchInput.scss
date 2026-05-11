@@ -46,6 +46,7 @@
         z-index: 10;
         background-color: #787a75;
         border-radius: 10px;
+        background-color: #4e4e4e;
         transition:
             top 300ms,
             visibility 300ms,
@@ -63,15 +64,15 @@
 
     &__input {
         padding: 11px 17px 11px 32px;
-        border: 1px solid rgba(226, 225, 225, 0.35);
+        border: 1px solid #c4c4c4;
         border-radius: 10px;
         background-color: transparent;
         color: #fff;
         width: 100%;
+        background-color: #4e4e4e;
 
         &::placeholder {
             color: #fff;
-            opacity: 0.8;
             border: none;
         }
 
