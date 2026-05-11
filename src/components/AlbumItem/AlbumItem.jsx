@@ -29,15 +29,17 @@ const AlbumItem = ({ albumData }) => {
     const dispatch = useDispatch();
     const { music } = albumData;
 
+    const isActiveAlbum =
+        currentSongsList?.length === music.length &&
+        music.some((song) => currentSongData?.song_id === song.song_id) &&
+        currentSongsList.every((song, i) => song.song_id === music[i]?.song_id);
+
     const handleAudio = () => {
-        if (
-            music.some(
-                (songObj) => currentSongData?.song_id === songObj.song_id
-            ) &&
-            currentSongsList?.every(
-                (song, i) => song.song_id === music[i].song_id
-            )
-        ) {
+        if (!music || !Array.isArray(music) || music.length === 0) {
+            return;
+        }
+
+        if (isActiveAlbum) {
             dispatch(setTogglePlaying());
         } else {
             dispatch(setAddCurrentSong(music[0]));
@@ -49,12 +51,6 @@ const AlbumItem = ({ albumData }) => {
     };
 
     const renderItem = () => {
-        const isActiveAlbum =
-            music?.some((song) => currentSongData?.song_id === song.song_id) &&
-            currentSongsList?.every(
-                (song, i) => song.song_id === music[i].song_id
-            );
-
         return (
             <div className="album-item">
                 <LikeBtn data={albumData} itemType="album" />
