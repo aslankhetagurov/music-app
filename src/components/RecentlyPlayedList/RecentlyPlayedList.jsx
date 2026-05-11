@@ -38,50 +38,26 @@ const RecentlyPlayedList = () => {
         // eslint-disable-next-line
     }, [userInfo]);
 
-    const renderItems = showAllItems ? (
-        <div className="recently-played__list">
-            {recentlyPlayed.map((data, i) => (
-                <LineSongItem
-                    key={data.song_id}
-                    songData={data}
-                    handleAddCurrentList={() =>
-                        handleAddCurrentSongsList(
-                            currentSongslist,
-                            recentlyPlayed
-                        )
-                    }
-                    songNum={i + 1}
-                />
-            ))}
-        </div>
-    ) : (
-        recentlyPlayed.map((data) => (
-            <SquareSongItem
-                key={data.song_id}
-                songData={data}
-                handleAddCurrentList={() =>
-                    handleAddCurrentSongsList(currentSongslist, recentlyPlayed)
-                }
-            />
-        ))
-    );
+    if (!userInfo || !recentlyPlayed?.length) return null;
+
+    const renderItems = recentlyPlayed.map((data) => (
+        <SquareSongItem
+            key={data.song_id}
+            songData={data}
+            handleAddCurrentList={() =>
+                handleAddCurrentSongsList(currentSongslist, recentlyPlayed)
+            }
+        />
+    ));
 
     return (
-        !!recentlyPlayed.length &&
-        (showAllItems ? (
-            <div className="recently-played">
-                <h1 className="recently-played__title">Recently played</h1>
-                {renderItems}
-            </div>
-        ) : (
-            <ItemListLayout
-                showAllItems={showAllItems}
-                loadingStatus={recentlyPlayedLoadingStatus}
-                items={renderItems}
-                title="Recently played"
-                linkToAll="/songs/recently-played"
-            />
-        ))
+        <ItemListLayout
+            showAllItems={showAllItems}
+            loadingStatus={recentlyPlayedLoadingStatus}
+            items={renderItems}
+            title="Recently played"
+            linkToAll="/songs/recently-played"
+        />
     );
 };
 

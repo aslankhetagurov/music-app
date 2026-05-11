@@ -37,6 +37,8 @@ const RecommendedSongsList = () => {
         [userInfo]
     );
 
+    if (!userInfo || !recommendedSongsList?.length) return null;
+
     const renderItems = recommendedSongsList?.map((data) => (
         <SquareSongItem
             key={data.id}
