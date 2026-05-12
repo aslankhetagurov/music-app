@@ -1,208 +1,257 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import MainLayout from './layouts/MainLayout';
-import HomePage from './pages/HomePage/HomePage';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import CurrentArtistPage from './pages/CurrentArtistPage/CurrentArtistPage';
-import CurrentArtistSongslist from './components/CurrentArtistSongsList/CurrentArtistSongsList';
-import CurrentArtistAbout from './components/CurrentArtistAbout/CurrentArtistAbout';
-import CurrentArtistAlbums from './components/CurrentArtistAlbums/CurrentArtistAlbums';
-import SignUpPage from './pages/SignUpPage/SignUpPage';
-import LogInPage from './pages/LogInPage/LogInPage';
-import { setAddUserInfo } from './store/slices/authSlice';
-import supabase from '../supabaseClient';
-import LoginDataUpdatePage from './pages/LoginDataUpdatePage/LoginDataUpdatePage';
-import PasswordRecoveryPage from './pages/PasswordRecoveryPage/PasswordRecoveryPage';
 import Alert from './components/Alert/Alert';
-import UserCollectionPage from './pages/UserCollectionPage/UserCollectionPage';
+import RegisterPopup from './components/RegisterPopup/RegisterPopup';
+import { setAddUserInfo } from './store/slices/authSlice';
 import { fetchUserCollection } from './components/UserCollection/store/userCollectionSlice';
-import UserCollectionFavoriteSongs from './components/UserCollection/UserCollectionFavoriteSongs/UserCollectionFavoriteSongs';
-import UserCollectionFavoriteArtists from './components/UserCollection/UserCollectionFavoriteArtists/UserCollectionFavoriteArtists';
-import ListeningHistory from './components/UserCollection/ListeningHistory/ListeningHistory';
-import SingleAlbumPage from './pages/SingleAlbumPage/SingleAlbumPage';
-import UserCollectionFavoriteAlbums from './components/UserCollection/UserCollectionFavoriteAlbums/UserCollectionFavoriteAlbums';
 import {
     setAddAlertText,
     setAddAlertType,
 } from './components/Alert/store/alertSlice';
-import SingleSongPage from './pages/SingleSongPage/SingleSongPage';
-import ChartPage from './pages/ChartPage/ChartPage';
-import RegisterPopup from './components/RegisterPopup/RegisterPopup';
-import ItemListPageLayout from './layouts/ItemListPageLayout/ItemListPageLayout';
-import NewReleasesList from './components/NewReleasesList/NewReleasesList';
-import PopularSongsList from './components/PopularSongsList/PopularSongsList';
-import RecentlyPlayedList from './components/RecentlyPlayedList/RecentlyPlayedList';
-import PopularArtistsList from './components/PopularArtistsList/PopularArtistsList';
-import RecommendedSongsList from './components/RecommendedSongsList/RecommendedSongsList';
-import PopularAlbumsList from './components/PopularAlbumsList/PopularAlbumsList';
+import supabase from '../supabaseClient';
+import HomePage from './pages/HomePage/HomePage';
+import AppLoader from './components/AppLoader/AppLoader';
 import './App.scss';
+
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
+const CurrentArtistPage = lazy(
+    () => import('./pages/CurrentArtistPage/CurrentArtistPage')
+);
+const CurrentArtistSongslist = lazy(
+    () => import('./components/CurrentArtistSongsList/CurrentArtistSongsList')
+);
+const CurrentArtistAbout = lazy(
+    () => import('./components/CurrentArtistAbout/CurrentArtistAbout')
+);
+const CurrentArtistAlbums = lazy(
+    () => import('./components/CurrentArtistAlbums/CurrentArtistAlbums')
+);
+const SignUpPage = lazy(() => import('./pages/SignUpPage/SignUpPage'));
+const LogInPage = lazy(() => import('./pages/LogInPage/LogInPage'));
+const LoginDataUpdatePage = lazy(
+    () => import('./pages/LoginDataUpdatePage/LoginDataUpdatePage')
+);
+const PasswordRecoveryPage = lazy(
+    () => import('./pages/PasswordRecoveryPage/PasswordRecoveryPage')
+);
+const UserCollectionPage = lazy(
+    () => import('./pages/UserCollectionPage/UserCollectionPage')
+);
+const UserCollectionFavoriteSongs = lazy(
+    () =>
+        import('./components/UserCollection/UserCollectionFavoriteSongs/UserCollectionFavoriteSongs')
+);
+const UserCollectionFavoriteArtists = lazy(
+    () =>
+        import('./components/UserCollection/UserCollectionFavoriteArtists/UserCollectionFavoriteArtists')
+);
+const ListeningHistory = lazy(
+    () =>
+        import('./components/UserCollection/ListeningHistory/ListeningHistory')
+);
+const SingleAlbumPage = lazy(
+    () => import('./pages/SingleAlbumPage/SingleAlbumPage')
+);
+const UserCollectionFavoriteAlbums = lazy(
+    () =>
+        import('./components/UserCollection/UserCollectionFavoriteAlbums/UserCollectionFavoriteAlbums')
+);
+const SingleSongPage = lazy(
+    () => import('./pages/SingleSongPage/SingleSongPage')
+);
+const ChartPage = lazy(() => import('./pages/ChartPage/ChartPage'));
+const ItemListPageLayout = lazy(
+    () => import('./layouts/ItemListPageLayout/ItemListPageLayout')
+);
+const NewReleasesList = lazy(
+    () => import('./components/NewReleasesList/NewReleasesList')
+);
+const PopularSongsList = lazy(
+    () => import('./components/PopularSongsList/PopularSongsList')
+);
+const RecentlyPlayedList = lazy(
+    () => import('./components/RecentlyPlayedList/RecentlyPlayedList')
+);
+const PopularArtistsList = lazy(
+    () => import('./components/PopularArtistsList/PopularArtistsList')
+);
+const RecommendedSongsList = lazy(
+    () => import('./components/RecommendedSongsList/RecommendedSongsList')
+);
+const PopularAlbumsList = lazy(
+    () => import('./components/PopularAlbumsList/PopularAlbumsList')
+);
 
 function App() {
     const dispatch = useDispatch();
 
-    useEffect(
-        () => {
-            supabase.auth.onAuthStateChange((event, session) => {
+    useEffect(() => {
+        const { data: authListener } = supabase.auth.onAuthStateChange(
+            async (event, session) => {
                 try {
                     if (session && event === 'INITIAL_SESSION') {
-                        (async () => {
-                            const { data: userInfo, error } = await supabase
-                                .from('users')
-                                .select('*')
-                                .eq('id', session.user.id);
+                        const { data: userInfo, error } = await supabase
+                            .from('users')
+                            .select('*')
+                            .eq('id', session.user.id);
 
-                            if (error) {
-                                dispatch(
-                                    setAddAlertText(
-                                        `Failed to load user data;
-                            ${error.message}`
-                                    )
-                                );
+                        if (error) {
+                            dispatch(
+                                setAddAlertText(
+                                    `Failed to load user data: ${error.message}`
+                                )
+                            );
+                            dispatch(setAddAlertType('error'));
+                            return;
+                        }
 
-                                dispatch(setAddAlertType('error'));
-                            }
-
-                            if (userInfo) {
-                                dispatch(
-                                    setAddUserInfo({
-                                        ...session.user,
-                                        ...userInfo[0],
-                                    })
-                                );
-                            }
-                        })();
-                        dispatch(fetchUserCollection(session.user.email));
+                        if (userInfo?.length) {
+                            dispatch(
+                                setAddUserInfo({
+                                    ...session.user,
+                                    ...userInfo[0],
+                                })
+                            );
+                            dispatch(fetchUserCollection(session.user.email));
+                        }
                     }
                 } catch (error) {
                     dispatch(
                         setAddAlertText(
-                            `Failed to load user data;
-                            ${error.message}`
+                            `Failed to load user data: ${error.message}`
                         )
                     );
                     dispatch(setAddAlertType('error'));
                 }
-            });
-        }, // eslint-disable-next-line
-        []
-    );
+            }
+        );
+
+        return () => {
+            authListener?.subscription?.unsubscribe();
+        };
+    }, []);
 
     return (
         <BrowserRouter>
             <div className="app">
                 <Alert />
                 <RegisterPopup />
-                <Routes>
-                    <Route path="/" element={<MainLayout />}>
-                        <Route index element={<HomePage />} />
-                        <Route
-                            path="songs/new-releases"
-                            element={
-                                <ItemListPageLayout
-                                    Component={NewReleasesList}
-                                />
-                            }
-                        />
-                        <Route
-                            path="songs/popular-songs"
-                            element={
-                                <ItemListPageLayout
-                                    Component={PopularSongsList}
-                                />
-                            }
-                        />
-                        <Route
-                            path="songs/recently-played"
-                            element={
-                                <ItemListPageLayout
-                                    Component={RecentlyPlayedList}
-                                />
-                            }
-                        />
-                        <Route
-                            path="artists/popular-artists"
-                            element={
-                                <ItemListPageLayout
-                                    Component={PopularArtistsList}
-                                />
-                            }
-                        />
-                        <Route
-                            path="songs/recommended-songs"
-                            element={
-                                <ItemListPageLayout
-                                    Component={RecommendedSongsList}
-                                />
-                            }
-                        />
-                        <Route
-                            path="albums/popular-albums"
-                            element={
-                                <ItemListPageLayout
-                                    Component={PopularAlbumsList}
-                                />
-                            }
-                        />
-                        <Route path="songs/chart" element={<ChartPage />} />
-                        <Route
-                            path="artists/:artistName"
-                            element={<CurrentArtistPage />}
-                        >
+                <Suspense fallback={<AppLoader />}>
+                    <Routes>
+                        <Route path="/" element={<MainLayout />}>
+                            <Route index element={<HomePage />} />
                             <Route
-                                path="songs"
-                                element={<CurrentArtistSongslist />}
-                            ></Route>
+                                path="songs/new-releases"
+                                element={
+                                    <ItemListPageLayout
+                                        Component={NewReleasesList}
+                                    />
+                                }
+                            />
                             <Route
-                                path="albums"
-                                element={<CurrentArtistAlbums />}
-                            ></Route>
+                                path="songs/popular-songs"
+                                element={
+                                    <ItemListPageLayout
+                                        Component={PopularSongsList}
+                                    />
+                                }
+                            />
                             <Route
-                                path="about"
-                                element={<CurrentArtistAbout />}
-                            ></Route>
+                                path="songs/recently-played"
+                                element={
+                                    <ItemListPageLayout
+                                        Component={RecentlyPlayedList}
+                                    />
+                                }
+                            />
+                            <Route
+                                path="artists/popular-artists"
+                                element={
+                                    <ItemListPageLayout
+                                        Component={PopularArtistsList}
+                                    />
+                                }
+                            />
+                            <Route
+                                path="songs/recommended-songs"
+                                element={
+                                    <ItemListPageLayout
+                                        Component={RecommendedSongsList}
+                                    />
+                                }
+                            />
+                            <Route
+                                path="albums/popular-albums"
+                                element={
+                                    <ItemListPageLayout
+                                        Component={PopularAlbumsList}
+                                    />
+                                }
+                            />
+                            <Route path="songs/chart" element={<ChartPage />} />
+                            <Route
+                                path="artists/:artistName"
+                                element={<CurrentArtistPage />}
+                            >
+                                <Route
+                                    path="songs"
+                                    element={<CurrentArtistSongslist />}
+                                />
+                                <Route
+                                    path="albums"
+                                    element={<CurrentArtistAlbums />}
+                                />
+                                <Route
+                                    path="about"
+                                    element={<CurrentArtistAbout />}
+                                />
+                            </Route>
+                            <Route
+                                path="users/:userId"
+                                element={<UserCollectionPage />}
+                            >
+                                <Route
+                                    path="favorite-songs"
+                                    element={<UserCollectionFavoriteSongs />}
+                                />
+                                <Route
+                                    path="favorite-artists"
+                                    element={<UserCollectionFavoriteArtists />}
+                                />
+                                <Route
+                                    path="favorite-albums"
+                                    element={<UserCollectionFavoriteAlbums />}
+                                />
+                                <Route
+                                    path="listening-history"
+                                    element={<ListeningHistory />}
+                                />
+                            </Route>
+                            <Route
+                                path="albums/:albumId"
+                                element={<SingleAlbumPage />}
+                            />
+                            <Route
+                                path="songs/:songId"
+                                element={<SingleSongPage />}
+                            />
+                            <Route path="*" element={<NotFoundPage />} />
                         </Route>
+                        <Route path="/signup" element={<SignUpPage />} />
+                        <Route path="/login" element={<LogInPage />} />
                         <Route
-                            path="users/:userId"
-                            element={<UserCollectionPage />}
-                        >
-                            <Route
-                                path="favorite-songs"
-                                element={<UserCollectionFavoriteSongs />}
-                            ></Route>
-                            <Route
-                                path="favorite-artists"
-                                element={<UserCollectionFavoriteArtists />}
-                            ></Route>
-                            <Route
-                                path="favorite-albums"
-                                element={<UserCollectionFavoriteAlbums />}
-                            ></Route>
-                            <Route
-                                path="listening-history"
-                                element={<ListeningHistory />}
-                            ></Route>
-                        </Route>
-                        <Route
-                            path="albums/:albumId"
-                            element={<SingleAlbumPage />}
+                            path="/recover"
+                            element={<PasswordRecoveryPage />}
                         />
                         <Route
-                            path="songs/:songId"
-                            element={<SingleSongPage />}
+                            path="/profile/update"
+                            element={<LoginDataUpdatePage />}
                         />
-
-                        <Route path="*" element={<NotFoundPage />} />
-                    </Route>
-                    <Route path="/signup" element={<SignUpPage />} />
-                    <Route path="/login" element={<LogInPage />} />
-                    <Route path="/recover" element={<PasswordRecoveryPage />} />
-                    <Route
-                        path="/profile/update"
-                        element={<LoginDataUpdatePage />}
-                    />
-                </Routes>
+                    </Routes>
+                </Suspense>
             </div>
         </BrowserRouter>
     );
