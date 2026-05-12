@@ -36,58 +36,72 @@ const AuthForm = ({ textBtn, title, type }) => {
     const [toggleShowPassword, setToggleShowPassword] = useState(false);
 
     const handleSubmit = async ({ email, password }) => {
-        const action =
-            type === 'signUp'
-                ? 'signUp'
-                : type === 'logIn'
-                ? 'signInWithPassword'
-                : 'updateUser';
-
         try {
-            let { data, error } = await supabase.auth[action]({
-                email,
-                password,
-            });
+            if (type === 'signUp') {
+                const { data, error } = await supabase.auth.signUp({
+                    email,
+                    password,
+                });
 
-            if (error) {
-                console.log(error);
-                dispatch(setAddAlertText(error.message));
-                dispatch(setAddAlertType('error'));
-                return;
-            }
-
-            data?.user && navigate('/');
-
-            if (data?.user && type === 'signUp') {
-                dispatch(setAddAlertText('Please confirm your email'));
-                dispatch(setAddAlertType('info'));
-            }
-
-            if (type === 'logIn') {
-                const { data: userInfo, error: userInfoError } = await supabase
-                    .from('users')
-                    .select('*')
-                    .eq('id', data.user.id);
-
-                if (userInfoError) {
-                    console.log(userInfoError);
-                    dispatch(setAddAlertText('Failed to load user data'));
+                if (error) {
+                    dispatch(setAddAlertText(error.message));
                     dispatch(setAddAlertType('error'));
+                    return;
                 }
 
-                if (userInfo.length) {
-                    dispatch(fetchUserCollection(userInfo[0].email));
-                    dispatch(
-                        setAddUserInfo({
-                            ...data.user,
-                            ...userInfo[0],
-                        })
-                    );
+                if (data?.user) {
+                    dispatch(setAddAlertText('Please confirm your email'));
+                    dispatch(setAddAlertType('info'));
+                }
+            } else if (type === 'logIn') {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email,
+                    password,
+                });
+
+                if (error) {
+                    dispatch(setAddAlertText(error.message));
+                    dispatch(setAddAlertType('error'));
+                    return;
+                }
+
+                if (data?.user) {
+                    const { data: userInfo, error: userInfoError } =
+                        await supabase
+                            .from('users')
+                            .select('*')
+                            .eq('id', data.user.id);
+
+                    if (userInfoError) {
+                        dispatch(setAddAlertText('Failed to load user data'));
+                        dispatch(setAddAlertType('error'));
+                        return;
+                    }
+
+                    if (userInfo?.length) {
+                        dispatch(fetchUserCollection(userInfo[0].email));
+                        dispatch(
+                            setAddUserInfo({ ...data.user, ...userInfo[0] })
+                        );
+                    }
+
                     navigate('/');
                 }
+            } else if (type === 'update') {
+                const { error } = await supabase.auth.updateUser({ password });
+
+                if (error) {
+                    dispatch(setAddAlertText(error.message));
+                    dispatch(setAddAlertType('error'));
+                    return;
+                }
+
+                dispatch(setAddAlertText('Password updated successfully'));
+                dispatch(setAddAlertType('info'));
+                navigate('/');
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
             dispatch(setAddAlertText(error.message));
             dispatch(setAddAlertType('error'));
         }
