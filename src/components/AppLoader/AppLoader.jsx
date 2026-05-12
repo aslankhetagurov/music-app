@@ -1,5 +1,5 @@
 import styles from './AppLoader.module.scss';
-import logo from '../../assets/logo.png';
+import logo from '/logo.webp';
 
 const AppLoader = () => {
     return (

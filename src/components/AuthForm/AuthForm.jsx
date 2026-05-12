@@ -9,7 +9,7 @@ import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import supabase from '../../../supabaseClient';
 import { setAddAlertText, setAddAlertType } from '../Alert/store/alertSlice';
 import { setAddUserInfo } from '../../store/slices/authSlice';
-import logo from '../../assets/logo.png';
+import logo from '/logo.webp';
 import { fetchUserCollection } from '../UserCollection/store/userCollectionSlice';
 import './AuthForm.scss';
 

@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { selectUserInfo } from '../../store/slices/authSlice';
-import logo from '../../assets/logo.png';
+import logo from '/logo.webp';
 import './RegisterPopup.scss';
 
 const RegisterPopup = () => {
@@ -28,7 +28,6 @@ const RegisterPopup = () => {
         return () => {
             clearTimeout(timeoutId);
         };
-        // eslint-disable-next-line
     }, [userInfo]);
 
     const turnOnScroll = () => document.body.classList.remove('scroll-lock');

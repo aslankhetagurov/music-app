@@ -3,7 +3,7 @@ import { IoMdClose } from 'react-icons/io';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import logo from '../../assets/logo.png';
+import logo from '/logo.webp';
 import avatar from '../../assets/avatar.png';
 import supabase from '../../../supabaseClient';
 import { selectUserInfo, setAddUserInfo } from '../../store/slices/authSlice';
