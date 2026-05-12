@@ -22,12 +22,9 @@ const NewReleasesList = () => {
     const { pathname } = useLocation();
     const showAllItems = pathname === '/songs/new-releases';
 
-    useEffect(
-        () => {
-            dispatch(fetchNewReleasesList(showAllItems ? 50 : 10));
-        }, // eslint-disable-next-line
-        []
-    );
+    useEffect(() => {
+        dispatch(fetchNewReleasesList(showAllItems ? 50 : 10));
+    }, []);
 
     const renderItems = newReleasesList?.map((data) => (
         <SquareSongItem
@@ -36,6 +33,8 @@ const NewReleasesList = () => {
             handleAddCurrentList={() =>
                 handleAddCurrentSongsList(currentSongslist, newReleasesList)
             }
+            imgLoading="eager"
+            imgFetchpriority="high"
         />
     ));
 

@@ -24,18 +24,15 @@ const RecommendedSongsList = () => {
     const { pathname } = useLocation();
     const showAllItems = pathname === '/songs/recommended-songs';
 
-    useEffect(
-        () => {
-            userInfo &&
-                dispatch(
-                    fetchRecommendedSongsList({
-                        userId: userInfo.id,
-                        limit: showAllItems ? 50 : 10,
-                    })
-                );
-        }, // eslint-disable-next-line
-        [userInfo]
-    );
+    useEffect(() => {
+        userInfo &&
+            dispatch(
+                fetchRecommendedSongsList({
+                    userId: userInfo.id,
+                    limit: showAllItems ? 50 : 10,
+                })
+            );
+    }, [userInfo]);
 
     if (!userInfo || !recommendedSongsList?.length) return null;
 
@@ -49,6 +46,8 @@ const RecommendedSongsList = () => {
                     recommendedSongsList
                 )
             }
+            imgLoading="eager"
+            imgFetchpriority="high"
         />
     ));
 

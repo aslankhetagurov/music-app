@@ -24,6 +24,8 @@ const LineSongItem = ({
     songNum,
     handleClosePlaybackQueue,
     prevPosition,
+    imgLoading = 'lazy',
+    imgFetchpriority = 'low',
 }) => {
     const { song_id, image, name, duration, artist, id } = songData;
     const currentSongData = useSelector(selectCurrentSong);
@@ -169,7 +171,8 @@ const LineSongItem = ({
                         alt={`Cover of ${name}`}
                         width="40"
                         height="40"
-                        loading="lazy"
+                        loading={imgLoading}
+                        fetchpriority={imgFetchpriority}
                         decoding="async"
                     />
                     <div className="line-song-item__info">

@@ -14,7 +14,12 @@ import defaultImg from '../../assets/default-img.webp';
 import { setAddSingleSongData } from '../SingleSong/store/singleSongSlice';
 import './SquareSongItem.scss';
 
-const SquareSongItem = ({ handleAddCurrentList, songData }) => {
+const SquareSongItem = ({
+    handleAddCurrentList,
+    songData,
+    imgLoading = 'lazy',
+    imgFetchpriority = 'low',
+}) => {
     const { song_id, image, artist, name, id } = songData;
     const currentSongData = useSelector(selectCurrentSong);
     const playing = useSelector(selectPlaying);
@@ -75,8 +80,9 @@ const SquareSongItem = ({ handleAddCurrentList, songData }) => {
                         alt={`Cover of ${name}`}
                         width="115"
                         height="115"
-                        loading="lazy"
                         decoding="async"
+                        loading={imgLoading}
+                        fetchpriority={imgFetchpriority}
                     />
                     <div className="song-item__info">
                         <Link

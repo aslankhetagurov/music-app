@@ -27,7 +27,6 @@ const Chart = () => {
 
     useEffect(() => {
         dispatch(fetchChartList());
-        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
@@ -73,6 +72,8 @@ const Chart = () => {
                         prevPosition={
                             prevPosition >= 0 ? prevPosition + 1 : prevPosition
                         }
+                        imgLoading="eager"
+                        imgFetchpriority="high"
                     />
                 );
             });
@@ -100,6 +101,8 @@ const Chart = () => {
                         prevPosition={
                             prevPosition >= 0 ? prevPosition + 1 : prevPosition
                         }
+                        imgLoading="eager"
+                        imgFetchpriority="high"
                     />
                 );
             });
@@ -120,6 +123,8 @@ const Chart = () => {
                     prevPosition={
                         prevPosition >= 0 ? prevPosition + 1 : prevPosition
                     }
+                    imgLoading="eager"
+                    imgFetchpriority="high"
                 />
             );
         });

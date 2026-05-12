@@ -35,7 +35,6 @@ const RecentlyPlayedList = () => {
                     limit: showAllItems ? 1000 : 10,
                 })
             );
-        // eslint-disable-next-line
     }, [userInfo]);
 
     if (!userInfo || !recentlyPlayed?.length) return null;
@@ -47,6 +46,8 @@ const RecentlyPlayedList = () => {
             handleAddCurrentList={() =>
                 handleAddCurrentSongsList(currentSongslist, recentlyPlayed)
             }
+            imgLoading="eager"
+            imgFetchpriority="high"
         />
     ));
 
