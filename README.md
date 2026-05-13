@@ -1,8 +1,162 @@
-# React + Vite
+# 🎵 LolMusic — музыкальная платформа
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![React](https://img.shields.io/badge/React-18.2-61DAFB)](https://reactjs.org/)
+[![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-2.1-764ABC)](https://redux-toolkit.js.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-2.39-3FCF8E)](https://supabase.com/)
+[![Vite](https://img.shields.io/badge/Vite-5.0-646CFF)](https://vitejs.dev/)
 
-Currently, two official plugins are available:
+Современная музыкальная платформа, где пользователи могут слушать треки, искать музыку, сохранять любимые песни, альбомы и исполнителей, а также управлять плейлистами.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
+
+## 🎯 Функционал
+
+### 🎵 Аудиоплеер
+
+- Воспроизведение, пауза, переключение треков
+- Регулировка громкости и mute
+- Перемотка трека (клик и перетаскивание)
+- Повтор трека (один / все)
+- Случайный порядок воспроизведения
+- Очередь воспроизведения (playback queue)
+- Отображение текущего времени и длительности трека
+- Поддержка touch-устройств
+
+### 🔐 Авторизация и аккаунт
+
+- Регистрация и вход (Formik + Yup валидация)
+- Восстановление пароля
+- Загрузка аватара пользователя
+- Разделение интерфейса для авторизованных и гостей
+
+### 💾 Личная коллекция
+
+- Сохранение любимых песен, альбомов, исполнителей
+- История прослушанных треков
+- Возможность очистки истории
+
+### 🔍 Поиск и навигация
+
+- Поиск по трекам и исполнителям
+- Страницы исполнителей (песни, альбомы, информация)
+- Страницы альбомов и отдельных треков
+- Популярные треки, альбомы, исполнители
+- Новые релизы и рекомендации
+
+### 📱 Адаптивный дизайн
+
+- Полностью адаптивная вёрстка под все устройства
+- Медиа-запросы и ResizeObserver
+- Адаптивное боковое меню
+
+---
+
+## ⚡ Производительность и доступность
+
+### Lighthouse показатели
+
+| Метрика        | Значение |
+| -------------- | -------- |
+| Performance    | 95       |
+| Accessibility  | 100      |
+| Best Practices | 96       |
+| SEO            | 100      |
+
+### Оптимизации
+
+| Техника         | Реализация                                                     |
+| --------------- | -------------------------------------------------------------- |
+| Lazy loading    | `React.lazy()` + `Suspense` для всех страниц                   |
+| Code splitting  | Vite `manualChunks`: React-vendor, UI-vendor, страницы         |
+| Предзагрузка    | Шрифты и hero-изображение с `preload` + `fetchpriority="high"` |
+| Асинхронный CSS | CSS не блокирует отрисовку                                     |
+| Кэширование     | Статика кэшируется на 1 год                                    |
+
+### Доступность (WCAG)
+
+- Aria-атрибуты (`aria-label`, `aria-invalid`, `aria-describedby`)
+- Семантическая вёрстка (`main`, `nav`, `header`, `section`)
+- Все поля форм имеют связанные `<label>`
+- Осмысленные `alt` для изображений
+- Клавиатурная навигация (видимый focus, логичный tab order)
+- Цветовой контраст соответствует WCAG 2.1
+
+---
+
+## 🛠 Технологии
+
+| Категория         | Технологии                       |
+| ----------------- | -------------------------------- |
+| Фреймворк         | React 18                         |
+| Стейт-менеджмент  | Redux Toolkit                    |
+| Маршрутизация     | React Router DOM v6              |
+| Языки             | JavaScript, SCSS                 |
+| Сборка            | Vite                             |
+| База данных и API | Supabase (PostgreSQL + REST API) |
+| Формы и валидация | Formik, Yup                      |
+| HTTP-запросы      | Fetch API                        |
+| Иконки            | React Icons                      |
+| Деплой            | Vercel                           |
+
+---
+
+## 📁 Структура проекта
+
+src/
+├── components/ # Переиспользуемые компоненты (35+)
+│ ├── AlbumItem/ # Элемент альбома
+│ ├── ArtistItem/ # Элемент исполнителя
+│ ├── Player/ # Плеер с управлением
+│ ├── Sidebar/ # Боковое меню
+│ ├── Chart/ # Чарты и рейтинги
+│ ├── Slider/ # Бесконечный слайдер
+│ ├── LikeBtn/ # Кнопка лайка
+│ ├── RegisterPopup/ # Попап регистрации
+│ ├── PasswordRecovery/# Восстановление пароля
+│ └── ... # (всего 35+ компонентов)
+├── pages/ # Страницы приложения
+│ ├── HomePage/ # Главная
+│ ├── CurrentArtistPage/ # Страница исполнителя
+│ ├── SingleAlbumPage/ # Страница альбома
+│ ├── SingleSongPage/ # Страница трека
+│ └── UserCollectionPage/ # Личная коллекция
+├── store/ # Redux store и слайсы
+├── layouts/ # Layout компоненты
+├── utils/ # Вспомогательные функции
+└── assets/ # Статические файлы
+
+text
+
+## 🗄 База данных (Supabase)
+
+**Таблицы:**
+
+- `users` — пользователи, аватары, данные аккаунта
+- `music` — треки (название, исполнитель, длительность, URL, обложка)
+- `albums` — альбомы
+- `artists` — исполнители
+- `favorite_songs` / `favorite_albums` / `favorite_artists` — избранное пользователя
+- `recently_played` — история прослушиваний
+- `chart` / `previous_day_chart` — чарты (текущий и за предыдущий день)
+
+---
+
+## 🚀 Установка и запуск
+
+```bash
+git clone https://github.com/aslankhetagurov/music-app.git
+cd music-app
+npm install
+# Создайте .env с вашими ключами Supabase
+npm run dev
+```
+
+## 🌐 Деплой
+
+[Vercel](https://lolmusic-psi.vercel.app)
+
+👨‍💻 Автор
+Аслан Хетагуров
+
+- GitHub: [aslankhetagurov](https://github.com/aslankhetagurov)
+- Сайт: [aslan-khetagurov.com](https://aslan-khetagurov.com)
